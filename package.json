@@ -2,6 +2,7 @@
   "name": "readbook",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,9 +10,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "antd": "^4.23.2",
+    "axios": "^0.21.1",
     "next": "12.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sass": "^1.54.9"
   },
   "devDependencies": {
     "eslint": "8.23.1",
