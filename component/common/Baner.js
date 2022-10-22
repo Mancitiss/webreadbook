@@ -29,17 +29,19 @@ const Baner= ()=>{
                     <Col lg={12}  sm={10} xs={24} >
                         <Row>
                             <Col lg={16}  sm={24} xs={24} justify='center'>
-                                <div style={{float: 'right',marginRight: "16px"}}>
+                                <div className="baner__home__right" >
                                     <div className="baner__home__bg-slide"></div>
                                     <div className="baner__home__img-slide" >
                                         <Image src={NvBook} alt='Nhan vat truyen' height={360} width={360} />
                                     </div>
                                 </div>
                             </Col>
-                            <Col lg={8}  sm={0} xs={0} >
+                            <Col lg={8} md={0} sm={0} xs={0} >
                                 <div className="baner__home__icon-slide">
                                     <div className="baner__home__slide-item">
-                                        <Image src={Book1} alt="" width={60} height={68}/>
+                                        <div className="baner__home__slide--img">
+                                            <Image src={Book1} alt="" width={60} height={68}/>
+                                        </div>
                                         <div className="baner__home__side-text">
                                             <p className="baner__home__side--name">Broken Horn</p>
                                             <EyeFilled /><span className="baner__home__side--view">145,290 K</span>
@@ -47,7 +49,9 @@ const Baner= ()=>{
                                         <TrophyFilled />
                                     </div>
                                     <div className="baner__home__slide-item">
-                                        <Image src={Book1} alt="" width={60} height={68}/>
+                                        <div className="baner__home__slide--img">
+                                            <Image src={Book1} alt="" width={60} height={68}/>
+                                        </div>
                                         <div className="baner__home__side-text">
                                             <p className="baner__home__side--name">Broken Horn</p>
                                             <EyeFilled /><span className="baner__home__side--view">145,290 K</span>
@@ -55,7 +59,9 @@ const Baner= ()=>{
                                         <TrophyFilled />
                                     </div>
                                     <div className="baner__home__slide-item">
-                                        <Image src={Book1} alt="" width={60} height={68}/>
+                                        <div className="baner__home__slide--img">
+                                            <Image src={Book1} alt="" width={60} height={68}/>
+                                        </div>
                                         <div className="baner__home__side-text">
                                             <p className="baner__home__side--name">Broken Horn</p>
                                             <EyeFilled /><span className="baner__home__side--view">145,290 K</span>
@@ -63,7 +69,9 @@ const Baner= ()=>{
                                         <TrophyFilled />
                                     </div>
                                     <div className="baner__home__slide-item">
-                                        <Image src={Book1} alt="" width={60} height={68}/>
+                                        <div className="baner__home__slide--img">
+                                            <Image src={Book1} alt="" width={60} height={68}/>
+                                        </div>
                                         <div className="baner__home__side-text">
                                             <p className="baner__home__side--name">Broken Horn</p>
                                             <EyeFilled /><span className="baner__home__side--view">145,290 K</span>
@@ -92,7 +100,7 @@ const Baner= ()=>{
                     font-size: 42px;
                     color: #ffff;
                     -webkit-text-stroke: 2px #FF8F5C;
-                    magrin-bottom:12px
+                    margin-bottom:12px;
                 }
 
                 .baner__home__titlebook{
@@ -102,7 +110,7 @@ const Baner= ()=>{
                     color: #1F1E22;
                     max-width: 80%;
                     opacity:0.8;
-                    magrin-bottom:8px
+                    margin-bottom:8px;
                 }
 
                 .baner__home__infoauthor{
@@ -112,6 +120,10 @@ const Baner= ()=>{
                     color: #FF8F5C;
                 }
 
+                .baner__home__right{
+                    float: right;
+                    margin-right: 16px;
+                }
                 .baner__home__infoauthor > b{
                     color: #1F1E22;
                     font-weight: 700;
@@ -148,13 +160,13 @@ const Baner= ()=>{
                     justify-content: center;
                     align-items: center;
                     position:relative;
-                    margin-bottom:16px;
-                    
+                    margin-bottom:32px;
+                    min-width: 222px;
                 }
 
                 .baner__home__slide-item:first-child,
                 .baner__home__slide-item:last-child{
-                    margin-left: -92px;
+                    margin-left: -56px;
                 }
 
                 .baner__home__slide-item::before{
@@ -169,15 +181,22 @@ const Baner= ()=>{
                     top: 0;
                     left: 12px;
                 }
-                .baner__home__slide-item:first-child::before,
-                .baner__home__slide-item:last-child::before{
-                    left: 52px;
+
+                .baner__home__slide--img{
+                    position: absolute;
+                    top: 0;
+                    left: 16px;
                 }
 
                 .baner__home__side-text{
-                    margin-left: 16px;
+                    margin-left: 68px;
                     font-weight: 700;
                     font-size: 14px;
+                }
+
+                .baner__home__side-text:first-child,
+                .baner__home__side-text:last-child{
+                    margin:0;
                 }
 
                 .baner__home__side--name{
@@ -191,7 +210,37 @@ const Baner= ()=>{
                     color: #FCE76C;
                     margin: 0 4px;
                 }
+                
+                @media  (max-width: 992px) {
+                    .baner__home__namebook {
+                      font-size:36px;
+                    }
 
+                    .baner__home__titlebook{
+                        font-size:26px;
+                    }
+                    
+                    .baner__home__starbook{
+                        font-size:18px;
+                    }
+
+                    .baner__home__infoauthor{
+                        font-size:14px;
+                    }
+                  }
+
+                  @media  (max-width: 576px){
+                    .baner__home{
+                        overflow: hidden;
+                    }
+                    .baner__home__right{
+                        margin-left: 50%;
+                        transform: translateX(-50%);
+                        overflow: hidden;
+                        display: inline-block;
+                        float:unset;
+                    }
+                  }
             `}</style>
             <style jsx global>{`
             .baner__home__starbook{
@@ -212,6 +261,7 @@ const Baner= ()=>{
             .baner__home .baner__home__icon-slide .baner__home__slide-item:first-child .anticon-trophy{
                 color:#FAFF00;
             }
+
             `}</style>
         </div>
     )

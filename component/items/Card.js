@@ -1,12 +1,15 @@
 import { PushpinOutlined ,PushpinFilled} from "@ant-design/icons"
 import { Button } from "antd"
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Book1 from "../../assets/images/book-card-1.png"
 
 export default function Card(){
     
     const [check, setCheck]= useState(false)
+    const router= useRouter()
+    const hello='book1'
     // useEffect(()=>{
     //     const checkSave=()=>{
             
@@ -16,7 +19,7 @@ export default function Card(){
     
     return(
         <div>
-            <div className="item__card__book">
+            <div className="item__card__book" onClick={() => router.push(`/books/detail/${hello}`)}>
                 <div className="item__card__book--bg"></div>
                 <input type='checkbox'style={{display:'none'}}  id='check__save'onClick={()=>{setCheck(!check)}} />
                 <div className="item__card__book--content" >
@@ -44,6 +47,7 @@ export default function Card(){
                 border-radius: 5px;
                 position: relative;
                 margin:12px 6px;
+                cursor: pointer;
             }
             
             .item__card__book--bg{
@@ -160,6 +164,48 @@ export default function Card(){
                 scale: 0.7;
                 transform: translateX(72px) translateY(-102px);
             }
+
+            @media  (max-width: 480px){
+                .item__card__book{
+                    width: 135px;
+                    height: 198px;
+                    margin: 6px;
+                }
+
+                .item__card__book--bg::before{
+                    font-size: 32px;
+                    line-height: 72px;
+                }
+
+                .item__card__book--bg::after{
+                    width: 116px;
+                    height: 116px;
+                }
+
+                .item__card__book--img{
+                    margin-top: 22px;
+                    scale: 0.8;
+                }
+
+                .item__card__book:hover .item__card__book--bg::after{
+                    transform: translate(-16px, -116px);
+                }
+
+                .item__card__book:hover .item__card__book--img{
+                    scale: 0.6;
+                    transform: translate(54px, -82px);
+                }
+
+                .item__card__book:hover .item__card__book--text{
+                    inset: 58px 4px 0;
+                }
+
+                .item__card__book--text--intro{
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
             `}</style>
             <style jsx global>{`
                 .item__card__book .item__card__book--content .anticon-pushpin{
@@ -184,6 +230,18 @@ export default function Card(){
                     font-size: 12px;
                     text-transform: uppercase;
                     color: #FFFFFF;
+                }
+
+                @media  (max-width: 480px){
+
+                    .item__card__book .item__card__book--content .item__card__book--btn{
+                        top: 160px;
+                        width: 82px;
+                        height: 28px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
                 }
             `}</style>
         </div>

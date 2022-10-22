@@ -22,7 +22,20 @@ export default function TextHeading({children}){
                 font-size: 28px;
                 text-transform: uppercase;
                 color: #1F1E22;
-                margin:0
+                margin:0;
+                white-space: nowrap;
+            }
+
+            @media  (max-width: 992px) {
+                .text__heading__common-content{
+                    font-size:24px
+                }
+            }
+
+            @media  (max-width: 576px){
+                .text__heading__common-content{
+                    font-size:20px
+                }
             }
             `}</style>
 
@@ -41,6 +54,20 @@ export default function TextHeading({children}){
                 position: absolute;
                 right: -16px;
                 top: 31px;
+            }
+
+            @media  (max-width: 992px) {
+                .text__heading__common .anticon-double-right{
+                    font-size:20px;
+                    top: -12px;
+                    left: -16px;
+                }
+
+                .text__heading__common .anticon-double-left{
+                    font-size: 16px;
+                    right: -12px;
+                    top: 26px;
+                }
             }
             `}</style>
         </div>

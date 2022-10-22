@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Logo from '../../assets/images/logo.png'
 import LogoLogin from '../../assets/images/logo-login.png'
 import Link from 'next/link'
-import { Col, Row, Input, Button ,Modal} from 'antd'
+import { Col, Row, Input, Button ,Modal,Avatar} from 'antd'
 import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
+import { UserOutlined } from '@ant-design/icons'
 
 import {
     SearchOutlined,
@@ -76,8 +77,11 @@ const Navbar = () => {
                     <Col lg={11}  sm={7} xs={0}  className={styles.align_center}>
                         <Input placeholder='Search' prefix={<SearchOutlined />} className='input-search-header-home'/>
                     </Col>
-                    <Col lg={2}  sm={3} xs={6} >
+                    <Col lg={2}  sm={3} xs={0} >
                         <Button className='btn__header__login' onClick={showModal}>Login</Button>
+                    </Col>
+                    <Col lg={0}  sm={0} xs={6} style={{textAlign: 'right'}}>
+                        <Avatar size="large" icon={<UserOutlined />} />
                     </Col>
                 </Row>
                 <Modal wrapClassName='modal__login' maskStyle={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}} footer={null} width={534} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
