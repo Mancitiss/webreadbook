@@ -100,16 +100,16 @@ export default function BookInfo(){
                                         <div>
                                             <Row>
                                                 <Col span={6}>
-                                                    <Card></Card>
+                                                    <Card index={1}></Card>
                                                 </Col>
                                                 <Col span={6}>
-                                                    <Card></Card>
+                                                    <Card index={2}></Card>
                                                 </Col>
                                                 <Col span={6}>
-                                                    <Card></Card>
+                                                    <Card index={3}></Card>
                                                 </Col>
                                                 <Col span={6}>
-                                                    <Card></Card>
+                                                    <Card index={4}></Card>
                                                 </Col>
                                             </Row>
                                         </div>
