@@ -54,28 +54,28 @@ export default function Category(){
                             <div className="category__list__book">
                                 <Row>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={1}/>
                                     </Col>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={2}/>
                                     </Col>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={3}/>
                                     </Col>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={4}/>
                                     </Col>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={5}/>
                                     </Col>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={6}/>
                                     </Col>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={7}/>
                                     </Col>
                                     <Col lg={6}  sm={8} xs={12}>
-                                        <Card />
+                                        <Card index={8}/>
                                     </Col>
                                 </Row>
                             </div>

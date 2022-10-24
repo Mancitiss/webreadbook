@@ -5,25 +5,29 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Book1 from "../../assets/images/book-card-1.png"
 
-export default function Card(){
+export default function Card({index}){
     
     const [check, setCheck]= useState(false)
     const router= useRouter()
     const hello='book1'
-    // useEffect(()=>{
-    //     const checkSave=()=>{
-            
-    //         console.log(check);
-    //     }
-    // },[check])
+    const color= ['#FF8F5C','#8BD0FC','#FCE76C']
+    const [colorID, setColorID]= useState(0)
+    useEffect(()=>{
+        const bg= document.getElementById(`item__card__book--bg--${index}`)
+        const btn= document.getElementById(`item__card__book--btn--${index}`)
+        setColorID(Math.floor(Math.random() * color.length))
+        // console.log(colorID);
+        bg.style.setProperty('--colorCard',`${color[colorID]}`)
+        btn.style.setProperty('--colorCard',`${color[colorID]}`)
+    })
     
     return(
         <div>
-            <div className="item__card__book" onClick={() => router.push(`/books/detail/${hello}`)}>
-                <div className="item__card__book--bg"></div>
-                <input type='checkbox'style={{display:'none'}}  id='check__save'onClick={()=>{setCheck(!check)}} />
-                <div className="item__card__book--content" >
-                    <label htmlFor='check__save'>{check ?<PushpinOutlined /> :<PushpinFilled /> }</label>
+            <div className="item__card__book">
+                <div className="item__card__book--bg" id={`item__card__book--bg--${index}`} ></div>
+                <input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={()=>{setCheck(!check)}} />
+                <label htmlFor={`check__save-${index}`} >{!check ?<PushpinOutlined /> :<PushpinFilled /> }</label>
+                <div className="item__card__book--content"  onClick={() => router.push(`/books/detail/${hello}`)} >
                     <div className="item__card__book--img">
                         <Image src={Book1} alt="image book" width ={107} height={144}/>
                     </div>
@@ -33,7 +37,7 @@ export default function Card(){
                         <p className="item__card__book--text--intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate Lorem ipsum dolor sit amet </p>
                         <p className="item__card__book--text--author">By <b>Luck</b></p>
                     </div>
-                    <Button className="item__card__book--btn">Read now</Button>
+                    <Button className="item__card__book--btn" id={`item__card__book--btn--${index}`}>Read now</Button>
                 </div>
                 
             </div>
@@ -58,6 +62,7 @@ export default function Card(){
                 top:0;
                 overflow:hidden;
             }
+
             .item__card__book--bg::before{
                 content:'Read and Listen';
                 width:100%;
@@ -86,9 +91,9 @@ export default function Card(){
                 position:absolute;
                 left:50%;
                 top:50%;
-                background: #8BD0FC;
-                box-shadow: 0px 0px 4px 20px rgba(139, 208, 252, 0.2), 
-                0px 0px 4px 5px rgba(139, 208, 252, 0.5);
+                background: var(--colorCard);
+                box-shadow: 0px 0px 25px 5px var(--colorCard), 
+                0px 0px 100px 10px var(--colorCard);
                 border-radius: 50%;
                 transform: translate(-50%, -50%);
                 transition: 0.6s;
@@ -147,6 +152,7 @@ export default function Card(){
                 float: right;
             }
 
+            
             .item__card__book--text--chap > b{
                 color: #FF8F5C;
             }
@@ -205,10 +211,11 @@ export default function Card(){
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
+
             }
             `}</style>
             <style jsx global>{`
-                .item__card__book .item__card__book--content .anticon-pushpin{
+                .item__card__book .anticon-pushpin{
                     position:absolute;
                     font-size: 36px;
                     right: 8px;
@@ -218,10 +225,10 @@ export default function Card(){
                     cursor: pointer;
                 }
 
-                .item__card__book .item__card__book--content .item__card__book--btn{
+                .item__card__book .item__card__book--btn{
                     width: 92px;
                     height: 32px;
-                    background: #8BD0FC;
+                    background: var(--colorCard);
                     border-radius: 20px;
                     border: none;
                     position: absolute;
@@ -230,6 +237,17 @@ export default function Card(){
                     font-size: 12px;
                     text-transform: uppercase;
                     color: #FFFFFF;
+                    box-shadow: 0 4px 8px var(--colorCard);
+                    transition:0.5s;
+                }
+
+                .item__card__book .item__card__book--btn:hover,
+                .item__card__book .item__card__book--btn:active{
+                    background: var(--colorCard);
+                    color:#fff;
+                    box-shadow: 0 1px 4px var(--colorCard);
+                    scale: 1.2;
+
                 }
 
                 @media  (max-width: 480px){

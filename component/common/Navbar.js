@@ -6,6 +6,7 @@ import { Col, Row, Input, Button ,Modal,Avatar} from 'antd'
 import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons'
+import AvatarLogin from '../../assets/images/avatar1.jpg'
 
 import {
   SearchOutlined,
@@ -13,11 +14,12 @@ import {
   GoogleOutlined,
   FacebookFilled,
 } from '@ant-design/icons';
+import { useRouter } from 'next/router'
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
-
+  const [isLogin, setLogin]= useState(false)
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -55,6 +57,10 @@ const Navbar = () => {
       abouts.classList.add('active');
     }
   });
+  const checkLogin =()=>{
+    setLogin(true)
+  }
+  const router = useRouter()
   return (
     <div>
       <div className='navbar-home'>
@@ -63,7 +69,7 @@ const Navbar = () => {
             <MenuOutlined style={{ fontSize: '32px' }} />
           </Col>
           <Col lg={2} sm={2} xs={12}>
-            <div className='logo-web'>
+            <div className='logo-web' onClick={()=>{router.push('/')}}>
               <Image
                 src={Logo}
                 alt='Logo trang web doc truyen'
@@ -105,12 +111,17 @@ const Navbar = () => {
             />
           </Col>
           <Col lg={2} sm={3} xs={6}>
-            <Button
+            {
+              !isLogin ? <Button
               className='btn__header__login'
               onClick={handleShowLoginModal}
             >
               Login
-            </Button>
+            </Button>: <div onClick={()=>{router.push('/profile')}} className='navbar__home__avatar'>
+              <Image src={AvatarLogin}  />
+            </div>
+            
+            }
           </Col>
         </Row>
         <Modal
@@ -193,7 +204,7 @@ const Navbar = () => {
               </div>
             )}
 
-            <Button className='btn__modal__login'>
+            <Button className='btn__modal__login' onClick={()=>{checkLogin(); handleOk()}}>
               {isModalLoginOpen ? 'Login' : 'Register'}
             </Button>
           </div>
@@ -211,6 +222,7 @@ const Navbar = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          cursor: pointer;
         }
 
         .modal__login .header__modal__login {
@@ -226,6 +238,21 @@ const Navbar = () => {
           padding: 0 12px;
           display: inline-block;
           color: #ff8f5c;
+        }
+
+        .navbar__home__avatar{
+          height: 52px;
+          width: 52px;
+          border-radius: 50%;
+          overflow: hidden;
+          float: right;
+          box-shadow: 1px 2px 10px #ccc;
+          cursor: pointer;
+        }
+
+        .navbar__home__avatar:hover{
+          scale: 1.2;
+          box-shadow: 6px 6px 10px #ccc;
         }
       `}</style>
       <style jsx global>{`

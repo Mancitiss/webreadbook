@@ -42,14 +42,14 @@ export default function Home() {
             <LeftCircleFilled className='btn__slide btn__back' />
             <RightCircleFilled className='btn__slide btn__next' />
           </div>
-          <div className='home__silde__container'>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+          <div className='home__silde__container' >
+            <Card index={1} />
+            <Card index={2} />
+            <Card index={3} />
+            <Card index={4} />
+            <Card index={5} />
+            <Card index={6} />
+            <Card index={7} />
           </div>
         </div>
         <div className='home__contaner__content'>
@@ -84,19 +84,19 @@ export default function Home() {
                 </Row>
                 <Row>
                   <Col lg={6}  sm={8} xs={12}>
-                    <Card></Card>
+                    <Card index={8}></Card>
                   </Col>
                   <Col lg={6}  sm={8} xs={12}>
-                    <Card></Card>
+                    <Card index={9}></Card>
                   </Col>
                   <Col lg={6}  sm={8} xs={12}>
-                    <Card></Card>
+                    <Card index={10}></Card>
                   </Col>
                   <Col lg={6}  sm={8} xs={12}>
-                    <Card></Card>
+                    <Card index={11}></Card>
                   </Col>
                   <Col lg={6}  sm={8} xs={12}>
-                    <Card></Card>
+                    <Card index={12}></Card>
                   </Col>
                 </Row>
               </div>

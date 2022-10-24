@@ -8,6 +8,7 @@ import Card from '../../component/items/Card';
 
 import bannerUrl from '../../assets/images/background-profile-user.png';
 import Avatar from '../../assets/images/avatar1.jpg';
+import TabBook from '../../component/book/TabBook';
 
 export default function Profile() {
   return (
@@ -107,15 +108,15 @@ export default function Profile() {
                   Reading
                 </TextHeading>
                 <div className='card-list'>
-                  <Card />
-                  <Card />
-                  <Card />
+                  <Card index={1}/>
+                  <Card index={2}/>
+                  <Card index={3}/>
                 </div>
               </Col>
             </Row>
           </div>
           <div className='profile-tabs'>
-            <Tabs defaultActiveKey='1' />
+            <TabBook></TabBook>
           </div>
         </div>
       </Main>
@@ -243,6 +244,11 @@ export default function Profile() {
         .write-book-btn,
         .setting-btn {
           height: 42px;
+        }
+
+        .profile-tabs{
+          width: 90%;
+          margin: 24px auto;
         }
       `}</style>
 
