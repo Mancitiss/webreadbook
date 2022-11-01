@@ -11,6 +11,7 @@ import Avatar from '../../assets/images/avatar1.jpg';
 import TabBook from '../../component/book/TabBook';
 
 export default function Profile() {
+
   return (
     <div>
       <Main>
@@ -120,7 +121,6 @@ export default function Profile() {
           </div>
         </div>
       </Main>
-
       <style jsx>{`
         .user-section {
           padding: 16px 36px;
@@ -270,6 +270,7 @@ export default function Profile() {
           border-radius: 50%;
         }
       `}</style>
+      
     </div>
   );
 }
