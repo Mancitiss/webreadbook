@@ -27,9 +27,14 @@ export default function Chap(){
                     font-size: 16px;
                     position:relative;
                     margin:6px;
+                    transition: 0.4s;
                     cursor: pointer;
                 }
 
+                .item__chap:hover{
+                    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25);
+                    scale: 1.02;
+                }
                 .item__chap__number{
                     margin: 0 24px 0 16px;
                     color: #FF8F5C;
