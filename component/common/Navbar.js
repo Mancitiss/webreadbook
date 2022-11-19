@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import getId from '../API/Profile';
 import Logo from '../../assets/images/logo.png'
 import LogoLogin from '../../assets/images/logo-login.png'
 import Link from 'next/link'
@@ -7,7 +8,7 @@ import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons'
 import AvatarLogin from '../../assets/images/avatar1.jpg'
-
+import cookies from 'react-cookies'
 import {
   SearchOutlined,
   MenuOutlined,
@@ -15,6 +16,8 @@ import {
   FacebookFilled,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router'
+import { ApiError } from 'next/dist/server/api-utils'
+import axios from 'axios'
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,9 +60,68 @@ const Navbar = () => {
       abouts.classList.add('active');
     }
   });
-  const checkLogin =()=>{
-    setLogin(true)
+
+  const checkLogin = async()=>{
+    let sttCode = 0
+    let sttCode_re = 0
+    let user = document.getElementById('username').value
+    let pass = document.getElementById('password').value
+    
+    if(!isModalLoginOpen){
+      let re_password = document.getElementById('re_password').value
+      if(re_password != pass){
+        alert("Password does not match")
+        return
+      }
+      var FormData = require('form-data');
+      var data = new FormData();
+      data.append('username', user);
+      data.append('password', pass);
+      let res = await axios.post("http://127.0.0.1:8000/api/users/", data)
+      .then(function (response) {
+        //console.log(JSON.stringify(response.data)),
+        alert("Sign Up Success"),
+        handleShowLoginModal();
+
+      })
+      .catch(
+          error => {
+            console.log(error),
+            alert("Account already exists")
+            }
+        );
+    }
+    else {
+      let res = await axios.post("http://127.0.0.1:8000/o/token/", {
+        client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
+        client_secret: 'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
+        username: user,
+        password: pass,
+        grant_type: 'password'
+      })
+      .then(
+          response => {
+            cookies.save("access_token", response.data.access_token)
+            sttCode = response.status == 200
+          }
+        )
+      .catch(
+          error => console.log(error)
+        );
+      if(sttCode){
+        setLogin(true)
+        handleOk()
+        getId()
+  
+      }
+      else {
+        alert("We don't recognize that username or password. You can try again or use another login option.")
+      }
+    }
+
   }
+  // const [username, setUsername] = useState(null)
+  // const [password, setPassword] = useState(null)
   const router = useRouter()
   return (
     <div>
@@ -175,8 +237,14 @@ const Navbar = () => {
               </Col>
             </Row>
             <div className='contaner__modal__login-input'>
-              <label className='contaner__modal__login-input-text'>Email</label>
-              <Input className='input-login' placeholder='Your email' />
+              <label className='contaner__modal__login-input-text'>Username</label>
+              <Input 
+                id="username"
+                className='input-login' 
+                placeholder='Username' 
+                // field={username} 
+                // change={event => setUsername(event.target.value)}
+                />
             </div>
             <div className='contaner__modal__login-input'>
               <div className='contaner__modal__login-forgot'>
@@ -186,8 +254,11 @@ const Navbar = () => {
                 {isModalLoginOpen && <span>Forgot password ?</span>}
               </div>
               <Input.Password
+                id="password"
                 className='input-login'
                 placeholder='Your password'
+                // field={password} 
+                // change={event => setPassword(event.target.value)
               />
             </div>
             {!isModalLoginOpen && (
@@ -198,13 +269,14 @@ const Navbar = () => {
                   </label>
                 </div>
                 <Input.Password
+                  id="re_password"
                   className='input-login'
                   placeholder='Confirm password'
                 />
               </div>
             )}
 
-            <Button className='btn__modal__login' onClick={()=>{checkLogin(); handleOk()}}>
+            <Button className='btn__modal__login'   onClick={()=>{checkLogin()}}>
               {isModalLoginOpen ? 'Login' : 'Register'}
             </Button>
           </div>
