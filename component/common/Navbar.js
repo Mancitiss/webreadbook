@@ -22,7 +22,9 @@ import axios from 'axios'
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
-  const [isLogin, setLogin]= useState(false)
+
+  const [isLogin, setLogin]= useState(true)
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -44,6 +46,13 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    let id_user = cookies.load("Id")
+    if(id_user == null || id_user == "false"){    
+      setLogin(false)
+    }
+    else{
+      setLogin(true)
+    }
     const home = document.getElementById('home');
     const category = document.getElementById('category');
     const abouts = document.getElementById('abouts');
@@ -112,6 +121,7 @@ const Navbar = () => {
         setLogin(true)
         handleOk()
         getId()
+        location.reload();
   
       }
       else {

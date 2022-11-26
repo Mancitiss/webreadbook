@@ -9,8 +9,13 @@ import Card from '../../component/items/Card';
 import bannerUrl from '../../assets/images/background-profile-user.png';
 import Avatar from '../../assets/images/avatar1.jpg';
 import TabBook from '../../component/book/TabBook';
-
+import cookies from 'react-cookies'
 export default function Profile() {
+  const logOut = async()=>{
+    cookies.save("Id", "false")
+    cookies.save("access_token", "")
+    window.location="/";
+  }
 
   return (
     <div>
@@ -101,6 +106,10 @@ export default function Profile() {
                   </div>
                   <div className='edit-details-btn'>
                     <Button className='btn'>Edit Details</Button>
+                  </div>  
+                  <br></br>
+                  <div className='item__card__book--btn'>
+                    <Button className='btn' onClick={()=>{logOut()}} >Logout</Button>
                   </div>
                 </div>
               </Col>
