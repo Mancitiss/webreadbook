@@ -8,13 +8,14 @@ import { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons'
 import AvatarLogin from '../../assets/images/avatar1.jpg'
 import axios from "axios";
-
+const { Search } = Input;
 
 import {
   SearchOutlined,
   MenuOutlined,
   GoogleOutlined,
   FacebookFilled,
+  HomeFilled
 } from '@ant-design/icons';
 import { useRouter } from 'next/router'
 
@@ -73,13 +74,64 @@ const Navbar = () => {
   },[])
 
   // console.log(users);
+  const [isModalOpenMobile, setIsModalOpenMobile] = useState(false);
+  const showModalMoblie = async() => {
+    await setIsModalOpenMobile(true);
+    const homeMobile = await document.getElementById('home__mobile');
+    // console.log(homeMobile);
+    if (window.location.pathname === '/') {
+      // console.log("true");
+      homeMobile.classList.add('active__mobile');
+    }
+    if (window.location.pathname === '/category') {
+      // console.log("true");
+    }
+    if (window.location.pathname === '/abouts') {
+      // console.log("true");
+    }
+  };
+  const handleOkMobile = () => {
+    setIsModalOpenMobile(false);
+  };
+  const handleCancelMobile = () => {
+    setIsModalOpenMobile(false);
+  };
+
+  const onSearch = (value) => console.log(value);
+
   return (
     <div>
       <div className='navbar-home'>
         <Row justify='center' align='middle'>
           <Col lg={0} sm={0} xs={6}>
-            <MenuOutlined style={{ fontSize: '32px' }} />
+            <MenuOutlined onClick={showModalMoblie} style={{ fontSize: '32px' }} />
           </Col>
+          <Modal className='modal__menu__mobile' open={isModalOpenMobile} onOk={handleOkMobile} onCancel={handleCancelMobile}>
+            <div className='logo__web' onClick={()=>{router.push('/')}}>
+              <Image
+                src={Logo}
+                alt='Logo trang web doc truyen'
+                height={72}
+                width={72}
+              />
+            </div>
+            <div className='modal__menu__mobile__content'>
+              <Search
+                placeholder="Search..."
+                onSearch={onSearch}
+              />
+              <div className='menu__moblie'>
+                <div id='home__mobile' className='menu__moblie--btn'>
+                  <HomeFilled />
+                  <Link href='/'>
+                    <a  className='navbar__home__link'>
+                      Home
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Modal>
           <Col lg={2} sm={2} xs={12}>
             <div className='logo-web' onClick={()=>{router.push('/')}}>
               <Image
@@ -471,6 +523,83 @@ const Navbar = () => {
         .modal__login .contaner__modal__login .btn__contaner__loginGG:hover {
           border: none;
           box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal__menu__mobile{
+          height: 100vh;
+          width: 63% !important;
+          position: fixed;
+          top: 0;
+          left: 0;
+          margin: 0;
+          padding-bottom: 0;
+        }
+
+        .modal__menu__mobile .ant-modal-content{
+          height: 100%;
+        }
+
+        .modal__menu__mobile .ant-modal-footer{
+          display:none;
+        }
+
+        .modal__menu__mobile .ant-modal-close-x{
+          color: #F19DA1;
+          font-size:20px
+        }
+
+        .modal__menu__mobile .logo__web{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .modal__menu__mobile .modal__menu__mobile__content{
+          margin: 30px auto;
+        }
+
+        .modal__menu__mobile .ant-input{
+          background: #FFF0E9;
+          border-radius: 10px 0 0 10px;
+          height: 42px;
+          border: none;
+          color: rgba(255, 143, 92, 0.7);
+          font-size: 14px;
+        }
+        .modal__menu__mobile .ant-input-search .ant-input:hover, 
+        .modal__menu__mobile .ant-input-search .ant-input:focus{
+          border:none;
+        }
+        .modal__menu__mobile .ant-input-search-button{
+          background: #FFF0E9;
+          border-radius: 0 10px 10px 0 !important;
+          height: 42px;
+          border: none;
+          color: rgba(255,143,92,.7) !important;
+        }
+
+        .modal__menu__mobile .menu__moblie{
+          margin:20px auto;
+          font-size: 16px;
+          font-weight: bold;
+          color: #FF8F5C;
+        }
+
+        .modal__menu__mobile .menu__moblie .menu__moblie--btn{
+          background: #FFFFFF;
+          border-radius: 5px;
+          height: 42px;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          padding: 12px;
+        }
+
+
+        .active__mobile{
+          color:#fff;
+          background: #FF8F5C !important;
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
         }
       `}</style>
     </div>
