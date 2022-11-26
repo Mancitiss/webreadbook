@@ -1,5 +1,6 @@
 import Main from "../../layouts/Main";
 import SilderBook from "../../component/category/SilderBook";
+import SilderOneBook from "../../component/category/SilderOneBook";
 import { Row, Col, Carousel, Layout } from "antd";
 import TextHeading from "../../component/common/TextHeading";
 import File from "../../component/items/File";
@@ -13,7 +14,7 @@ export default function Category(){
             <Main>
                 <div className="category__silder">
                     <Row>
-                        <Col lg={18}  sm={16} xs={24}>
+                        <Col lg={18}  sm={24} xs={0}>
                             <Carousel autoplay dots={{className:'dot__silder__category'}}>
                                 <div>
                                     <SilderBook />
@@ -81,32 +82,101 @@ export default function Category(){
                             </div>
                             
                         </Col>
-                        <Col lg={6}  sm={8} xs={24}>
+                        <Col lg={0}  sm={0} xs={24}>
+                            <Carousel autoplay dots={{className:'dot__silder__category'}}>
+                                <div>
+                                    <SilderOneBook />
+                                </div>
+                                <div>
+                                    <SilderOneBook />
+                                </div>
+                                <div>
+                                    <SilderOneBook />
+                                </div>
+                                
+                            </Carousel>
+                            <div>
+                                <div className="category__silder__title">
+                                    <TextHeading >Category</TextHeading>
+                                </div>
+                                <div className='category__contaner__content--listfile'>
+                                    <File></File>
+                                    <File></File>
+                                    <File></File>
+                                    <File></File>
+                                    <File></File>
+                                </div>
+                                <Row align='middle'>
+                                    <Col lg={4}  sm={6} xs={12}>
+                                        <div className='home__next__back--slide slide__small'>
+                                        <LeftCircleFilled className='btn__slide btn__back' />
+                                        <RightCircleFilled className='btn__slide btn__next' />
+                                        </div>
+                                    </Col>
+                                    <Col lg={14}  sm={12} xs={0}>
+                                        <div className='silde__dot__bottom'>
+
+                                        </div>
+                                    </Col>
+                                   
+                                </Row>
+                            </div>
+                            <div className="category__list__book">
+                                <Row>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={1}/>
+                                    </Col>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={2}/>
+                                    </Col>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={3}/>
+                                    </Col>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={4}/>
+                                    </Col>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={5}/>
+                                    </Col>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={6}/>
+                                    </Col>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={7}/>
+                                    </Col>
+                                    <Col lg={6}  sm={8} xs={12}>
+                                        <Card index={8}/>
+                                    </Col>
+                                </Row>
+                            </div>
+                            
+                        </Col>
+                        <Col lg={6}  sm={24} xs={24}>
                             <div className="category__navbar__review">
                                 <div className="category__navbar__review--title">
                                     <ReadOutlined />
                                     <span>Book review</span>
                                 </div>
                                 <Row>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
                                 </Row>

@@ -7,6 +7,8 @@ import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons'
 import AvatarLogin from '../../assets/images/avatar1.jpg'
+import axios from "axios";
+
 
 import {
   SearchOutlined,
@@ -61,6 +63,16 @@ const Navbar = () => {
     setLogin(true)
   }
   const router = useRouter()
+  const [users, setUsers]= useState([])
+  useEffect(()=>{
+
+    axios
+    .get('http://localhost:8000/users/')
+    .then((res) =>{setUsers(res.data)})
+    .catch((err) => console.log(err));
+  },[])
+
+  // console.log(users);
   return (
     <div>
       <div className='navbar-home'>

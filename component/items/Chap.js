@@ -51,6 +51,27 @@ export default function Chap(){
                     font-size: 22px;
                     color: rgba(255, 143, 92, 0.7);
                 }
+                @media  (max-width: 992px)and (min-width:577px) {
+                    
+                }
+                
+                @media  (max-width: 576px){
+                    .item__chap{
+                        width:98%;
+                        font-size: 12px;
+                        margin: 4px;
+                    }
+
+                    .item__chap__number{
+                        margin: 0 4px 0 8px;
+                    }
+
+                    .item__chap__isread{
+                        font-size: 18px;
+                        right: 6px;
+                    }
+                   
+                }
             `}</style>
         </div>
     )

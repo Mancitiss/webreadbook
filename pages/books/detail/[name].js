@@ -22,64 +22,64 @@ export default function BookInfo(){
                     </Breadcrumb>
                     <div className="book__detail__content">
                         <Row>
-                            <Col span={18}>
+                            <Col  lg={18}  sm={24} xs={24}>
                                 <div>
                                     <BookDetail></BookDetail>
                                 </div>
                                 <div className="book__detail__content__listchap">
                                     <Row>
-                                        <Col span={24}>
+                                        <Col lg={24}  sm={24} xs={24}>
                                             <div className="book__detail__content__listchap--title">
                                                 <TextHeading>All chap</TextHeading>
                                             </div>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col  lg={12}  sm={12} xs={12}>
                                             <Chap></Chap>
                                         </Col>
                                     </Row>
                                 </div>
                                 <div className="book__detail__content__comment">
                                     <Row>
-                                        <Col span={24}>
+                                        <Col lg={24}  sm={24} xs={24}>
                                             <div className="book__detail__content__listchap--title">
                                                 <TextHeading>Comment</TextHeading>
                                             </div>
@@ -92,23 +92,23 @@ export default function BookInfo(){
                                 </div>
                                 <div className="book__detail__content__similar">
                                 <Row>
-                                        <Col span={24}>
+                                        <Col lg={24}  sm={24} xs={24}>
                                             <div className="book__detail__content__listchap--title">
                                                 <TextHeading>Similar books</TextHeading>
                                             </div>
                                         </Col>
                                         <div>
                                             <Row>
-                                                <Col span={6}>
+                                                <Col lg={6}  sm={8} xs={12}>
                                                     <Card index={1}></Card>
                                                 </Col>
-                                                <Col span={6}>
+                                                <Col lg={6}  sm={8} xs={12}>
                                                     <Card index={2}></Card>
                                                 </Col>
-                                                <Col span={6}>
+                                                <Col lg={6}  sm={8} xs={12}>
                                                     <Card index={3}></Card>
                                                 </Col>
-                                                <Col span={6}>
+                                                <Col lg={6}  sm={8} xs={12}>
                                                     <Card index={4}></Card>
                                                 </Col>
                                             </Row>
@@ -117,31 +117,31 @@ export default function BookInfo(){
                                     </Row>
                                 </div>
                             </Col>
-                            <Col span={6}>
+                            <Col  lg={6}  sm={24} xs={24}>
                                 <div className="book__detail__navbar__review--title">
                                     <ReadOutlined />
                                     <span>Book review</span>
                                 </div>
                                 <Row>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
-                                    <Col span={24}>
+                                    <Col lg={24}  sm={12} xs={24}>
                                         <ItemReview></ItemReview>
                                     </Col>
                                 </Row>
@@ -176,6 +176,17 @@ export default function BookInfo(){
 
                 .book__detail__content__similar{
                     margin:24px 0;
+                }
+
+                @media  (max-width: 992px)and (min-width:577px) {
+                    
+                }
+                
+                @media  (max-width: 576px){
+                    .book__detail{
+                        margin:92px 12px 12px
+                    }
+                   
                 }
             `}</style>
 

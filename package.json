@@ -14,11 +14,13 @@
     "@ant-design/icons": "^4.7.0",
     "antd": "^4.23.2",
     "axios": "^0.21.1",
+    "fs": "0.0.1-security",
     "moment": "^2.29.4",
     "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sass": "^1.54.9"
+    "sass": "^1.54.9",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "eslint": "8.23.1",
