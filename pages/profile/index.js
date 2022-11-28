@@ -1,7 +1,7 @@
 import { Row, Col, Button, Tabs } from 'antd';
 import { EditOutlined, SettingOutlined, CameraFilled } from '@ant-design/icons';
 import Image from 'next/image';
-
+import Link from 'next/link'
 import Main from '../../layouts/Main';
 import TextHeading from '../../component/common/TextHeading';
 import Card from '../../component/items/Card';
@@ -12,9 +12,10 @@ import TabBook from '../../component/book/TabBook';
 import cookies from 'react-cookies'
 export default function Profile() {
   const logOut = async()=>{
-    cookies.save("Id", "false")
     cookies.save("access_token", "")
-    window.location="/";
+    cookies.remove("access_token")
+    localStorage.clear();
+    // window.location="/";
   }
 
   return (
@@ -109,7 +110,9 @@ export default function Profile() {
                   </div>  
                   <br></br>
                   <div className='item__card__book--btn'>
-                    <Button className='btn' onClick={()=>{logOut()}} >Logout</Button>
+                  <Link href='/'>
+                  <Button className='btn' onClick={()=>{logOut()}} >Logout</Button>
+                  </Link>                    
                   </div>
                 </div>
               </Col>
