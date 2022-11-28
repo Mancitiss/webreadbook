@@ -1,4 +1,4 @@
-import { Col, Row, Rate } from "antd"
+import { Col, Row, Rate, Button } from "antd"
 import Image from 'next/image'
 import NvBook1 from '../../assets/images/nv-book-1.png'
 import NvBook2 from '../../assets/images/nv-book-2.png'
@@ -88,24 +88,29 @@ const Baner= ()=>{
         <div >
             <div className="baner__home">
                 <Row>
-                    <Col lg={12}  sm={14} xs={0} >
+                    <Col lg={12}  sm={14} xs={{order:2, span:24}} >
                         <div className="baner__home__text" >
                             <h1 className="baner__home__namebook">{nameBook}</h1>
                             <h3 className="baner__home__titlebook">{detailBook}</h3>
                             <Row>
-                                <Col span={10}>
+                                <Col lg={10}  sm={10} xs={12}>
                                     <Rate className="baner__home__starbook" disabled allowHalf defaultValue={4.5} />
                                 </Col>
-                                <Col span={4}>
+                                <Col lg={4}  sm={5} xs={6}>
                                     <p className="baner__home__infoauthor"><b>By </b>{onwerBook}</p>
                                 </Col>
-                                <Col span={4}>
+                                <Col lg={4}  sm={5} xs={6}>
                                     <p className="baner__home__infoauthor"><b>In </b>{timeBook}</p>
                                 </Col>
                             </Row>
+                            <div className="baner__home__list--btn">
+                                <button className="baner__home--btn">Read Now</button>
+                                <button className="baner__home--btn baner__home--btn--right">See More</button>
+                            </div>
                         </div>
                     </Col>
-                    <Col lg={12}  sm={10} xs={24} >
+                    
+                    <Col lg={12}  sm={10} xs={{order:1, span:24}} >
                         <Row>
                             <Col lg={16}  sm={24} xs={24} justify='center'>
                                 <div className="baner__home__right" >
@@ -169,6 +174,7 @@ const Baner= ()=>{
                             </Col>
                         </Row>
                     </Col>
+                    
                 </Row>
             </div>
             <style jsx >{`
@@ -337,6 +343,38 @@ const Baner= ()=>{
                     box-shadow:none;
                 }
 
+                .baner__home__list--btn{
+                    display:flex;
+                    margin: 20px 12px;
+                }
+
+                .baner__home--btn{
+                    height:48px;
+                    width:130px;
+                    border-radius: 20px;
+                    background: #8BD0FC;
+                    color:#fff;
+                    font-weight: 700;
+                    font-size: 16px;
+                    border: none;
+                    margin-right:24px;
+                    cursor: pointer;
+                    box-shadow: 3px 5px 10px #ccc;
+                    transition: 0.3s;
+                }
+                
+                .baner__home--btn:hover{
+                    box-shadow: 1px 3px 5px #ccc;
+                    scale:1.05;
+                    transition: 0.5s;
+                    transform: translate(1px, -2px);
+                }
+
+                .baner__home--btn--right{
+                    background: #fff;
+                    color: #8bd0fc;
+                    border: 1px solid #8BD0FC;
+                }
                 .input__top__item:checked +label .baner__item--active::after{
                     height: 110px;
                     width: 110px;
@@ -348,21 +386,9 @@ const Baner= ()=>{
                     animation: rotate 12s infinite;
                 }
                 
-                @keyframes rotate {
-                    0%,100% {
-                        scale:0.9;
-                      rotate: 0deg;
-                    }
-                    50% {
-                        scale:1.1;
-                      rotate: 180deg;
-                }
                 
-                @media  (max-width: 992px) {
-                    .baner__home__namebook {
-                      font-size:36px;
-                    }
-
+                @media  (max-width: 992px)and (min-width:577px) {
+                    
                     .baner__home__titlebook{
                         font-size:26px;
                     }
@@ -370,16 +396,43 @@ const Baner= ()=>{
                     .baner__home__starbook{
                         font-size:18px;
                     }
-
+    
                     .baner__home__infoauthor{
                         font-size:14px;
                     }
-                  }
+                    
+                    .baner__home__text{
+                        margin: 16px 0 12px 6px;
+                    }
+    
+                    .baner__home__namebook{
+                        font-size:32px;
+                    }
+    
+                    .baner__home__titlebook{
+                        font-size:24px;
+                    }
+                    
+                    .baner__home--btn{
+                        height:42px;
+                        width:110px;
+                    }
+                    .baner__home__bg-slide{
+                        width:280px;
+                        height:280px
+                    }
 
+                    .baner__home__img-slide{
+                        left:0px;
+                        top:0px;
+                    }
+                  }
+    
                   @media  (max-width: 576px){
                     .baner__home{
-                        overflow: hidden;
+                        max-height:unset;
                     }
+
                     .baner__home__right{
                         margin-left: 50%;
                         transform: translateX(-50%);
@@ -387,10 +440,47 @@ const Baner= ()=>{
                         display: inline-block;
                         float:unset;
                     }
+
+                    .baner__home__text{
+                        margin: 16px 0 12px 6px;
+                    }
+    
+                    .baner__home__namebook{
+                        font-size:26px;
+                    }
+    
+                    .baner__home__titlebook{
+                        font-size: 18px;
+                        line-height: 24px;
+                    }
+                    
+                    .baner__home--btn{
+                        height:42px;
+                        width:110px;
+                    }
+
+                    .baner__home__img-slide{
+                        left: 16px;
+                        top: 0;
+                    }
+
+                    .baner__home .baner__home__starbook{
+                        font-size:16px
+                    }
                   }
+
+                @keyframes rotate {
+                    0%,100% {
+                        scale:0.9;
+                        rotate: 0deg;
+                    }
+                    50% {
+                        scale:1.1;
+                        rotate: 180deg;
+                }
             `}</style>
             <style jsx global>{`
-            .baner__home__starbook{
+            .baner__home .baner__home__starbook{
                 font-size:24px;
             }
 
@@ -408,6 +498,7 @@ const Baner= ()=>{
             .baner__home .baner__home__icon-slide .baner__home__slide-item:first-child .anticon-trophy{
                 color:#FAFF00;
             }
+            
 
             .baner__home .icon__choose--item{
                 position: absolute;
@@ -421,6 +512,12 @@ const Baner= ()=>{
             .baner__home .input__top__item:checked +label .icon__choose--item{
                 display: block;
             }
+
+            @media  (max-width: 576px){
+                .baner__home .baner__home__starbook{
+                    font-size:18px
+                }
+              }
             `}</style>
         </div>
     )
