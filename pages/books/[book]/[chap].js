@@ -1,5 +1,5 @@
 import Main from "../../../layouts/Main";
-import { Breadcrumb, Col, Row } from 'antd';
+import { Breadcrumb, Button, Col, Row } from 'antd';
 import { ReadOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import TextHeading from "../../../component/common/TextHeading";
@@ -15,9 +15,12 @@ export default function ReadBook(){
     const hello='book1'
     const router= useRouter()
     const [check, setCheck]= useState(false)
+   
     useEffect(()=>{
         
         const icon = document.getElementsByClassName('icon__light__darkmode')
+        const iconVocie= document.getElementsByClassName('icon__play__voice')
+        const iconSettingVocie= document.getElementsByClassName('icon__setting__voice')
         const bg = document.getElementsByClassName('layout__main')
         const header = document.getElementsByClassName('ant-layout-header')
         const footer = document.getElementsByClassName('ant-layout-footer')
@@ -30,6 +33,8 @@ export default function ReadBook(){
         const textBook= document.getElementsByClassName("content__book__chap--content")
         
         icon[0].classList.toggle('icon__dark')
+        iconVocie[0].classList.toggle('icon__dark')
+        iconSettingVocie[0].classList.toggle('icon__dark')
         bg[0].classList.toggle('bg__dark')
         header[0].classList.toggle('bg__dark')
         footer[0].classList.toggle('bg__dark')
@@ -70,19 +75,19 @@ export default function ReadBook(){
                         <TextHeading>Love story Vault</TextHeading>
                         <div className="readbook__content__main--title">
                             <Row justify="center" align='middle' >
-                                <Col span={5}></Col>
-                                <Col span={4} >
+                                <Col lg={5}  sm={2} xs={0}></Col>
+                                <Col lg={4}  sm={6} xs={7} >
                                     <BackwardOutlined className="icon__nextback" />
                                     <span className="btn__next__back--chap">Back</span>
                                 </Col>
-                                <Col span={6}>
+                                <Col lg={6}  sm={8} xs={10}>
                                     <p className="readbook__content__main--title--chap">Chap 132: Where the love</p>
                                 </Col>
-                                <Col span={4} >
+                                <Col lg={4}  sm={6} xs={7} >
                                     <span className="btn__next__back--chap">Next</span>
                                     <ForwardOutlined  className="icon__nextback"/>
                                 </Col>
-                                <Col span={5}></Col>
+                                <Col lg={5}  sm={2} xs={0}></Col>
                             </Row>
                         </div>
                             <input type='checkbox' id='change__mode' className="change__mode__book" onClick={()=>{setCheck(!check)}} style={{display:'none'}} />
@@ -93,8 +98,9 @@ export default function ReadBook(){
                                         { check ? <Image src={IconDark} />: <Image src={IconLight} />}
                                         </label>
                                 </div>
+                                
                             </div>
-                            <Book></Book>
+                            <Book check={check}></Book>
                         </div>
 
                     </div>
@@ -111,6 +117,7 @@ export default function ReadBook(){
                     font-weight: 600;
                     font-size: 20px;
                     color: rgba(31, 30, 34, 0.8);
+                    margin: 12px 0;
                 }
 
                 .readbook__content__main--title--chap{
@@ -130,7 +137,7 @@ export default function ReadBook(){
                     align-items: center;
                     position: fixed;
                     left: 12px;
-                    bottom: 140px;
+                    top: 180px;
                     cursor: pointer;
                     z-index:100;
 
@@ -145,6 +152,30 @@ export default function ReadBook(){
                     display:none;
                 }
                 
+                @media  (max-width: 992px)and (min-width:577px) {
+                    .readbook__content{
+                        margin:92px 8px 16px;
+                    }
+
+                    .readbook__content__main--title--chap{
+                        font-size:20px;
+                    }
+                }
+
+                @media  (max-width: 576px){
+                    .readbook__content{
+                        margin:92px 8px 16px;
+                    }
+
+                    .readbook__content__main--title--chap{
+                        font-size:18px;
+                    }
+
+                    .icon__light__darkmode{
+                        top: unset;
+                        bottom: 42px;
+                    }
+                }
                 
                 `}</style>
 

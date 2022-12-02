@@ -30,7 +30,7 @@ export default function ItemReview(){
                     background: #FFFFFF;
                     box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
                     border-radius: 10px;
-                    width: 100%;
+                    width: 90%;
                     margin: 0 4px 6px;
                     padding:4px ;
                     height: 110px;

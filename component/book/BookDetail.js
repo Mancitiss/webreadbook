@@ -8,7 +8,7 @@ export default function BookDetail(){
         <div>
             <div className="component__detail">
                 <Row>
-                    <Col span={8}>
+                    <Col  lg={8}  sm={12} xs={24}>
                         <div className="component__detail__img">
                             <Image src={Book1} layout='fixed' alt='hinh bia sach' />
                         </div>
@@ -27,7 +27,7 @@ export default function BookDetail(){
                             </Row>
                         </div>
                     </Col>
-                    <Col span={16}>
+                    <Col  lg={16}  sm={12} xs={24}>
                         <div className="component__detail__information">
                             <h1 className="component__detail__information--name">Love story Vault</h1>
                             <Rate className="component__detail__information--rate" allowHalf defaultValue={4.5} disabled />
@@ -122,7 +122,7 @@ export default function BookDetail(){
                 }
 
                 .component__detail__new--listchap{
-                    width:90%;
+                    width:95%;
                 }
             `}</style>
 

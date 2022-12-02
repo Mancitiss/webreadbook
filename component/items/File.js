@@ -1,11 +1,15 @@
 import { StarFilled, RightCircleFilled } from "@ant-design/icons"
 import Book1 from "../../assets/images/book-card-1.png"
 import Image from "next/image"
+import React, { useEffect, useState } from 'react';
 
-export default function File(){
+export default function File({index}){
+
     return(
         <div>
-            <div className="file__item">
+            <input type={'radio'} id={`check__category__${index}`} className='chose__catergory'  name='checkbox__category' />
+            <label htmlFor={`check__category__${index}`}>
+                <div className="file__item" id={`item__category__${index}`}>
                 <div className="file__item__bg"></div>
                 <div className="file__item__content">
                     <StarFilled className="icon__star__file" />
@@ -19,7 +23,7 @@ export default function File(){
                     <span className="file__item__content--detail">Lorem ipsum </span>
                     <RightCircleFilled className="icon__detail__file" />
                 </div>
-            </div>
+            </div></label>
 
             <style jsx>{`
                 .file__item{
@@ -59,12 +63,20 @@ export default function File(){
                     box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
                     border-radius: 0px 10px 10px 10px;
                 }
+
+                .chose__catergory{
+                    display: none;
+                }
+
+                .chose__catergory:checked +label .file__item,
                 .file__item:hover{
                     transform: translateY(-6px);
                     transition: 0.5s;
                     cursor: pointer;
                 }
 
+                .chose__catergory:checked +label .file__item .file__item__bg::before,
+                .chose__catergory:checked +label .file__item .file__item__bg::after,
                 .file__item:hover .file__item__bg::before,
                 .file__item:hover .file__item__bg::after{
                     background: #FCE76C;
@@ -115,6 +127,8 @@ export default function File(){
                 justify-content: center;
                 align-items: center;
             }
+
+            .chose__catergory:checked +label .file__item .file__item__content .icon__star__file,
             .file__item:hover .file__item__content .icon__star__file{
                 background: rgba(255, 218, 0, 0.8);
                 color: #FCE76C;

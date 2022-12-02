@@ -1,11 +1,11 @@
-import { PushpinOutlined ,PushpinFilled} from "@ant-design/icons"
+import { PushpinOutlined ,PushpinFilled, EditFilled} from "@ant-design/icons"
 import { Button } from "antd"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Book1 from "../../assets/images/book-card-1.png"
 
-export default function Card({index}){
+export default function Card({index, owner}){
     
     const [check, setCheck]= useState(false)
     const router= useRouter()
@@ -13,20 +13,30 @@ export default function Card({index}){
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
     useEffect(()=>{
-        const bg= document.getElementById(`item__card__book--bg--${index}`)
-        const btn= document.getElementById(`item__card__book--btn--${index}`)
+        const bgs= document.getElementsByClassName(`item__card__book--bg--${index}`)
+        const btns= document.getElementsByClassName(`item__card__book--btn--${index}`)
         setColorID(Math.floor(Math.random() * color.length))
         // console.log(colorID);
-        bg.style.setProperty('--colorCard',`${color[colorID]}`)
-        btn.style.setProperty('--colorCard',`${color[colorID]}`)
+        for(let i=0; i<bgs.length;i++){
+            // console.log("bg", bgs[i]);
+            bgs[i].style.setProperty('--colorCard',`${color[colorID]}`)
+        }
+        for(let i=0; i<btns.length;i++){
+            // console.log("bg", bgs[i]);
+            btns[i].style.setProperty('--colorCard',`${color[colorID]}`)
+        }
     })
     
     return(
         <div>
             <div className="item__card__book">
-                <div className="item__card__book--bg" id={`item__card__book--bg--${index}`} ></div>
-                <input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={()=>{setCheck(!check)}} />
-                <label htmlFor={`check__save-${index}`} >{!check ?<PushpinOutlined /> :<PushpinFilled /> }</label>
+                <div className={`item__card__book--bg item__card__book--bg--${index}`} ></div>
+                {
+                    owner ?(<><div onClick={()=>router.push(`/books/edit/${hello}`)}><EditFilled /></div></>)
+                    :(<><input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={()=>{setCheck(!check)}} />
+                    <label htmlFor={`check__save-${index}`} >{!check ?<PushpinOutlined /> :<PushpinFilled /> }</label></>)
+                }
+                
                 <div className="item__card__book--content"  onClick={() => router.push(`/books/detail/${hello}`)} >
                     <div className="item__card__book--img">
                         <Image src={Book1} alt="image book" width ={107} height={144}/>
@@ -37,7 +47,7 @@ export default function Card({index}){
                         <p className="item__card__book--text--intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate Lorem ipsum dolor sit amet </p>
                         <p className="item__card__book--text--author">By <b>Luck</b></p>
                     </div>
-                    <Button className="item__card__book--btn" id={`item__card__book--btn--${index}`}>Read now</Button>
+                    <Button className={`item__card__book--btn item__card__book--btn--${index}`} >Read now</Button>
                 </div>
                 
             </div>
@@ -215,7 +225,8 @@ export default function Card({index}){
             }
             `}</style>
             <style jsx global>{`
-                .item__card__book .anticon-pushpin{
+                .item__card__book .anticon-pushpin,
+                .item__card__book .anticon-edit{
                     position:absolute;
                     font-size: 36px;
                     right: 8px;
