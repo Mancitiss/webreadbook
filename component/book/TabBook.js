@@ -93,6 +93,14 @@ export default function TabBook(){
                     font-size: 100px;
                     color: #FCE76C;
                 }
+
+                @media  (max-width: 576px){
+                    .create__book--item{
+                        width: 135px;
+                        height: 198px;
+                        margin: 6px;
+                    }
+                }
             `}</style>
 
             <style jsx global>{`
