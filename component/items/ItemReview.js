@@ -2,11 +2,14 @@ import { Col, Row } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import Book1 from '../../assets/images/book-1.png'
+import { useRouter } from "next/router";
 
 export default function ItemReview(){
+    const router = useRouter()
+    const name= 'book1'
     return(
         <div>
-            <div className="item__review__book">
+            <div className="item__review__book" onClick={()=>{ router.push(`/reviews/${name}`)}} >
                 <Row>
                     <Col span={6}>
                         <div className="item__review__book--img">
@@ -77,6 +80,8 @@ export default function ItemReview(){
                     line-height: 15px;
                     color: #000000;
                     opacity: 0.8;
+                    font-weight: 530;
+
                 }
             `}</style>
             <style jsx global>{`

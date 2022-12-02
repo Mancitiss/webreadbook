@@ -1,7 +1,7 @@
 import { Row, Col, Button, Tabs } from 'antd';
 import { EditOutlined, SettingOutlined, CameraFilled } from '@ant-design/icons';
 import Image from 'next/image';
-
+import Link from 'next/link'
 import Main from '../../layouts/Main';
 import TextHeading from '../../component/common/TextHeading';
 import Card from '../../component/items/Card';
@@ -9,8 +9,14 @@ import { useRouter } from 'next/router';
 import bannerUrl from '../../assets/images/background-profile-user.png';
 import Avatar from '../../assets/images/avatar1.jpg';
 import TabBook from '../../component/book/TabBook';
-
+import cookies from 'react-cookies'
 export default function Profile() {
+  const logOut = async()=>{
+    cookies.save("access_token", "")
+    cookies.remove("access_token")
+    localStorage.clear();
+    // window.location="/";
+  }
 
   const router= useRouter()
   const name= 'book1'
@@ -117,6 +123,12 @@ export default function Profile() {
                   </div>
                   <div >
                     <Button className='edit__intro__user'>Edit Details</Button>
+                </div>
+                  <br></br>
+                  <div className='item__card__book--btn'>
+                  <Link href='/'>
+                  <Button className='edit__intro__user' onClick={()=>{logOut()}} >Logout</Button>
+                  </Link>                    
                   </div>
                 </div>
               </Col>

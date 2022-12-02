@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import getId from '../API/Profile';
 import Logo from '../../assets/images/logo.png'
 import LogoLogin from '../../assets/images/logo-login.png'
 import Link from 'next/link'
@@ -30,7 +29,9 @@ import { ApiError } from 'next/dist/server/api-utils'
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
-  const [isLogin, setLogin]= useState(false)
+
+  const [isLogin, setLogin]= useState(true)
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -52,6 +53,13 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    var access_token = cookies.load("access_token")
+    if(access_token == null || access_token == ""){    
+      setLogin(false)
+    }
+    else{
+      setLogin(true)
+    }
     const home = document.getElementById('home');
     const category = document.getElementById('category');
     const abouts = document.getElementById('abouts');
@@ -69,6 +77,39 @@ const Navbar = () => {
     }
   });
 
+  const getId = async()=>{
+    let token = cookies.load("access_token")
+    let data 
+    let res = await axios.get("http://127.0.0.1:8000/api/users/current-user/", {
+    headers: {
+        'Authorization': 'Bearer ' + token
+    }
+    })
+    .then(
+        response => {
+            data = response.data;
+            //cookies.save("Id", response.data.id)
+            localStorage.setItem ('id', response.data.id);
+            localStorage.setItem ('username', response.data.username);
+            localStorage.setItem ('avatar', response.data.avatar);
+            localStorage.setItem ('nickname', response.data.nickname);
+            localStorage.setItem ('intro', response.data.intro);
+            localStorage.setItem ('hobbies', response.data.hobbies);
+            localStorage.setItem ('address', response.data.address);
+            localStorage.setItem ('phone', response.data.phone);
+        }
+    )
+    .catch(
+        error => console.log(error)
+    );
+    var access_token = cookies.load("access_token")
+    if(access_token == null || access_token == ""){    
+      setLogin(false)
+    }
+    else{
+      setLogin(true)
+    }
+}
   const checkLogin = async()=>{
     let sttCode = 0
     let sttCode_re = 0
@@ -120,7 +161,7 @@ const Navbar = () => {
         setLogin(true)
         handleOk()
         getId()
-  
+       
       }
       else {
         alert("We don't recognize that username or password. You can try again or use another login option.")
