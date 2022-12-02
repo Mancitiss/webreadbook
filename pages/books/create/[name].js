@@ -2,13 +2,13 @@ import Main from "../../../layouts/Main";
 import { Breadcrumb, Col, Row } from 'antd';
 import { ReadOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import EditBookContent from "../../../component/book/EditBook";
+import CreateBookContent from "../../../component/book/CreateBook";
 import Chap from '../../../component/items/Chap'
 
 export default function EditBook(){
     const hello='book1'
     const router= useRouter()
-
+    const chap = false
     return(
         <div>
             <Main>
@@ -18,22 +18,26 @@ export default function EditBook(){
                         <ReadOutlined className="icon__book" />
                         <span>Book</span>
                         </Breadcrumb.Item >
-                        <Breadcrumb.Item onClick={() => router.push(`/books/detail/${hello}`)}> Love story valut</Breadcrumb.Item>
-                        <Breadcrumb.Item > Edit</Breadcrumb.Item>
+                        {/* <Breadcrumb.Item onClick={() => router.push(`/books/detail/${hello}`)}> Love story valut</Breadcrumb.Item> */}
+                        <Breadcrumb.Item > Create</Breadcrumb.Item>
                     </Breadcrumb>
                     <Row>
                         <Col lg={18}  sm={24} xs={24}>
-                            <EditBookContent></EditBookContent>
+                            <CreateBookContent></CreateBookContent>
                         </Col>
                         <Col lg={6}  sm={24} xs={24}>
                             <h3 className="book__edit__book__chap--title">All chap</h3>
                             <div>
-                                <Chap ></Chap>
-                                <Chap ></Chap>
-                                <Chap ></Chap>
-                                <Chap ></Chap>
-                                <Chap ></Chap>
-                                <Chap ></Chap>
+                                {
+                                    chap? (<>
+                                        <Chap ></Chap>
+                                        <Chap ></Chap>
+                                        <Chap ></Chap>
+                                        <Chap ></Chap>
+                                        <Chap ></Chap>
+                                        <Chap ></Chap></>
+                                    ):(<> <p>No have chap in your book</p></>)
+                                }
                             </div>
                         </Col>
                     </Row>

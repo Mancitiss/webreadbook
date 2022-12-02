@@ -7,8 +7,43 @@ import File from "../../component/items/File";
 import { LeftCircleFilled, RightCircleFilled,ReadOutlined } from '@ant-design/icons';
 import ItemReview from "../../component/items/ItemReview";
 import Card from "../../component/items/Card";
+import { useEffect } from "react";
 
 export default function Category(){
+    
+  const category=[
+    {
+      id:1,
+      name: 'All',
+    },
+    {
+      id:2,
+      name: 'New',
+    },
+    {
+      id:3,
+      name: 'Hot',
+    },
+    {
+      id:4,
+      name: 'Novel',
+    },
+    {
+      id:5,
+      name: 'Anime',
+    },
+    {
+      id:6,
+      name: 'Love',
+    },
+  ]
+    useEffect(()=>{
+        for( let i=0; i< category.length; i++){
+          const one= document.getElementById(`check__category__${category[0].id}`)
+          one.checked=true
+        }
+        
+      },[])
     return(
         <div>
             <Main>
@@ -31,11 +66,13 @@ export default function Category(){
                                     <TextHeading >Category</TextHeading>
                                 </div>
                                 <div className='category__contaner__content--listfile'>
-                                    <File></File>
-                                    <File></File>
-                                    <File></File>
-                                    <File></File>
-                                    <File></File>
+                                {
+                                    category.map((categori)=>{
+                                    // console.log(categori);
+                                    return(
+                                    <File key={categori.id} index={categori.id}  />)
+                                    })
+                                }
                                 </div>
                                 <Row align='middle'>
                                     <Col lg={4}  sm={6} xs={12}>

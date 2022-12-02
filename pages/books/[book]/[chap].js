@@ -170,6 +170,11 @@ export default function ReadBook(){
                     .readbook__content__main--title--chap{
                         font-size:18px;
                     }
+
+                    .icon__light__darkmode{
+                        top: unset;
+                        bottom: 42px;
+                    }
                 }
                 
                 `}</style>

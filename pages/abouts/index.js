@@ -34,13 +34,13 @@ export default function Abouts() {
           </div>
           <div className='container__abouts__content'>
             <Row>
-              <Col span={12}>
+              <Col lg={12}  sm={10} xs={24}>
                   <div style={{marginTop: '62px'}}>
                     <p className='container__abouts__content--text-title'>Vision</p>
                     <p className='container__abouts__content--text-detail'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra. Aliquam in elementum tellus.</p>
                   </div>
               </Col>
-              <Col span={12}>
+              <Col lg={12}  sm={14} xs={0}>
                 <div style={{padding:'0 24px',minHeight: '320px'}}>
                   <div className='container__abouts__content--bg-text'>
                     <p className='container__abouts__content--text-title'><b style={{color: '#8BD0FC'}}>Who</b><br></br> we are ?</p>
@@ -50,7 +50,7 @@ export default function Abouts() {
                   </div>
                 </div>
               </Col>
-              <Col span={12}>
+              <Col lg={12}  sm={14} xs={0}>
                   <div style={{marginTop: '64px'}}>
                     <div className='container__abouts__content--bg-text'>
                       <p className='container__abouts__content--text-title'><b style={{color: '#8BD0FC'}}>What</b><br></br> we do ?</p>
@@ -60,19 +60,19 @@ export default function Abouts() {
                     </div>
                   </div>
               </Col>
-              <Col span={12}>
+              <Col lg={12}  sm={10} xs={24}>
                   <div style={{marginTop: '52px'}}>
                     <p className='container__abouts__content--text-title'>Integrated reading and listening</p>
                     <p className='container__abouts__content--text-detail'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra. Aliquam in elementum tellus.</p>
                   </div>
               </Col>
-              <Col span={12}>
-                  <div style={{marginTop: '142px'}}>
+              <Col lg={12}  sm={10} xs={24}>
+                  <div style={{marginTop: '142px'}} className='about__why'>
                     <p className='container__abouts__content--text-title'>Why us ?</p>
                     <p className='container__abouts__content--text-detail'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra. Aliquam in elementum tellus.</p>
                   </div>
               </Col>
-              <Col span={12}>
+              <Col lg={12}  sm={14} xs={0}>
                   <div style={{marginTop: '64px'}}>
                     <div className='container__abouts__content--bg-text'>
                       <p className='container__abouts__content--text-title'><b style={{color: '#8BD0FC'}}>Why</b><br></br> choose us ?</p>
@@ -91,36 +91,36 @@ export default function Abouts() {
               <Carousel autoplay  dots={{className:'abouts__silder__dots'}} >
                 <div className='abouts__silder__content'>
                   <div className='abouts__silder__content--avatar' >
-                    <Image src={avatar1} layout='fixed' height={120} width={120}  />
+                    <Image src={avatar1}  objectFit='cover' />
                   </div>
-                  <div style={{maxWidth:'45%'}}>
+                  <div className='about__silder__text' style={{maxWidth:'45%'}}>
                     <p className='abouts__silder__content--name'>Luck</p>
                     <p className='abouts__silder__content--info'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                   </div>
                 </div>
                 <div className='abouts__silder__content'>
                   <div className='abouts__silder__content--avatar'>
-                    <Image src={avatar1} layout='fixed' height={120} width={120}  />
+                    <Image src={avatar1}   objectFit='cover'/>
                   </div>
-                  <div style={{maxWidth:'45%'}}>
+                  <div className='about__silder__text' style={{maxWidth:'45%'}}>
                     <p className='abouts__silder__content--name'>Linh</p>
                     <p className='abouts__silder__content--info'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                   </div>
                 </div>
                 <div className='abouts__silder__content'>
                   <div className='abouts__silder__content--avatar'>
-                    <Image src={avatar1} layout='fixed' height={120} width={120}  />
+                    <Image src={avatar1}  objectFit='cover' />
                   </div>
-                  <div style={{maxWidth:'45%'}}>
+                  <div className='about__silder__text' style={{maxWidth:'45%'}}>
                     <p className='abouts__silder__content--name'>Khoa</p>
                     <p className='abouts__silder__content--info'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                   </div>
                 </div>
                 <div className='abouts__silder__content'>
                   <div className='abouts__silder__content--avatar'>
-                    <Image src={avatar1} layout='fixed' height={120} width={120}  />
+                    <Image src={avatar1}  objectFit='cover' />
                   </div>
-                  <div style={{maxWidth:'45%'}}>
+                  <div className='about__silder__text' style={{maxWidth:'45%'}}>
                     <p className='abouts__silder__content--name'>Minh</p>
                     <p className='abouts__silder__content--info'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                   </div>
@@ -131,7 +131,7 @@ export default function Abouts() {
             <div className='abouts__contact'>
               <p className='abouts__contact__title'>Contact us</p>
               <Row>
-                <Col span={12}>
+                <Col lg={12}  sm={12} xs={24}>
                   <div>
                     <p className='abouts__contact__text'>Name</p>
                     <Input className='abouts__contact__input' placeholder="Your name" />
@@ -146,7 +146,7 @@ export default function Abouts() {
                   </div>
                   <Button className='btn__send__abouts'>Send</Button>
                 </Col>
-                <Col span={12}>
+                <Col lg={12}  sm={12} xs={24}>
                   <div className='abouts__contact__information'>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
                     <div className='abouts__contact__listicon'>
@@ -369,6 +369,73 @@ export default function Abouts() {
         .abouts__contact__information--img{
           width:100%;
           max-height:230px;
+        }
+        
+        @media  (max-width: 992px)and (min-width:577px){
+          .wave__img{
+            height:45%;
+          }
+
+          .wave__img:nth-child(2){
+            transform: translate(0px,18px);
+          }
+
+          .container__abouts__content--img{
+            top:-42px
+          }
+
+          .container__abouts__content--text-detail{
+            font-size:14px
+          }
+        }
+
+        @media  (max-width: 576px){
+          .wave__img{
+            display:none;
+          }
+
+          .container__abouts__content--text-title{
+            font-size:20px;
+            margin-top:-24px;
+            text-align:center
+          }
+
+          .abouts__silder__content--avatar{
+            height:60px;
+            width:60px;
+            margin:0 12px;
+          }
+          .container__abouts__content--text-detail{
+            font-size:14px;
+            text-align: center;
+          }
+
+          .about__why{
+            margin-top:42px !important;
+          }
+
+          .about__silder__text{
+            max-width:70% !important;
+            max-height: 60%;
+            margin: auto;
+            overflow-y: hidden;
+            
+          }
+
+          .abouts__silder__content--name{
+            font-size:14px;
+          }
+
+          .abouts__silder__content--info{
+            font-size:12px;
+            max-height: 100%;
+            overflow-y: scroll;
+
+          }
+
+          .abouts__contact__information{
+            margin: 24px auto;
+          }
         }
         `}</style>
 

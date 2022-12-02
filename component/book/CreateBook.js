@@ -1,26 +1,26 @@
 import { Row, Col, Rate } from "antd";
 import Image from "next/image";
-import Book1 from '../../assets/images/baner-book1.png'
+// import Book1 from '../../assets/images/baner-book1.png'
 const { TextArea } = Input;
 import { EditFilled } from "@ant-design/icons";
 import TextHeading from "../common/TextHeading";
 import { PlusOutlined } from '@ant-design/icons';
 import { Divider, Input, Select, Space, Button } from 'antd';
 import { useState, useRef, useEffect } from 'react';
-
+import { PlusCircleOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 let index = 0;
 
 export default function EditBookContent() {
-    const mainContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus."
+    const mainContent = ""
     const onChange = (e) => {
         console.log(e);
       };
     
     const [items, setItems] = useState(['jack', 'lucy']);
     const [name, setName] = useState('');
-    const [imgBook, setImgBook] = useState(Book1)
+    const [imgBook, setImgBook] = useState('')
     // const inputRef = useRef(null);
     const onNameChange = (event) => {
     setName(event.target.value);
@@ -53,13 +53,24 @@ export default function EditBookContent() {
             <div className="component__detail__edit">
                 <Row>
                     <Col lg={8}  sm={12} xs={24}>
-                        <div className="component__detail__edit__img">
-                            <Image src={imgBook} layout='fill' alt='hinh bia sach'  height={310}/>
-                            <input type={'file'} style={{display:'none'}} id='update__baner__book' onChange={updateImage}/>
-                            <label htmlFor="update__baner__book"><div  className="component__detail__edit__content--icon icon__edit" >
-                                <EditFilled />
-                            </div></label>
-                        </div>
+                        <input type={'file'} style={{display:'none'}} id='update__baner__book' onChange={updateImage}/>
+                        {
+                            imgBook ? (
+                                <div className="component__detail__edit__img">
+                                    <Image src={imgBook} layout='fill' alt='hinh bia sach'  height={310}/>
+                                    <label htmlFor="update__baner__book"><div  className="component__detail__edit__content--icon icon__edit" >
+                                        <EditFilled />
+                                    </div></label>
+                                </div>
+
+                            ):(
+                                <div>
+                                    <label htmlFor="update__baner__book"><div className="upload__img__book">
+                                        <PlusCircleOutlined />
+                                    </div></label>
+                                </div>
+                            )
+                        }
                         <div className="component__detail__edit__info">
                             <Row>
                                 <Col span={24}>
@@ -131,7 +142,8 @@ export default function EditBookContent() {
                     position:relative;
                 }
 
-                .component__detail__edit__img{
+                .component__detail__edit__img,
+                .upload__img__book{
                     width: 90%;
                     height: 310px;
                     overflow: hidden;
@@ -199,6 +211,18 @@ export default function EditBookContent() {
                     display:flex;
                     width: 90%;
                     justify-content: flex-end;
+                }
+
+                .upload__img__book{
+                    background: #FFFFFF;
+                    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25), 2px 2px 6px rgba(0, 0, 0, 0.25);
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 186px;
+                    color: #FCE76C;
+                    cursor: pointer;
                 }
 
                 @media  (max-width: 992px)and (min-width:577px){

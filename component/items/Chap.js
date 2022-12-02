@@ -1,17 +1,33 @@
 import { CheckCircleOutlined } from "@ant-design/icons"
 import { useRouter } from "next/router"
+import { useEffect } from "react"
 
 export default function Chap(){
     const link={'book':'book1','chap':'123'}
+    const read= true
     const router= useRouter()
+    useEffect(()=>{
+        const items = document.getElementsByClassName('item__chap');
+        console.log(items.length);
+        for(let i=0; i<items.length;i++){
+            if(read){
+
+                items[i].classList.add('readed')
+            }
+        }
+    },[])
     return(
         <div>
             <div className="item__chap" onClick={()=>{router.push(`/books/${link.book}/${link.chap}`)}}>
                 <p className="item__chap__number">Chap 123:</p>
                 <p className="item__chap__name">Where my love ?</p>
-                <div className="item__chap__isread">
-                    <CheckCircleOutlined  />
-                </div>
+                {
+                    read ?(
+                    <div className="item__chap__isread">
+                        <CheckCircleOutlined  />
+                    </div>
+                    ):(<> </>)
+                }
             </div>
 
             <style jsx>{`
@@ -60,17 +76,20 @@ export default function Chap(){
                         width:98%;
                         font-size: 12px;
                         margin: 4px;
+                        
                     }
-
+                    
                     .item__chap__number{
                         margin: 0 4px 0 8px;
                     }
-
+                    
                     .item__chap__isread{
-                        font-size: 18px;
-                        right: 6px;
+                        display:none;
                     }
-                   
+                    
+                    .readed{
+                        background: rgba(255,143,92,.5);
+                    }
                 }
             `}</style>
         </div>

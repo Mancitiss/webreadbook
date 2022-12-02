@@ -5,13 +5,15 @@ import Image from 'next/image';
 import Main from '../../layouts/Main';
 import TextHeading from '../../component/common/TextHeading';
 import Card from '../../component/items/Card';
-
+import { useRouter } from 'next/router';
 import bannerUrl from '../../assets/images/background-profile-user.png';
 import Avatar from '../../assets/images/avatar1.jpg';
 import TabBook from '../../component/book/TabBook';
 
 export default function Profile() {
 
+  const router= useRouter()
+  const name= 'book1'
   return (
     <div>
       <Main>
@@ -40,7 +42,7 @@ export default function Profile() {
 
                 <div className='user-info-options'>
                   <div className='write-book-btn'>
-                    <Button className='btn'>
+                    <Button className='btn__create__book' onClick={()=>router.push(`books/create/${name}`)}>
                       <span className='option-icon'>
                         <EditOutlined />
                       </span>
@@ -48,11 +50,25 @@ export default function Profile() {
                     </Button>
                   </div>
                   <div className='setting-btn'>
-                    <Button className='mr-4 btn'>
+                    <Button className='btn__setting__user' disabled>
                       <span className='option-icon'>
                         <SettingOutlined />
                       </span>
                       <span className='option-content'>Setting</span>
+                    </Button>
+                  </div>
+                  <div className='write-book-btn-mb'>
+                    <Button className='btn__create__book' onClick={()=>router.push(`books/create/${name}`)}>
+                      <span className='option-icon'>
+                        <EditOutlined />
+                      </span>
+                    </Button>
+                  </div>
+                  <div className='setting-btn-mb'>
+                    <Button className='btn__setting__user' disabled>
+                      <span className='option-icon'>
+                        <SettingOutlined />
+                      </span>
                     </Button>
                   </div>
                 </div>
@@ -61,7 +77,7 @@ export default function Profile() {
           </div>
           <div className='main-section-profile'>
             <Row gutter={38}>
-              <Col lg={8} xs={24}>
+              <Col lg={8} sm={10} xs={24}>
                 <TextHeading className='text-heading-section'>
                   Information
                 </TextHeading>
@@ -71,8 +87,8 @@ export default function Profile() {
                     <div className='user-intro-text'>
                       <span>I like write sad books {':))'} </span>
                     </div>
-                    <div className='edit-intro-btn'>
-                      <Button className='btn'>Edit intro</Button>
+                    <div >
+                      <Button className='edit__intro__user'>Edit intro</Button>
                     </div>
                   </div>
                   <div className='user-introduce-item'>
@@ -99,19 +115,19 @@ export default function Profile() {
                       Write book, play games
                     </span>
                   </div>
-                  <div className='edit-details-btn'>
-                    <Button className='btn'>Edit Details</Button>
+                  <div >
+                    <Button className='edit__intro__user'>Edit Details</Button>
                   </div>
                 </div>
               </Col>
-              <Col lg={16} xs={24}>
+              <Col lg={16} sm={14} xs={24}>
                 <TextHeading className='text-heading-section'>
                   Reading
                 </TextHeading>
                 <div className='card-list'>
-                  <Card index={1}/>
-                  <Card index={2}/>
-                  <Card index={3}/>
+                  <Card index={1} />
+                  <Card index={2} />
+                  <Card index={3} />
                 </div>
               </Col>
             </Row>
@@ -164,6 +180,8 @@ export default function Profile() {
           right: 0;
           transform: translate(50%, 50%);
           cursor: pointer;
+          font-size: 20px;
+          opacity: 0.6;
         }
 
         .user-info-options {
@@ -246,13 +264,6 @@ export default function Profile() {
           height: 42px;
         }
 
-        .profile-tabs{
-          width: 90%;
-          margin: 24px auto;
-        }
-      `}</style>
-
-      <style jsx global>{`
         .btn {
           height: 100%;
           width: 100%;
@@ -264,10 +275,113 @@ export default function Profile() {
           box-shadow: 2px 4px 4px rgb(0 0 0 / 25%);
           border: none;
         }
+        .setting-btn{
+          background:#fff;
+        }
+
+        .profile-tabs{
+          width: 90%;
+          margin: 24px auto;
+        }
+        .write-book-btn-mb,.setting-btn-mb{
+          display:none;
+        }
+        @media  (max-width: 992px)and (min-width:577px){
+          .user-introduce{
+            padding: 16px;
+          }
+        }
+
+        @media  (max-width: 576px){
+          .user-section{
+            padding:16px;
+          }
+
+          .banner-background{
+            height:172px;
+          }
+
+          .user-avatar{
+            height:72px;
+            width:72px;
+          }
+
+          .user-change-avatar{
+            top: 20px;
+            left: 24px;
+            opacity: 0.4;
+          }
+
+          .user-info-options{
+            gap:12px ;// set khoang cach space 2 item trong flex
+          }
+
+          .write-book-btn-mb, .setting-btn-mb{
+            display:block;
+          }
+
+          .write-book-btn,.setting-btn{
+
+            display:none
+          }
+
+          .option-icon{
+            width:unset;
+            height:unset;
+            margin:0
+          }
+
+          .user-section{
+            margin:82px auto 36px;
+          }
+          
+        }
+      `}</style>
+
+      <style jsx global>{`
+        .user-info-options .btn__create__book,
+        .user-info-options .btn__setting__user,
+        .user-introduce .edit__intro__user{
+          height: 42px;
+          border-radius: 20px;
+          border: none;
+          box-shadow: 2px 4px 4px rgb(0 0 0 / 25%);
+          width: 160px;
+          font-weight: 700;
+          font-size: 18px;
+          color: #fff;
+          background: #8BD0FC;
+        }
+
+        .user-info-options .btn__setting__user{
+          color: #8BD0FC;
+          background:#fff
+        }
+
+        .user-introduce .edit__intro__user{
+          width: 100%;
+          border-radius: 10px;
+          margin: 12px 0;
+        }
 
         .user-avatar .user-avatar-img {
           object-fit: cover;
           border-radius: 50%;
+        }
+        @media  (max-width: 576px){
+          .user-info-options .btn__create__book,
+          .user-info-options .btn__setting__user{
+            height: 42px;
+            width: 42px;
+            border-radius: 5px;
+            display: flex;
+            font-size: 20px;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            box-shadow: unset;
+            color: #8BD0FC;
+          }
         }
       `}</style>
       

@@ -48,6 +48,7 @@ export default function Book({check}){
 
             if(responsiveVoice.isPlaying()) {
                 // console.log("I hope you are listening");
+                iconVoice.current.style.display='flex'
               }
             else{
                 // console.log("none listenming");
@@ -374,6 +375,22 @@ export default function Book({check}){
                     }
                     .lopgia::before,.lopgia::after{
                         display:none;
+                    }
+
+                    .icon__setting__voice{
+                        bottom: 24px;
+                        top: unset;
+                    }
+
+                    .icon__play__voice{
+                        bottom: 96px;
+                        top: unset;
+                    }
+
+                    .icon__replay__voice{
+                        top: unset;
+                        bottom: 162px;
+                        color: #FF8F5C;
                     }
                 }
             `}</style>

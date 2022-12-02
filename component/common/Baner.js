@@ -88,7 +88,7 @@ const Baner= ()=>{
         <div >
             <div className="baner__home">
                 <Row>
-                    <Col lg={12}  sm={14} xs={{order:2, span:24}} >
+                    <Col lg={{order:1, span:12}}  sm={{order:1, span:14}} xs={{order:2, span:24}} >
                         <div className="baner__home__text" >
                             <h1 className="baner__home__namebook">{nameBook}</h1>
                             <h3 className="baner__home__titlebook">{detailBook}</h3>
@@ -110,7 +110,7 @@ const Baner= ()=>{
                         </div>
                     </Col>
                     
-                    <Col lg={12}  sm={10} xs={{order:1, span:24}} >
+                    <Col lg={{order:2, span:12}}  sm={{order:1, span:10}} xs={{order:1, span:24}} >
                         <Row>
                             <Col lg={16}  sm={24} xs={24} justify='center'>
                                 <div className="baner__home__right" >
@@ -423,8 +423,8 @@ const Baner= ()=>{
                     }
 
                     .baner__home__img-slide{
-                        left:0px;
-                        top:0px;
+                        left:12px;
+                        top:-12px;
                     }
                   }
     

@@ -122,7 +122,7 @@ export default function BookDetail(){
                 }
 
                 .component__detail__new--listchap{
-                    width:90%;
+                    width:95%;
                 }
             `}</style>
 
