@@ -3,7 +3,7 @@ import Book1 from "../../assets/images/book-card-1.png"
 import Image from "next/image"
 import React, { useEffect, useState } from 'react';
 
-export default function File({index}){
+export default function File({index, name}){
 
     return(
         <div>
@@ -13,7 +13,7 @@ export default function File({index}){
                 <div className="file__item__bg"></div>
                 <div className="file__item__content">
                     <StarFilled className="icon__star__file" />
-                    <h5 className="file__item__content--namefile">Novel</h5>
+                    <h5 className="file__item__content--namefile">{name}</h5>
                     <div className="file__item__content--listimg">
                         <Image src={Book1} alt="anh sach" className="file__item__content--img" height={40} width={30} />
                         <Image src={Book1} alt="anh sach" className="file__item__content--img" height={40} width={30} />

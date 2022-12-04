@@ -4,67 +4,65 @@ import Main from '../layouts/Main'
 import TextHeading from '../component/common/TextHeading';
 import Card from '../component/items/Card';
 import { LeftCircleFilled, RightCircleFilled } from '@ant-design/icons';
-import { Row , Col, Button} from 'antd';
+import { Row, Col, Button } from 'antd';
 import File from '../component/items/File';
 import Bar from '../component/items/Bar';
 import CardCreater from '../component/items/CardCreater';
+import axios from "axios";
 
 export default function Home() {
+  let category = []
+  
+  //var dataReturn = []
+  async function getCategory() {
+    let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
+      .then(
+        response => {
+          let data = response.data
+          for (let temp of data) {
+            let ob = 
+              {
+                id: temp.id,
+                category_name: temp.category_name,
+              }
+              category.push(ob)
+          }
+        }
+      )
+      .catch(
+        error => console.log(error)
+      );
+  }
 
-  const category=[
-    {
-      id:1,
-      name: 'All',
-    },
-    {
-      id:2,
-      name: 'New',
-    },
-    {
-      id:3,
-      name: 'Hot',
-    },
-    {
-      id:4,
-      name: 'Novel',
-    },
-    {
-      id:5,
-      name: 'Anime',
-    },
-    {
-      id:6,
-      name: 'Love',
-    },
-  ]
-  useEffect(()=>{
-    const btnBack= document.getElementsByClassName('btn__back')
-    const btnNext= document.getElementsByClassName('btn__next')
-    const widthItem= document.querySelector('.item__card__book').getBoundingClientRect().width
-    const widthSlide= document.querySelector('.home__silde__container').getBoundingClientRect().width
-    const sliders= document.querySelectorAll('.home__silde__container')
+  useEffect(() => { 
+    const btnBack = document.getElementsByClassName('btn__back')
+    const btnNext = document.getElementsByClassName('btn__next')
+    const widthItem = document.querySelector('.item__card__book').getBoundingClientRect().width
+    const widthSlide = document.querySelector('.home__silde__container').getBoundingClientRect().width
+    const sliders = document.querySelectorAll('.home__silde__container')
     console.log(widthItem);
     console.log(widthSlide);
     // console.log(items.length);
-    sliders.forEach((slide)=>{
-      btnNext[0].addEventListener('click',()=>{
-        slide.scrollLeft +=100;
-        console.log("herr",slide.scrollLeft);
+    sliders.forEach((slide) => {
+      btnNext[0].addEventListener('click', () => {
+        slide.scrollLeft += 100;
+        console.log("herr", slide.scrollLeft);
       })
-      btnBack[0].addEventListener('click',()=>{
-        slide.scrollLeft -=100;
-        console.log("herr",slide.scrollLeft);
+      btnBack[0].addEventListener('click', () => {
+        slide.scrollLeft -= 100;
+        console.log("herr", slide.scrollLeft);
       })
     })
-  },[])
-  
-  useEffect(()=>{
-    for( let i=0; i< category.length; i++){
-      const one= document.getElementById(`check__category__${category[0].id}`)
-      one.checked=true
+  }, [])
+  getCategory()
+  useEffect(() => {
+    console.log("chieu dai: " + category.length)
+    console.log(category)
+    for (let i = 0; i < category.length; i++) {
+      const one = document.getElementById(`check__category__${category[0].id}`)
+      one.checked = true
     }
-    
-  },[])
+  }, [])
 
   return (
     <div >
@@ -87,16 +85,16 @@ export default function Home() {
           </div>
         </div>
         <div className='home__contaner__content'>
-           <Row >
-            <Col lg={16}  sm={24} xs={24}>
+          <Row >
+            <Col lg={16} sm={24} xs={24}>
               <TextHeading>Book Category</TextHeading>
               <div>
                 <div className='home__contaner__content--listfile'>
                   {
-                    category.map((categori)=>{
-                      // console.log(categori);
-                      return(
-                      <File key={categori.id} index={categori.id}  />)
+                    category.map((categori) => {
+                      console.log(category)
+                      return (
+                        <File index={categori.id} name={categori.category_name} />)
                     })
                   }
                   {/* <File index={category[1].id}></File> */}
@@ -106,79 +104,79 @@ export default function Home() {
                   <File index={5}></File> */}
                 </div>
                 <Row align='middle'>
-                  <Col lg={4}  sm={6} xs={12}>
+                  <Col lg={4} sm={6} xs={12}>
                     <div className='home__next__back--slide slide__small'>
                       <LeftCircleFilled className='btn__slide btn__back' />
                       <RightCircleFilled className='btn__slide btn__next' />
                     </div>
                   </Col>
-                  <Col lg={14}  sm={12} xs={0}>
+                  <Col lg={14} sm={12} xs={0}>
                     <div className='silde__dot__bottom'>
 
                     </div>
                   </Col>
-                  <Col lg={6}  sm={6} xs={12}>
+                  <Col lg={6} sm={6} xs={12}>
                     <div>
                       <Button className='btn__all__category'>All category</Button>
                     </div>
                   </Col>
                 </Row>
                 <Row>
-                  <Col lg={6}  sm={8} xs={12}>
+                  <Col lg={6} sm={8} xs={12}>
                     <Card index={8}></Card>
                   </Col>
-                  <Col lg={6}  sm={8} xs={12}>
+                  <Col lg={6} sm={8} xs={12}>
                     <Card index={9}></Card>
                   </Col>
-                  <Col lg={6}  sm={8} xs={12}>
+                  <Col lg={6} sm={8} xs={12}>
                     <Card index={10}></Card>
                   </Col>
-                  <Col lg={6}  sm={8} xs={12}>
+                  <Col lg={6} sm={8} xs={12}>
                     <Card index={11}></Card>
                   </Col>
-                  <Col lg={6}  sm={8} xs={12}>
+                  <Col lg={6} sm={8} xs={12}>
                     <Card index={12}></Card>
                   </Col>
                 </Row>
               </div>
             </Col>
-            <Col lg={8}  sm={24} xs={24}>
+            <Col lg={8} sm={24} xs={24}>
               <Row>
-                <Col lg={24}  sm={24} xs={0}>
+                <Col lg={24} sm={24} xs={0}>
                   <div className='home__bar__line'>
                     <TextHeading>Top Category</TextHeading>
                     <Bar />
                   </div>
-                 
+
                 </Col>
               </Row>
               <Row>
-                <Col lg={24}  sm={24} xs={24}>
+                <Col lg={24} sm={24} xs={24}>
                   <div className='home__bar__line'>
                     <TextHeading>Top Creater</TextHeading>
                     <Row>
-                      <Col lg={12}  sm={6} xs={12} >
-                        <CardCreater {...{number:'1'}} />
+                      <Col lg={12} sm={6} xs={12} >
+                        <CardCreater {...{ number: '1' }} />
                       </Col>
-                      <Col lg={12}  sm={6} xs={12} >
-                        <CardCreater {...{number:'2'}}/>
+                      <Col lg={12} sm={6} xs={12} >
+                        <CardCreater {...{ number: '2' }} />
                       </Col>
-                      <Col lg={12}  sm={6} xs={12} >
-                        <CardCreater {...{number:'3'}}/>
+                      <Col lg={12} sm={6} xs={12} >
+                        <CardCreater {...{ number: '3' }} />
                       </Col>
-                      <Col lg={12}  sm={6} xs={12} >
-                        <CardCreater {...{number:'4'}}/>
+                      <Col lg={12} sm={6} xs={12} >
+                        <CardCreater {...{ number: '4' }} />
                       </Col>
-                      <Col lg={12}  sm={6} xs={12} >
-                        <CardCreater {...{number:'5'}}/>
+                      <Col lg={12} sm={6} xs={12} >
+                        <CardCreater {...{ number: '5' }} />
                       </Col>
                     </Row>
                   </div>
                 </Col>
               </Row>
             </Col>
-           </Row>
-          </div>
+          </Row>
+        </div>
       </Main>
 
       <style jsx>{`
@@ -252,6 +250,6 @@ export default function Home() {
       }
       `}</style>
     </div>
-   
+
   )
 }
