@@ -8,36 +8,37 @@ import { Row , Col, Button} from 'antd';
 import File from '../component/items/File';
 import Bar from '../component/items/Bar';
 import CardCreater from '../component/items/CardCreater';
-
+import axios from "axios";
 export default function Home() {
-
-  const category=[
-    {
-      id:1,
-      name: 'All',
-    },
-    {
-      id:2,
-      name: 'New',
-    },
-    {
-      id:3,
-      name: 'Hot',
-    },
-    {
-      id:4,
-      name: 'Novel',
-    },
-    {
-      id:5,
-      name: 'Anime',
-    },
-    {
-      id:6,
-      name: 'Love',
-    },
-  ]
+  const [category, setCategory] = useState([]);
+  
+  
+  async function getCategory() {
+    let data_new = []
+    let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
+      .then(
+        response => {
+          let data = response.data
+          for (let temp of data) {
+            let ob = 
+              {
+                id: temp.id,
+                category_name: temp.category_name,
+              }
+              data_new.push(ob)
+          };
+          
+        }
+      )
+      .catch(
+        error => console.log(error)
+      );
+      setCategory(data_new)
+      console.log(data_new)
+  }
+  
   useEffect(()=>{
+    getCategory()
     const btnBack= document.getElementsByClassName('btn__back')
     const btnNext= document.getElementsByClassName('btn__next')
     const widthItem= document.querySelector('.item__card__book').getBoundingClientRect().width
@@ -59,6 +60,7 @@ export default function Home() {
   },[])
   
   useEffect(()=>{
+    
     for( let i=0; i< category.length; i++){
       const one= document.getElementById(`check__category__${category[0].id}`)
       one.checked=true
@@ -96,7 +98,7 @@ export default function Home() {
                     category.map((categori)=>{
                       // console.log(categori);
                       return(
-                      <File key={categori.id} index={categori.id}  />)
+                      <File index={categori.id} name={categori.category_name}  />)
                     })
                   }
                   {/* <File index={category[1].id}></File> */}
