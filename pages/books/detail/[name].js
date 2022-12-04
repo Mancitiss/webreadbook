@@ -144,54 +144,64 @@ export default function BookInfo() {
               </Col>
             </Row>
           </div>
+
+  </Main>
+
+            <style jsx>{`
+                .book__detail{
+                    margin: 92px 24px 24px;
+                }
+
+                .book__detail__navbar__review--title{
+                    font-weight: 700;
+                    font-size: 18px;
+                    line-height: 22px;
+                    color: #FF8F5C;
+                    margin:0 0 16px;
+                }
+
+                .book__detail__content__listchap--title{
+                    float: left;
+                    margin: 12px 24px;
+                }
+
+                .book__detail__content__comment--comment{
+                    width:85%;
+                    margin:12px auto;
+                }
+
+                .book__detail__content__similar{
+                    margin:24px 0;
+                }
+
+                @media  (max-width: 992px)and (min-width:577px) {
+                    
+                }
+                
+                @media  (max-width: 576px){
+                    .book__detail{
+                        margin:92px 12px 12px
+                    }
+                   
+                }
+            `}</style>
+
+            <style jsx global>{`
+                .book__detail .book__detail__breadcurmb{
+                    font-weight: 700;
+                    font-size: 18px;
+                    line-height: 36px;
+                }
+
+                .book__detail .book__detail__breadcurmb .icon__book{
+                    font-size:26px;
+                    color:#FF8F5C;
+                }
+
+                .book__detail .book__detail__content .anticon-read{
+                    font-size: 24px;
+                    margin: 0px 6px;
+                }
+            `}</style>
         </div>
-      </Main>
-
-      <style jsx>{`
-        .book__detail {
-          margin: 92px 24px 24px;
-        }
-
-        .book__detail__navbar__review--title {
-          font-weight: 700;
-          font-size: 18px;
-          line-height: 22px;
-          color: #ff8f5c;
-          margin: 0 0 16px;
-        }
-
-        .book__detail__content__listchap--title {
-          float: left;
-          margin: 12px 24px;
-        }
-
-        .book__detail__content__comment--comment {
-          width: 85%;
-          margin: 12px auto;
-        }
-
-        .book__detail__content__similar {
-          margin: 24px 0;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        .book__detail .book__detail__breadcurmb {
-          font-weight: 700;
-          font-size: 18px;
-          line-height: 36px;
-        }
-
-        .book__detail .book__detail__breadcurmb .icon__book {
-          font-size: 26px;
-          color: #ff8f5c;
-        }
-
-        .book__detail .book__detail__content .anticon-read {
-          font-size: 24px;
-          margin: 0px 6px;
-        }
-      `}</style>
-    </div>
-  );
-}
+ </Main>

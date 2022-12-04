@@ -2,11 +2,11 @@ import { Row, Col, Button, Tabs } from 'antd';
 import { useState, useEffect } from 'react';
 import { EditOutlined, SettingOutlined, CameraFilled } from '@ant-design/icons';
 import Image from 'next/image';
-
+import Link from 'next/link'
 import Main from '../../layouts/Main';
 import TextHeading from '../../component/common/TextHeading';
 import Card from '../../component/items/Card';
-
+import { useRouter } from 'next/router';
 import bannerUrl from '../../assets/images/background-profile-user.png';
 import TabBook from '../../component/book/TabBook';
 
@@ -30,6 +30,18 @@ export default function Profile() {
     getUser();
   }, []);
 
+import cookies from 'react-cookies'
+export default function Profile() {
+  const logOut = async()=>{
+    cookies.save("access_token", "")
+    cookies.remove("access_token")
+    localStorage.clear();
+    // window.location="/";
+  }
+
+
+  const router= useRouter()
+  const name= 'book1'
   return (
     <div>
       <Main>
@@ -58,7 +70,7 @@ export default function Profile() {
 
                 <div className='user-info-options'>
                   <div className='write-book-btn'>
-                    <Button className='btn'>
+                    <Button className='btn__create__book' onClick={()=>router.push(`books/create/${name}`)}>
                       <span className='option-icon'>
                         <EditOutlined />
                       </span>
@@ -66,11 +78,25 @@ export default function Profile() {
                     </Button>
                   </div>
                   <div className='setting-btn'>
-                    <Button className='mr-4 btn'>
+                    <Button className='btn__setting__user' disabled>
                       <span className='option-icon'>
                         <SettingOutlined />
                       </span>
                       <span className='option-content'>Setting</span>
+                    </Button>
+                  </div>
+                  <div className='write-book-btn-mb'>
+                    <Button className='btn__create__book' onClick={()=>router.push(`books/create/${name}`)}>
+                      <span className='option-icon'>
+                        <EditOutlined />
+                      </span>
+                    </Button>
+                  </div>
+                  <div className='setting-btn-mb'>
+                    <Button className='btn__setting__user' disabled>
+                      <span className='option-icon'>
+                        <SettingOutlined />
+                      </span>
                     </Button>
                   </div>
                 </div>
@@ -79,7 +105,7 @@ export default function Profile() {
           </div>
           <div className='main-section-profile'>
             <Row gutter={38}>
-              <Col lg={8} xs={24}>
+              <Col lg={8} sm={10} xs={24}>
                 <TextHeading className='text-heading-section'>
                   Information
                 </TextHeading>
@@ -91,8 +117,8 @@ export default function Profile() {
                         {user?.intro || 'Hiện chưa có phần giới thiệu'}
                       </span>
                     </div>
-                    <div className='edit-intro-btn'>
-                      <Button className='btn'>Edit intro</Button>
+                    <div >
+                      <Button className='edit__intro__user'>Edit intro</Button>
                     </div>
                   </div>
                   <div className='user-introduce-item'>
@@ -119,12 +145,18 @@ export default function Profile() {
                       {user?.hobbies || 'Hiện chưa có sở thích'}
                     </span>
                   </div>
-                  <div className='edit-details-btn'>
-                    <Button className='btn'>Edit Details</Button>
+                  <div >
+                    <Button className='edit__intro__user'>Edit Details</Button>
+                </div>
+                  <br></br>
+                  <div className='item__card__book--btn'>
+                  <Link href='/'>
+                  <Button className='edit__intro__user' onClick={()=>{logOut()}} >Logout</Button>
+                  </Link>                    
                   </div>
                 </div>
               </Col>
-              <Col lg={16} xs={24}>
+              <Col lg={16} sm={14} xs={24}>
                 <TextHeading className='text-heading-section'>
                   Reading
                 </TextHeading>
@@ -184,6 +216,8 @@ export default function Profile() {
           right: 0;
           transform: translate(50%, 50%);
           cursor: pointer;
+          font-size: 20px;
+          opacity: 0.6;
         }
 
         .user-info-options {
@@ -266,6 +300,7 @@ export default function Profile() {
           height: 42px;
         }
 
+
         .profile-tabs {
           width: 90%;
           margin: 24px auto;
@@ -284,10 +319,113 @@ export default function Profile() {
           box-shadow: 2px 4px 4px rgb(0 0 0 / 25%);
           border: none;
         }
+        .setting-btn{
+          background:#fff;
+        }
+
+        .profile-tabs{
+          width: 90%;
+          margin: 24px auto;
+        }
+        .write-book-btn-mb,.setting-btn-mb{
+          display:none;
+        }
+        @media  (max-width: 992px)and (min-width:577px){
+          .user-introduce{
+            padding: 16px;
+          }
+        }
+
+        @media  (max-width: 576px){
+          .user-section{
+            padding:16px;
+          }
+
+          .banner-background{
+            height:172px;
+          }
+
+          .user-avatar{
+            height:72px;
+            width:72px;
+          }
+
+          .user-change-avatar{
+            top: 20px;
+            left: 24px;
+            opacity: 0.4;
+          }
+
+          .user-info-options{
+            gap:12px ;// set khoang cach space 2 item trong flex
+          }
+
+          .write-book-btn-mb, .setting-btn-mb{
+            display:block;
+          }
+
+          .write-book-btn,.setting-btn{
+
+            display:none
+          }
+
+          .option-icon{
+            width:unset;
+            height:unset;
+            margin:0
+          }
+
+          .user-section{
+            margin:82px auto 36px;
+          }
+          
+        }
+      `}</style>
+
+      <style jsx global>{`
+        .user-info-options .btn__create__book,
+        .user-info-options .btn__setting__user,
+        .user-introduce .edit__intro__user{
+          height: 42px;
+          border-radius: 20px;
+          border: none;
+          box-shadow: 2px 4px 4px rgb(0 0 0 / 25%);
+          width: 160px;
+          font-weight: 700;
+          font-size: 18px;
+          color: #fff;
+          background: #8BD0FC;
+        }
+
+        .user-info-options .btn__setting__user{
+          color: #8BD0FC;
+          background:#fff
+        }
+
+        .user-introduce .edit__intro__user{
+          width: 100%;
+          border-radius: 10px;
+          margin: 12px 0;
+        }
 
         .user-avatar .user-avatar-img {
           object-fit: cover;
           border-radius: 50%;
+        }
+        @media  (max-width: 576px){
+          .user-info-options .btn__create__book,
+          .user-info-options .btn__setting__user{
+            height: 42px;
+            width: 42px;
+            border-radius: 5px;
+            display: flex;
+            font-size: 20px;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            box-shadow: unset;
+            color: #8BD0FC;
+          }
         }
       `}</style>
     </div>

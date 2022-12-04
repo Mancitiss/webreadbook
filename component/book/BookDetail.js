@@ -21,20 +21,18 @@ export default function BookDetail({ book, newChapterList }) {
     getCategories();
   }, [book]);
 
-  console.log(book)
-
-  return (
-    <div>
-      <div className='component__detail'>
-        <Row>
-          <Col span={8}>
-            <div className='component__detail__img'>
+    return(
+        <div>
+            <div className="component__detail">
+                <Row>
+                    <Col  lg={8}  sm={12} xs={24}>
+                        <div className='component__detail__img'>
               <Image
                 src={book?.image || Book1}
                 layout='fixed'
                 alt='hinh bia sach'
               />
-            </div>
+                        </div>
             <div className='component__detail__info'>
               <Row>
                 <Col span={12}>
@@ -176,3 +174,4 @@ export default function BookDetail({ book, newChapterList }) {
     </div>
   );
 }
+

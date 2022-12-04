@@ -1,9 +1,22 @@
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { useEffect } from "react"
 
 export default function Chap({ chap, book }) {
   const link = { book: book?.id, chap: chap?.index };
+   const read= true
   const router = useRouter();
+  useEffect(()=>{
+        const items = document.getElementsByClassName('item__chap');
+        console.log(items.length);
+        for(let i=0; i<items.length;i++){
+            if(read){
+
+                items[i].classList.add('readed')
+            }
+        }
+    },[])
+  
   return (
     <div>
       <div
@@ -45,18 +58,38 @@ export default function Chap({ chap, book }) {
           color: #ff8f5c;
         }
 
-        .item__chap__name {
-          margin: 0;
-          color: #1f1e22;
-        }
-
-        .item__chap__isread {
-          position: absolute;
-          right: 16px;
-          font-size: 22px;
-          color: rgba(255, 143, 92, 0.7);
-        }
-      `}</style>
+        .item__chap__isread{
+                    position: absolute;
+                    right: 16px;
+                    font-size: 22px;
+                    color: rgba(255, 143, 92, 0.7);
+                }
+                @media  (max-width: 992px)and (min-width:577px) {
+                    
+                }
+                
+                @media  (max-width: 576px){
+                    .item__chap{
+                        width:98%;
+                        font-size: 12px;
+                        margin: 4px;
+                        
+                    }
+                    
+                    .item__chap__number{
+                        margin: 0 4px 0 8px;
+                    }
+                    
+                    .item__chap__isread{
+                        display:none;
+                    }
+                    
+                    .readed{
+                        background: rgba(255,143,92,.5);
+                    }
+                  
+  `}</style>
     </div>
   );
 }
+

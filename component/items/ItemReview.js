@@ -46,17 +46,7 @@ export default function ItemReview({ bookReview, book }) {
         <HeartOutlined className='icon__heart' />
       </div>
       <style jsx>{`
-        .item__review__book {
-          background: #ffffff;
-          box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
-          border-radius: 10px;
-          width: 100%;
-          margin: 0 4px 6px;
-          padding: 4px;
-          height: 110px;
-          position: relative;
-        }
-
+ 
         .item__review__book--img {
           width: 100%;
           max-height: 52px;
@@ -65,6 +55,19 @@ export default function ItemReview({ bookReview, book }) {
           align-items: center;
           justify-content: center;
         }
+
+   
+             .item__review__book{
+                   background: #FFFFFF;
+                    box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
+                    border-radius: 10px;
+                    width: 90%;
+                    margin: 0 4px 6px;
+                    padding:4px ;
+                    height: 110px;
+                    position:relative;
+              }
+
 
         .item__review__book--text {
           white-space: nowrap;
@@ -87,6 +90,7 @@ export default function ItemReview({ bookReview, book }) {
           margin-bottom: 4px;
           color: rgba(31, 30, 34, 0.6);
         }
+
 
         .item__review__book--content {
           width: 85%;
@@ -112,3 +116,5 @@ export default function ItemReview({ bookReview, book }) {
     </div>
   );
 }
+       
+      

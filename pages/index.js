@@ -1,5 +1,5 @@
 import Baner from '../component/common/Baner'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Main from '../layouts/Main'
 import TextHeading from '../component/common/TextHeading';
 import Card from '../component/items/Card';
@@ -10,6 +10,33 @@ import Bar from '../component/items/Bar';
 import CardCreater from '../component/items/CardCreater';
 
 export default function Home() {
+
+  const category=[
+    {
+      id:1,
+      name: 'All',
+    },
+    {
+      id:2,
+      name: 'New',
+    },
+    {
+      id:3,
+      name: 'Hot',
+    },
+    {
+      id:4,
+      name: 'Novel',
+    },
+    {
+      id:5,
+      name: 'Anime',
+    },
+    {
+      id:6,
+      name: 'Love',
+    },
+  ]
   useEffect(()=>{
     const btnBack= document.getElementsByClassName('btn__back')
     const btnNext= document.getElementsByClassName('btn__next')
@@ -29,8 +56,15 @@ export default function Home() {
         console.log("herr",slide.scrollLeft);
       })
     })
-  })
- 
+  },[])
+  
+  useEffect(()=>{
+    for( let i=0; i< category.length; i++){
+      const one= document.getElementById(`check__category__${category[0].id}`)
+      one.checked=true
+    }
+    
+  },[])
 
   return (
     <div >
@@ -58,11 +92,18 @@ export default function Home() {
               <TextHeading>Book Category</TextHeading>
               <div>
                 <div className='home__contaner__content--listfile'>
-                  <File></File>
-                  <File></File>
-                  <File></File>
-                  <File></File>
-                  <File></File>
+                  {
+                    category.map((categori)=>{
+                      // console.log(categori);
+                      return(
+                      <File key={categori.id} index={categori.id}  />)
+                    })
+                  }
+                  {/* <File index={category[1].id}></File> */}
+                  {/* <File index={2}></File>
+                  <File index={3}></File>
+                  <File index={4}></File>
+                  <File index={5}></File> */}
                 </div>
                 <Row align='middle'>
                   <Col lg={4}  sm={6} xs={12}>
