@@ -62,6 +62,8 @@ export default function Home() {
       const one = document.getElementById(`check__category__${category[0].id}`)
       one.checked = true
     }
+    
+
   }, [])
 
   return (
