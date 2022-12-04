@@ -1,4 +1,5 @@
 import { Row, Col, Button, Tabs } from 'antd';
+import { useState, useEffect } from 'react';
 import { EditOutlined, SettingOutlined, CameraFilled } from '@ant-design/icons';
 import Image from 'next/image';
 
@@ -7,10 +8,27 @@ import TextHeading from '../../component/common/TextHeading';
 import Card from '../../component/items/Card';
 
 import bannerUrl from '../../assets/images/background-profile-user.png';
-import Avatar from '../../assets/images/avatar1.jpg';
 import TabBook from '../../component/book/TabBook';
 
+import userApi from '../../utils/user';
+import getCookie from '../../utils/getCookie';
+
 export default function Profile() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const id = getCookie('id') || 4;
+    const getUser = async () => {
+      try {
+        const res = await userApi.get(id);
+        setUser(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUser();
+  }, []);
 
   return (
     <div>
@@ -27,7 +45,7 @@ export default function Profile() {
                 <div>
                   <div className='user-avatar'>
                     <Image
-                      src={Avatar}
+                      src={user?.avatar}
                       alt='Avatar'
                       layout='fill'
                       className='user-avatar-img'
@@ -69,7 +87,9 @@ export default function Profile() {
                   <div className='user-introduce-item user-intro'>
                     <span className='user-introduce-item-title'>Intro</span>
                     <div className='user-intro-text'>
-                      <span>I like write sad books {':))'} </span>
+                      <span>
+                        {user?.intro || 'Hiện chưa có phần giới thiệu'}
+                      </span>
                     </div>
                     <div className='edit-intro-btn'>
                       <Button className='btn'>Edit intro</Button>
@@ -78,25 +98,25 @@ export default function Profile() {
                   <div className='user-introduce-item'>
                     <span className='user-introduce-item-title'>Email:</span>
                     <span className='user-introduce-item-content'>
-                      abc@gmail.com
+                      {user?.email || 'Hiện chưa có email'}
                     </span>
                   </div>
                   <div className='user-introduce-item'>
                     <span className='user-introduce-item-title'>Phone:</span>
                     <span className='user-introduce-item-content'>
-                      0988731212
+                      {user?.phone || 'Hiện chưa có số điện thoại'}
                     </span>
                   </div>
                   <div className='user-introduce-item'>
                     <span className='user-introduce-item-title'>Address:</span>
                     <span className='user-introduce-item-content'>
-                      st1, Ho Chi Minh city, VN
+                      {user?.address || 'Hiện chưa có địa chỉ'}
                     </span>
                   </div>
                   <div className='user-introduce-item'>
                     <span className='user-introduce-item-title'>Hobbies:</span>
                     <span className='user-introduce-item-content'>
-                      Write book, play games
+                      {user?.hobbies || 'Hiện chưa có sở thích'}
                     </span>
                   </div>
                   <div className='edit-details-btn'>
@@ -109,9 +129,9 @@ export default function Profile() {
                   Reading
                 </TextHeading>
                 <div className='card-list'>
-                  <Card index={1}/>
-                  <Card index={2}/>
-                  <Card index={3}/>
+                  <Card index={1} />
+                  <Card index={2} />
+                  <Card index={3} />
                 </div>
               </Col>
             </Row>
@@ -246,7 +266,7 @@ export default function Profile() {
           height: 42px;
         }
 
-        .profile-tabs{
+        .profile-tabs {
           width: 90%;
           margin: 24px auto;
         }
@@ -270,7 +290,6 @@ export default function Profile() {
           border-radius: 50%;
         }
       `}</style>
-      
     </div>
   );
 }

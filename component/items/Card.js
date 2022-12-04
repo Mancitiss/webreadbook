@@ -9,7 +9,7 @@ export default function Card({index}){
     
     const [check, setCheck]= useState(false)
     const router= useRouter()
-    const hello='book1'
+    const hello='2'
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
     useEffect(()=>{
