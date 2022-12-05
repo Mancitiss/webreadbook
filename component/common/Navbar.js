@@ -1,16 +1,16 @@
-import Image from 'next/image'
-import Logo from '../../assets/images/logo.png'
-import LogoLogin from '../../assets/images/logo-login.png'
-import Link from 'next/link'
-import { Col, Row, Input, Button ,Modal,Avatar} from 'antd'
-import styles from '../../styles/Home.module.css'
+import Image from 'next/image';
+import Logo from '../../assets/images/logo.png';
+import LogoLogin from '../../assets/images/logo-login.png';
+import Link from 'next/link';
+import { Col, Row, Input, Button, Modal, Avatar } from 'antd';
+import styles from '../../styles/Home.module.css';
 import { useEffect, useState } from 'react';
-import { UserOutlined } from '@ant-design/icons'
-import AvatarLogin from '../../assets/images/avatar1.jpg'
-import axios from "axios";
+import { UserOutlined } from '@ant-design/icons';
+import AvatarLogin from '../../assets/images/avatar1.jpg';
+import axios from 'axios';
 const { Search } = Input;
 
-import cookies from 'react-cookies'
+import cookies from 'react-cookies';
 import {
   SearchOutlined,
   MenuOutlined,
@@ -21,16 +21,16 @@ import {
   ScheduleFilled,
   InfoCircleFilled,
   LogoutOutlined,
-  LoginOutlined
+  LoginOutlined,
 } from '@ant-design/icons';
-import { useRouter } from 'next/router'
-import { ApiError } from 'next/dist/server/api-utils'
+import { useRouter } from 'next/router';
+import { ApiError } from 'next/dist/server/api-utils';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 
-  const [isLogin, setLogin]= useState(true)
+  const [isLogin, setLogin] = useState(true);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -53,12 +53,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    var access_token = cookies.load("access_token")
-    if(access_token == null || access_token == ""){    
-      setLogin(false)
-    }
-    else{
-      setLogin(true)
+    var access_token = cookies.load('access_token');
+    if (access_token == null || access_token == '') {
+      setLogin(false);
+    } else {
+      setLogin(true);
     }
     const home = document.getElementById('home');
     const category = document.getElementById('category');
@@ -77,113 +76,103 @@ const Navbar = () => {
     }
   });
 
-  const getId = async()=>{
-    let token = cookies.load("access_token")
-    let data 
-    let res = await axios.get("http://127.0.0.1:8000/api/users/current-user/", {
-    headers: {
-        'Authorization': 'Bearer ' + token
+  const getId = async () => {
+    let token = cookies.load('access_token');
+    let data;
+    let res = await axios
+      .get('http://127.0.0.1:8000/api/users/current-user/', {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      })
+      .then((response) => {
+        data = response.data;
+        //cookies.save("Id", response.data.id)
+        localStorage.setItem('id', response.data.id);
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('avatar', response.data.avatar);
+        localStorage.setItem('nickname', response.data.nickname);
+        localStorage.setItem('email', response.data.email);
+        localStorage.setItem('intro', response.data.intro);
+        localStorage.setItem('hobbies', response.data.hobbies);
+        localStorage.setItem('address', response.data.address);
+        localStorage.setItem('phone', response.data.phone);
+      })
+      .catch((error) => console.log(error));
+    var access_token = cookies.load('access_token');
+    if (access_token == null || access_token == '') {
+      setLogin(false);
+    } else {
+      setLogin(true);
     }
-    })
-    .then(
-        response => {
-            data = response.data;
-            //cookies.save("Id", response.data.id)
-            localStorage.setItem ('id', response.data.id);
-            localStorage.setItem ('username', response.data.username);
-            localStorage.setItem ('avatar', response.data.avatar);
-            localStorage.setItem ('nickname', response.data.nickname);
-            localStorage.setItem ('intro', response.data.intro);
-            localStorage.setItem ('hobbies', response.data.hobbies);
-            localStorage.setItem ('address', response.data.address);
-            localStorage.setItem ('phone', response.data.phone);
-        }
-    )
-    .catch(
-        error => console.log(error)
-    );
-    var access_token = cookies.load("access_token")
-    if(access_token == null || access_token == ""){    
-      setLogin(false)
-    }
-    else{
-      setLogin(true)
-    }
-}
-  const checkLogin = async()=>{
-    let sttCode = 0
-    let sttCode_re = 0
-    let user = document.getElementById('username').value
-    let pass = document.getElementById('password').value
-    
-    if(!isModalLoginOpen){
-      let re_password = document.getElementById('re_password').value
-      if(re_password != pass){
-        alert("Password does not match")
-        return
+  };
+  const checkLogin = async () => {
+    let sttCode = 0;
+    let sttCode_re = 0;
+    let user = document.getElementById('username').value;
+    let pass = document.getElementById('password').value;
+
+    if (!isModalLoginOpen) {
+      let re_password = document.getElementById('re_password').value;
+      if (re_password != pass) {
+        alert('Password does not match');
+        return;
       }
       var FormData = require('form-data');
       var data = new FormData();
       data.append('username', user);
       data.append('password', pass);
-      let res = await axios.post("http://127.0.0.1:8000/api/users/", data)
-      .then(function (response) {
-        //console.log(JSON.stringify(response.data)),
-        alert("Sign Up Success"),
-        handleShowLoginModal();
-
-      })
-      .catch(
-          error => {
-            console.log(error),
-            alert("Account already exists")
-            }
+      let res = await axios
+        .post('http://127.0.0.1:8000/api/users/', data)
+        .then(function (response) {
+          //console.log(JSON.stringify(response.data)),
+          alert('Sign Up Success'), handleShowLoginModal();
+        })
+        .catch((error) => {
+          console.log(error), alert('Account already exists');
+        });
+    } else {
+      let res = await axios
+        .post('http://127.0.0.1:8000/o/token/', {
+          client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
+          client_secret:
+            'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
+          username: user,
+          password: pass,
+          grant_type: 'password',
+        })
+        .then((response) => {
+          cookies.save('access_token', response.data.access_token);
+          sttCode = response.status == 200;
+        })
+        .catch((error) => console.log(error));
+      if (sttCode) {
+        setLogin(true);
+        handleOk();
+        getId();
+      } else {
+        alert(
+          "We don't recognize that username or password. You can try again or use another login option."
         );
-    }
-    else {
-      let res = await axios.post("http://127.0.0.1:8000/o/token/", {
-        client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
-        client_secret: 'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
-        username: user,
-        password: pass,
-        grant_type: 'password'
-      })
-      .then(
-          response => {
-            cookies.save("access_token", response.data.access_token)
-            sttCode = response.status == 200
-          }
-        )
-      .catch(
-          error => console.log(error)
-        );
-      if(sttCode){
-        setLogin(true)
-        handleOk()
-        getId()
-       
-      }
-      else {
-        alert("We don't recognize that username or password. You can try again or use another login option.")
       }
     }
-
-  }
+  };
   // const [username, setUsername] = useState(null)
   // const [password, setPassword] = useState(null)
-  const router = useRouter()
-  const [users, setUsers]= useState([])
-  useEffect(()=>{
-
+  const router = useRouter();
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
     axios
-    .get('http://localhost:8000/users/')
-    .then((res) =>{setUsers(res.data)})
-    .catch((err) => console.log(err));
-  },[])
+      .get('http://localhost:8000/users/')
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // console.log(users);
   const [isModalOpenMobile, setIsModalOpenMobile] = useState(false);
-  const showModalMoblie = async() => {
+  const showModalMoblie = async () => {
     await setIsModalOpenMobile(true);
     const homeMobile = await document.getElementById('home__mobile');
     const categoryMobile = await document.getElementById('category__mobile');
@@ -222,10 +211,23 @@ const Navbar = () => {
       <div className='navbar-home'>
         <Row justify='center' align='middle'>
           <Col lg={0} sm={0} xs={6}>
-            <MenuOutlined onClick={showModalMoblie} style={{ fontSize: '32px' }} />
+            <MenuOutlined
+              onClick={showModalMoblie}
+              style={{ fontSize: '32px' }}
+            />
           </Col>
-          <Modal className='modal__menu__mobile' open={isModalOpenMobile} onOk={handleOkMobile} onCancel={handleCancelMobile}>
-            <div className='logo__web' onClick={()=>{router.push('/')}}>
+          <Modal
+            className='modal__menu__mobile'
+            open={isModalOpenMobile}
+            onOk={handleOkMobile}
+            onCancel={handleCancelMobile}
+          >
+            <div
+              className='logo__web'
+              onClick={() => {
+                router.push('/');
+              }}
+            >
               <Image
                 src={Logo}
                 alt='Logo trang web doc truyen'
@@ -234,56 +236,59 @@ const Navbar = () => {
               />
             </div>
             <div className='modal__menu__mobile__content'>
-              <Search
-                placeholder="Search..."
-                onSearch={onSearch}
-              />
+              <Search placeholder='Search...' onSearch={onSearch} />
               <div className='menu__moblie'>
                 <div id='home__mobile' className='menu__moblie--btn'>
-                  <HomeFilled className='icon__home__mobile'/>
+                  <HomeFilled className='icon__home__mobile' />
                   <Link href='/'>
-                    <a  className='navbar__home__link'>
-                      Home
-                    </a>
+                    <a className='navbar__home__link'>Home</a>
                   </Link>
                 </div>
                 <div id='category__mobile' className='menu__moblie--btn'>
-                  <FolderOpenFilled className='icon__home__mobile'/>
+                  <FolderOpenFilled className='icon__home__mobile' />
                   <Link href='/category'>
-                    <a  className='navbar__home__link'>
-                      Category
-                    </a>
+                    <a className='navbar__home__link'>Category</a>
                   </Link>
                 </div>
-                { isLogin ? (
+                {isLogin ? (
                   <div id='profile__mobile' className='menu__moblie--btn'>
-                  <ScheduleFilled className='icon__home__mobile'/>
-                  <Link href='/profile'>
-                    <a  className='navbar__home__link'>
-                      Profile
-                    </a>
-                  </Link>
-                </div>
-                ):(
+                    <ScheduleFilled className='icon__home__mobile' />
+                    <Link href='/profile'>
+                      <a className='navbar__home__link'>Profile</a>
+                    </Link>
+                  </div>
+                ) : (
                   <></>
                 )}
                 <div id='about__mobile' className='menu__moblie--btn'>
-                  <InfoCircleFilled  className='icon__home__mobile'/>
+                  <InfoCircleFilled className='icon__home__mobile' />
                   <Link href='/abouts'>
-                    <a  className='navbar__home__link'>
-                      Abouts
-                    </a>
+                    <a className='navbar__home__link'>Abouts</a>
                   </Link>
                 </div>
               </div>
-              <div >
-                {isLogin ? (<div className='memu__mobile__footer'><LogoutOutlined className='icon__login--logout'/> <span>Logout</span></div>)
-                :(<div className='memu__mobile__footer'><LoginOutlined  className='icon__login--logout'/> <span>Login</span></div>)}
+              <div>
+                {isLogin ? (
+                  <div className='memu__mobile__footer'>
+                    <LogoutOutlined className='icon__login--logout' />{' '}
+                    <span>Logout</span>
+                  </div>
+                ) : (
+                  <div className='memu__mobile__footer'>
+                    <LoginOutlined className='icon__login--logout' />{' '}
+                    <span>Login</span>
+                  </div>
+                )}
               </div>
             </div>
           </Modal>
           <Col lg={2} sm={2} xs={12}>
-            <div className='logo-web' onClick={()=>{router.push('/')}}>
+            <div
+              className='logo-web'
+              onClick={() => {
+                router.push('/');
+              }}
+            >
               <Image
                 src={Logo}
                 alt='Logo trang web doc truyen'
@@ -325,17 +330,23 @@ const Navbar = () => {
             />
           </Col>
           <Col lg={2} sm={3} xs={6}>
-            {
-              !isLogin ? <Button
-              className='btn__header__login'
-              onClick={handleShowLoginModal}
-            >
-              Login
-            </Button>: <div onClick={()=>{router.push('/profile')}} className='navbar__home__avatar'>
-              <Image src={AvatarLogin}  />
-            </div>
-            
-            }
+            {!isLogin ? (
+              <Button
+                className='btn__header__login'
+                onClick={handleShowLoginModal}
+              >
+                Login
+              </Button>
+            ) : (
+              <div
+                onClick={() => {
+                  router.push('/profile');
+                }}
+                className='navbar__home__avatar'
+              >
+                <Image src={AvatarLogin} />
+              </div>
+            )}
           </Col>
         </Row>
         <Modal
@@ -389,14 +400,16 @@ const Navbar = () => {
               </Col>
             </Row>
             <div className='contaner__modal__login-input'>
-              <label className='contaner__modal__login-input-text'>Username</label>
-              <Input 
-                id="username"
-                className='input-login' 
-                placeholder='Username' 
-                // field={username} 
+              <label className='contaner__modal__login-input-text'>
+                Username
+              </label>
+              <Input
+                id='username'
+                className='input-login'
+                placeholder='Username'
+                // field={username}
                 // change={event => setUsername(event.target.value)}
-                />
+              />
             </div>
             <div className='contaner__modal__login-input'>
               <div className='contaner__modal__login-forgot'>
@@ -406,10 +419,10 @@ const Navbar = () => {
                 {isModalLoginOpen && <span>Forgot password ?</span>}
               </div>
               <Input.Password
-                id="password"
+                id='password'
                 className='input-login'
                 placeholder='Your password'
-                // field={password} 
+                // field={password}
                 // change={event => setPassword(event.target.value)
               />
             </div>
@@ -421,14 +434,19 @@ const Navbar = () => {
                   </label>
                 </div>
                 <Input.Password
-                  id="re_password"
+                  id='re_password'
                   className='input-login'
                   placeholder='Confirm password'
                 />
               </div>
             )}
 
-            <Button className='btn__modal__login'   onClick={()=>{checkLogin()}}>
+            <Button
+              className='btn__modal__login'
+              onClick={() => {
+                checkLogin();
+              }}
+            >
               {isModalLoginOpen ? 'Login' : 'Register'}
             </Button>
           </div>
@@ -464,7 +482,7 @@ const Navbar = () => {
           color: #ff8f5c;
         }
 
-        .navbar__home__avatar{
+        .navbar__home__avatar {
           height: 52px;
           width: 52px;
           border-radius: 50%;
@@ -474,7 +492,7 @@ const Navbar = () => {
           cursor: pointer;
         }
 
-        .navbar__home__avatar:hover{
+        .navbar__home__avatar:hover {
           scale: 1.2;
           box-shadow: 6px 6px 10px #ccc;
         }
@@ -685,7 +703,7 @@ const Navbar = () => {
           box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.25);
         }
 
-        .modal__menu__mobile{
+        .modal__menu__mobile {
           height: 100vh;
           width: 63% !important;
           position: fixed;
@@ -695,59 +713,59 @@ const Navbar = () => {
           padding-bottom: 0;
         }
 
-        .modal__menu__mobile .ant-modal-content{
+        .modal__menu__mobile .ant-modal-content {
           height: 100%;
         }
 
-        .modal__menu__mobile .ant-modal-footer{
-          display:none;
+        .modal__menu__mobile .ant-modal-footer {
+          display: none;
         }
 
-        .modal__menu__mobile .ant-modal-close-x{
-          color: #F19DA1;
-          font-size:20px
+        .modal__menu__mobile .ant-modal-close-x {
+          color: #f19da1;
+          font-size: 20px;
         }
 
-        .modal__menu__mobile .logo__web{
+        .modal__menu__mobile .logo__web {
           display: flex;
           justify-content: center;
           align-items: center;
         }
 
-        .modal__menu__mobile .modal__menu__mobile__content{
+        .modal__menu__mobile .modal__menu__mobile__content {
           margin: 30px auto;
         }
 
-        .modal__menu__mobile .ant-input{
-          background: #FFF0E9;
+        .modal__menu__mobile .ant-input {
+          background: #fff0e9;
           border-radius: 10px 0 0 10px;
           height: 42px;
           border: none;
           color: rgba(255, 143, 92, 0.7);
           font-size: 14px;
         }
-        .modal__menu__mobile .ant-input-search .ant-input:hover, 
-        .modal__menu__mobile .ant-input-search .ant-input:focus{
-          border:none;
+        .modal__menu__mobile .ant-input-search .ant-input:hover,
+        .modal__menu__mobile .ant-input-search .ant-input:focus {
+          border: none;
         }
-        .modal__menu__mobile .ant-input-search-button{
-          background: #FFF0E9;
+        .modal__menu__mobile .ant-input-search-button {
+          background: #fff0e9;
           border-radius: 0 10px 10px 0 !important;
           height: 42px;
           border: none;
-          color: rgba(255,143,92,.7) !important;
+          color: rgba(255, 143, 92, 0.7) !important;
         }
 
-        .modal__menu__mobile .menu__moblie{
-          margin:20px auto;
+        .modal__menu__mobile .menu__moblie {
+          margin: 20px auto;
           font-size: 16px;
           font-weight: bold;
-          color: #FF8F5C;
+          color: #ff8f5c;
         }
 
         .modal__menu__mobile .menu__moblie .menu__moblie--btn,
-        .modal__menu__mobile .memu__mobile__footer{
-          background: #FFFFFF;
+        .modal__menu__mobile .memu__mobile__footer {
+          background: #ffffff;
           border-radius: 5px;
           height: 42px;
           width: 100%;
@@ -757,22 +775,21 @@ const Navbar = () => {
           margin: 4px 0;
         }
 
-
-        .active__mobile{
-          color:#fff;
-          background: #FF8F5C !important;
+        .active__mobile {
+          color: #fff;
+          background: #ff8f5c !important;
           box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
         }
 
-        .modal__menu__mobile .icon__home__mobile{
-          font-size:24px
+        .modal__menu__mobile .icon__home__mobile {
+          font-size: 24px;
         }
 
-        .modal__menu__mobile .navbar__home__link{
-          margin:0 16px;
+        .modal__menu__mobile .navbar__home__link {
+          margin: 0 16px;
         }
 
-        .modal__menu__mobile .memu__mobile__footer{
+        .modal__menu__mobile .memu__mobile__footer {
           display: flex;
           font-size: 16px;
           font-weight: bolder;
@@ -780,31 +797,34 @@ const Navbar = () => {
           bottom: 24px;
           width: unset;
           align-items: center;
-          color: #E75C62;
-          background: #FFF0E9;
+          color: #e75c62;
+          background: #fff0e9;
         }
 
-        .modal__menu__mobile .memu__mobile__footer .icon__login--logout{
+        .modal__menu__mobile .memu__mobile__footer .icon__login--logout {
           font-size: 24px;
           margin-right: 12px;
         }
 
-        @media  (max-width: 576px){
-          .modal__login .contaner__modal__login .btn__contaner__loginGG{
-            font-size:18px;
+        @media (max-width: 576px) {
+          .modal__login .contaner__modal__login .btn__contaner__loginGG {
+            font-size: 18px;
             padding: 0 8px;
           }
 
-          .modal__login .contaner__modal__login .btn__contaner__loginGG>.anticon-google{
-            margin-right:4px
+          .modal__login
+            .contaner__modal__login
+            .btn__contaner__loginGG
+            > .anticon-google {
+            margin-right: 4px;
           }
 
-          .modal__login .contaner__modal__login .ant-btn > .anticon + span{
-            margin-left:2px
+          .modal__login .contaner__modal__login .ant-btn > .anticon + span {
+            margin-left: 2px;
           }
 
-          .modal__login .header__modal__login .header__modal__login-signup>p{
-            font-size:14px
+          .modal__login .header__modal__login .header__modal__login-signup > p {
+            font-size: 14px;
           }
         }
       `}</style>

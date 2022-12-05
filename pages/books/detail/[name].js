@@ -55,7 +55,7 @@ export default function BookInfo() {
     const getChapters = async () => {
       try {
         const res = await bookApi.getChapters(id);
-        setChapterList(res.data)
+        setChapterList(res.data);
       } catch (error) {}
     };
     getChapters();
@@ -76,7 +76,13 @@ export default function BookInfo() {
             <Row>
               <Col span={18}>
                 <div>
-                  <BookDetail book={book} newChapterList = {chapterList.slice(chapterList.length - 3, chapterList.length)}></BookDetail>
+                  <BookDetail
+                    book={book}
+                    newChapterList={chapterList.slice(
+                      chapterList.length - 3,
+                      chapterList.length
+                    )}
+                  ></BookDetail>
                 </div>
                 <div className='book__detail__content__listchap'>
                   <Row>
@@ -86,9 +92,10 @@ export default function BookInfo() {
                       </div>
                     </Col>
                     {chapterList.map((chap, index) => (
-                    <Col span={12} key={index}>
-                      <Chap chap={chap} book ={book}/>
-                    </Col> ))}
+                      <Col span={12} key={index}>
+                        <Chap chap={chap} book={book} />
+                      </Col>
+                    ))}
                   </Row>
                 </div>
                 <div className='book__detail__content__comment'>
@@ -144,64 +151,62 @@ export default function BookInfo() {
               </Col>
             </Row>
           </div>
-
-  </Main>
-
-            <style jsx>{`
-                .book__detail{
-                    margin: 92px 24px 24px;
-                }
-
-                .book__detail__navbar__review--title{
-                    font-weight: 700;
-                    font-size: 18px;
-                    line-height: 22px;
-                    color: #FF8F5C;
-                    margin:0 0 16px;
-                }
-
-                .book__detail__content__listchap--title{
-                    float: left;
-                    margin: 12px 24px;
-                }
-
-                .book__detail__content__comment--comment{
-                    width:85%;
-                    margin:12px auto;
-                }
-
-                .book__detail__content__similar{
-                    margin:24px 0;
-                }
-
-                @media  (max-width: 992px)and (min-width:577px) {
-                    
-                }
-                
-                @media  (max-width: 576px){
-                    .book__detail{
-                        margin:92px 12px 12px
-                    }
-                   
-                }
-            `}</style>
-
-            <style jsx global>{`
-                .book__detail .book__detail__breadcurmb{
-                    font-weight: 700;
-                    font-size: 18px;
-                    line-height: 36px;
-                }
-
-                .book__detail .book__detail__breadcurmb .icon__book{
-                    font-size:26px;
-                    color:#FF8F5C;
-                }
-
-                .book__detail .book__detail__content .anticon-read{
-                    font-size: 24px;
-                    margin: 0px 6px;
-                }
-            `}</style>
         </div>
- </Main>
+      </Main>
+      <style jsx>{`
+        .book__detail {
+          margin: 92px 24px 24px;
+        }
+
+        .book__detail__navbar__review--title {
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 22px;
+          color: #ff8f5c;
+          margin: 0 0 16px;
+        }
+
+        .book__detail__content__listchap--title {
+          float: left;
+          margin: 12px 24px;
+        }
+
+        .book__detail__content__comment--comment {
+          width: 85%;
+          margin: 12px auto;
+        }
+
+        .book__detail__content__similar {
+          margin: 24px 0;
+        }
+
+        @media (max-width: 992px) and (min-width: 577px) {
+        }
+
+        @media (max-width: 576px) {
+          .book__detail {
+            margin: 92px 12px 12px;
+          }
+        }
+      `}</style>
+
+      <style jsx global>{`
+        .book__detail .book__detail__breadcurmb {
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 36px;
+        }
+
+        .book__detail .book__detail__breadcurmb .icon__book {
+          font-size: 26px;
+          color: #ff8f5c;
+        }
+
+        .book__detail .book__detail__content .anticon-read {
+          font-size: 24px;
+          margin: 0px 6px;
+        }
+      `}</style>
+    </div>
+  );
+}

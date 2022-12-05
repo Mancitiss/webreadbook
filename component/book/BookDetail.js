@@ -6,7 +6,6 @@ import Book1 from '../../assets/images/baner-book1.png';
 import Chap from '../items/Chap';
 
 export default function BookDetail({ book, newChapterList }) {
-
   const [categoryList, setCategoryList] = useState([]);
 
   useEffect(() => {
@@ -21,18 +20,18 @@ export default function BookDetail({ book, newChapterList }) {
     getCategories();
   }, [book]);
 
-    return(
-        <div>
-            <div className="component__detail">
-                <Row>
-                    <Col  lg={8}  sm={12} xs={24}>
-                        <div className='component__detail__img'>
+  return (
+    <div>
+      <div className='component__detail'>
+        <Row>
+          <Col lg={8} sm={12} xs={24}>
+            <div className='component__detail__img'>
               <Image
                 src={book?.image || Book1}
                 layout='fixed'
                 alt='hinh bia sach'
               />
-                        </div>
+            </div>
             <div className='component__detail__info'>
               <Row>
                 <Col span={12}>
@@ -65,7 +64,7 @@ export default function BookDetail({ book, newChapterList }) {
               <Rate
                 className='component__detail__information--rate'
                 allowHalf
-                defaultValue={Number(book?.rating)}
+                value={Number(book?.rating)}
                 disabled
               />
             </div>
@@ -79,13 +78,9 @@ export default function BookDetail({ book, newChapterList }) {
               <div className='component__detail__new--chap'>
                 <h3 className='component__detail__content--title'>New chap</h3>
                 <div className='component__detail__new--listchap'>
-                  {newChapterList.map(
-                    (
-                      chap 
-                    ) => (
-                      <Chap chap={chap} book={book} key={chap.id} />
-                    )
-                  )}
+                  {newChapterList.map((chap) => (
+                    <Chap chap={chap} book={book} key={chap.id} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -174,4 +169,3 @@ export default function BookDetail({ book, newChapterList }) {
     </div>
   );
 }
-
