@@ -13,39 +13,68 @@ const { Option } = Select;
 let index = 0;
 
 export default function EditBookContent() {
-    const mainContent = ""
+
+    const addStory = () => {
+        console.log(nameBook)
+        console.log(mainContent)
+        console.log(estimate)
+        console.log(imgBook)
+        var formdata = new FormData();
+        formdata.append("story_name", nameBook);
+        formdata.append("category_name", "1");
+        formdata.append("create_date", "");
+        formdata.append("author", localStorage.getItem("id"));
+        formdata.append("image", file);
+        formdata.append("total_chapters", estimate);
+        formdata.append("user", localStorage.getItem("id"));
+        formdata.append("showtimes", "2 4 6");
+        formdata.append("rating", "");
+        formdata.append("views", "");
+        formdata.append("introduce", mainContent);
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/api/story/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
     const onChange = (e) => {
         console.log(e);
-      };
-    
-    const [items, setItems] = useState(['jack', 'lucy']);
+    };
+    const [mainContent, setMainContent] = useState("")
+    const [items, setItems] = useState([]);
     const [name, setName] = useState('');
     const [imgBook, setImgBook] = useState('')
+    const [estimate, setEstimate] = useState('')
+    const [nameBook, setNameBook] = useState('')
+    const [file, setFile] = useState(null)
     // const inputRef = useRef(null);
     const onNameChange = (event) => {
-    setName(event.target.value);
+        setName(event.target.value);
     };
     const addItem = (e) => {
         e.preventDefault();
         setItems([...items, name || `New item ${index++}`]);
         setName('');
-        // setTimeout(() => {
-        //   inputRef.current?.focus();
-        // }, 0);
     };
-    const [attribute, setAtrribute]= useState(true)
-    useEffect(()=>{
+    const [attribute, setAtrribute] = useState(true)
+    useEffect(() => {
 
         const textArea = document.querySelector('.component__detail__edit__content--detail')
-        if(attribute === false){
+        if (attribute === false) {
             textArea.removeAttribute('readOnly')
         }
-    },[attribute])
-    const updateImage=(e)=>{
+    }, [attribute])
+    const updateImage = (e) => {
         // console.log(e.target.files[0]);
-        const img= URL.createObjectURL(e.target.files[0])
-        console.log(img);
+        const img = URL.createObjectURL(e.target.files[0])
         setImgBook(img)
+        setFile(e.target.files[0])
     }
     const handleChange = (value) => {
         console.log(`selected ${value}`);
@@ -66,18 +95,18 @@ export default function EditBookContent() {
         <div>
             <div className="component__detail__edit">
                 <Row>
-                    <Col lg={8}  sm={12} xs={24}>
-                        <input type={'file'} style={{display:'none'}} id='update__baner__book' onChange={updateImage}/>
+                    <Col lg={8} sm={12} xs={24}>
+                        <input type={'file'} style={{ display: 'none' }} id='update__baner__book' onChange={updateImage} />
                         {
                             imgBook ? (
                                 <div className="component__detail__edit__img">
-                                    <Image src={imgBook} layout='fill' alt='hinh bia sach'  height={310}/>
-                                    <label htmlFor="update__baner__book"><div  className="component__detail__edit__content--icon icon__edit" >
+                                    <Image src={imgBook} layout='fill' alt='hinh bia sach' height={310} />
+                                    <label htmlFor="update__baner__book"><div className="component__detail__edit__content--icon icon__edit" >
                                         <EditFilled />
                                     </div></label>
                                 </div>
 
-                            ):(
+                            ) : (
                                 <div>
                                     <label htmlFor="update__baner__book"><div className="upload__img__book">
                                         <PlusCircleOutlined />
@@ -91,25 +120,29 @@ export default function EditBookContent() {
                                     <div className="component__detail__edit__information">
                                         <div className="input__name__book">
                                             <p className="title__input__name">Name book :</p>
-                                            <Input className="input__name__book--input" placeholder="Your book name" />
+                                            <Input className="input__name__book--input" placeholder="Your book name" onChange={event => setNameBook(event.target.value)} />
                                             <p className="title__input__name">Category</p>
                                             <Select className=" select__chap__edit" placeholder="Choose your category"  onChange={handleChange} options={category}></Select>
-                                            <span  className="title__input__name">Chap estimate :</span>
-                                            <InputNumber className="input__number__chap" min={1} max={999} defaultValue={1} bordered={false} />
+                                            <span className="title__input__name">Chap estimate :</span>
+                                            <Input className="input__number__chap" onChange={event => setEstimate(event.target.value)} />
                                         </div>
-                                        
+
                                     </div>
                                 </Col>
                             </Row>
                         </div>
                     </Col>
-                    <Col lg={16}  sm={12} xs={24}>
+                    <Col lg={16} sm={12} xs={24}>
                         <div className="component__detail__edit__content">
                             <h3 className="component__detail__edit__content--title">Main content</h3>
-                            <span className="component__detail__edit__content--icon" onClick={()=>{setAtrribute(false)}} >
+                            <span className="component__detail__edit__content--icon" onClick={() => { setAtrribute(false) }} >
                                 <EditFilled />
                             </span>
-                            <TextArea onClick={()=>{setAtrribute(false)}} className="component__detail__edit__content--detail" defaultValue={mainContent} allowClear readOnly onChange={onChange} />
+                            <TextArea onClick={() => { setAtrribute(false) }} className="component__detail__edit__content--detail" defaultValue={mainContent} allowClear readOnly onChange={event => setMainContent(event.target.value)} />
+
+                        </div>
+                        <div className="component__detail__edit__content--btn">
+                            <Button className="btn__save__edit" onClick={() => { addStory() }} >Save</Button>
                         </div>
                     </Col>
                     <Col span={24}>
@@ -121,33 +154,33 @@ export default function EditBookContent() {
                             </Col>
                         </Row>
                         <div className="component__detail__edit--choosechap">
-                            <h3 className="component__detail__edit__content--title" style={{display: 'block'}}>Name chap</h3>
+                            <h3 className="component__detail__edit__content--title" style={{ display: 'block' }}>Name chap</h3>
                             <Select
-                            className=" select__chap__edit"
-                            placeholder="Add your chap name"
-                            popupClassName='select__chap__edit--dropdown'
-                            dropdownRender={(menu) => (
-                                <>
-                                {menu}
-                                    <Input
-                                    placeholder="Please enter item"
-                                    // ref={inputRef}
-                                    value={name}
-                                    onChange={onNameChange}
-                                    />
-                                    <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-                                    Add item
-                                    </Button>
-                                </>
-                            )}
+                                className=" select__chap__edit"
+                                placeholder="Add your chap name"
+                                popupClassName='select__chap__edit--dropdown'
+                                dropdownRender={(menu) => (
+                                    <>
+                                        {menu}
+                                        <Input
+                                            placeholder="Please enter item"
+                                            // ref={inputRef}
+                                            value={name}
+                                            onChange={onNameChange}
+                                        />
+                                        <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
+                                            Add item
+                                        </Button>
+                                    </>
+                                )}
                             >
-                            {items.map((item) => (
-                                <Option key={item}>{item}</Option>
+                                {items.map((item) => (
+                                    <Option key={item}>{item}</Option>
                                 ))}
                             </Select>
 
-                            <h3 className="component__detail__edit__content--title" style={{display: 'block'}}>Content</h3>
-                            <TextArea className="component__detail__edit__content--detail component__detail__edit__content--content"  allowClear onChange={onChange} />
+                            <h3 className="component__detail__edit__content--title" style={{ display: 'block' }}>Content</h3>
+                            <TextArea className="component__detail__edit__content--detail component__detail__edit__content--content" allowClear onChange={onChange} />
                         </div>
                         <div className="component__detail__edit__content--btn">
                             <Button className="btn__cancel__edit">Cancel</Button>
