@@ -236,6 +236,10 @@ export default function Category(){
                     width:100%;
                     margin-bottom: 8px;
                 }
+
+                .category__contaner__content--listfile:hover{
+                    overflow-x:scroll;
+                }
                 
                 .category__silder__title{
                     float: left;
