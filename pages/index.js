@@ -101,11 +101,6 @@ export default function Home() {
                       <File index={categori.id} name={categori.category_name}  />)
                     })
                   }
-                  {/* <File index={category[1].id}></File> */}
-                  {/* <File index={2}></File>
-                  <File index={3}></File>
-                  <File index={4}></File>
-                  <File index={5}></File> */}
                 </div>
                 <Row align='middle'>
                   <Col lg={4}  sm={6} xs={12}>
