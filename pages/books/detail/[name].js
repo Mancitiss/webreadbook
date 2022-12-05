@@ -9,7 +9,6 @@ import Chap from '../../../component/items/Chap';
 import TextHeading from '../../../component/common/TextHeading';
 import CommentBook from '../../../component/book/CommentBook';
 import Card from '../../../component/items/Card';
-
 import bookApi from '../../../utils/book';
 
 export default function BookInfo() {

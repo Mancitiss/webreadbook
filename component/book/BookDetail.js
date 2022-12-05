@@ -2,7 +2,6 @@ import { Row, Col, Rate } from 'antd';
 import { useState, useEffect } from 'react';
 import bookApi from '../../utils/book';
 import Image from 'next/image';
-import Book1 from '../../assets/images/baner-book1.png';
 import Chap from '../items/Chap';
 
 export default function BookDetail({ book, newChapterList }) {
@@ -27,8 +26,9 @@ export default function BookDetail({ book, newChapterList }) {
           <Col lg={8} sm={12} xs={24}>
             <div className='component__detail__img'>
               <Image
-                src={book?.image || Book1}
-                layout='fixed'
+                src={book?.image || ''}
+                width={279}
+                height={279}
                 alt='hinh bia sach'
               />
             </div>

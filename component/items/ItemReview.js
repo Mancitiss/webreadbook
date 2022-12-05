@@ -2,7 +2,6 @@ import { Col, Row } from 'antd';
 import { useState, useEffect } from 'react';
 import { HeartOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-import Book1 from '../../assets/images/book-1.png';
 import userApi from '../../utils/user';
 
 export default function ItemReview({ bookReview, book }) {
@@ -28,7 +27,12 @@ export default function ItemReview({ bookReview, book }) {
         <Row>
           <Col span={6}>
             <div className='item__review__book--img'>
-              <Image src={book?.image || Book1} alt='bia sach' />
+              <Image
+                src={book?.image || ''}
+                alt='bia sach'
+                width={60}
+                height={52}
+              />
             </div>
           </Col>
           <Col span={18}>
@@ -40,13 +44,10 @@ export default function ItemReview({ bookReview, book }) {
             </div>
           </Col>
         </Row>
-        <p className='item__review__book--content'>
-          {bookReview?.content}
-        </p>
+        <p className='item__review__book--content'>{bookReview?.content}</p>
         <HeartOutlined className='icon__heart' />
       </div>
       <style jsx>{`
- 
         .item__review__book--img {
           width: 100%;
           max-height: 52px;
@@ -56,18 +57,16 @@ export default function ItemReview({ bookReview, book }) {
           justify-content: center;
         }
 
-   
-             .item__review__book{
-                   background: #FFFFFF;
-                    box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
-                    border-radius: 10px;
-                    width: 90%;
-                    margin: 0 4px 6px;
-                    padding:4px ;
-                    height: 110px;
-                    position:relative;
-              }
-
+        .item__review__book {
+          background: #ffffff;
+          box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
+          border-radius: 10px;
+          width: 90%;
+          margin: 0 4px 6px;
+          padding: 4px;
+          height: 110px;
+          position: relative;
+        }
 
         .item__review__book--text {
           white-space: nowrap;
@@ -90,7 +89,6 @@ export default function ItemReview({ bookReview, book }) {
           margin-bottom: 4px;
           color: rgba(31, 30, 34, 0.6);
         }
-
 
         .item__review__book--content {
           width: 85%;
@@ -116,5 +114,3 @@ export default function ItemReview({ bookReview, book }) {
     </div>
   );
 }
-       
-      
