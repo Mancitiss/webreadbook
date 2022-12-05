@@ -5,7 +5,7 @@ const { TextArea } = Input;
 import { EditFilled } from "@ant-design/icons";
 import TextHeading from "../common/TextHeading";
 import { PlusOutlined } from '@ant-design/icons';
-import { Divider, Input, Select, Space, Button } from 'antd';
+import { Divider, Input, Select, Space, Button, InputNumber } from 'antd';
 import { useState, useRef, useEffect } from 'react';
 import { PlusCircleOutlined } from "@ant-design/icons";
 const { Option } = Select;
@@ -75,8 +75,13 @@ export default function EditBookContent() {
                             <Row>
                                 <Col span={24}>
                                     <div className="component__detail__edit__information">
-                                        <h1 className="component__detail__edit__information--name">Love story Vault</h1>
-                                        <Rate className="component__detail__edit__information--rate" allowHalf defaultValue={4.5} disabled />
+                                        <div className="input__name__book">
+                                            <p className="title__input__name">Name book :</p>
+                                            <Input className="input__name__book--input" placeholder="Your book name" />
+                                            <span className="title__input__name">Chap estimate :</span>
+                                            <InputNumber className="input__number__chap" min={1} max={999} defaultValue={1} bordered={false} />
+                                        </div>
+                                        
                                     </div>
                                 </Col>
                             </Row>
@@ -171,6 +176,14 @@ export default function EditBookContent() {
 
                 .component__detail__edit__information--name{
                     margin:0;
+                }
+                
+                .input__name__book{
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #1f1e22;
+                    text-align: left;
                 }
 
                 .component__detail__edit__content--title{
@@ -288,6 +301,32 @@ export default function EditBookContent() {
                     font-size: 18px;
                     font-weight: 530;
                     text-transform: capitalize;
+                }
+
+                .component__detail__edit  .input__name__book--input{
+                    height: 48px;
+                    background: #fff;
+                    -webkit-box-shadow: 0px 0px 4px 1px rgb(0 0 0 / 25%), inset 1px 2px 4px rgb(0 0 0 / 25%);
+                    -moz-box-shadow: 0px 0px 4px 1px rgb(0 0 0/25%),inset 1px 2px 4px rgb(0 0 0/25%);
+                    box-shadow: 0px 0px 4px 1px rgb(0 0 0 / 25%), inset 1px 2px 4px rgb(0 0 0 / 25%);
+                    -webkit-border-radius: 10px;
+                    -moz-border-radius: 10px;
+                    border-radius: 10px;
+                    border: none;
+                    font-size: 14px;
+                    font-weight: 530;
+                    margin-bottom: 16px;
+                }
+
+                .component__detail__edit .input__number__chap{
+                    margin: 0 16px;
+                    font-size: 20px;
+                    color: #ff8f5c;
+                }
+                
+                .component__detail__edit .input__number__chap input{
+                    font-weight: bolder;
+
                 }
 
                 .component__detail__edit .ant-select-single .ant-select-selector .ant-select-selection-placeholder,
