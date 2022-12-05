@@ -8,20 +8,47 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Divider, Input, Select, Space, Button, InputNumber } from 'antd';
 import { useState, useRef, useEffect } from 'react';
 import { PlusCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
 const { Option } = Select;
 
 let index = 0;
 
 export default function EditBookContent() {
-
+    const [category, setCategory] = useState([]);
+  
+  
+    async function getCategory() {
+      let data_new = []
+      let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
+        .then(
+          response => {
+            let data = response.data
+            for (let temp of data) {
+              let ob = 
+                {
+                  value: temp.id,
+                  label: temp.category_name,
+                }
+                data_new.push(ob)
+            };
+            
+          }
+        )
+        .catch(
+          error => console.log(error)
+        );
+        setCategory(data_new)
+        console.log(data_new)
+    }
     const addStory = () => {
-        console.log(nameBook)
-        console.log(mainContent)
-        console.log(estimate)
-        console.log(imgBook)
+        // console.log(nameBook)
+        // console.log(mainContent)
+        // console.log(estimate)
+        // console.log(imgBook)
+        // console.log(cata)
         var formdata = new FormData();
         formdata.append("story_name", nameBook);
-        formdata.append("category_name", "1");
+        formdata.append("category_name", cata);
         formdata.append("create_date", "");
         formdata.append("author", localStorage.getItem("id"));
         formdata.append("image", file);
@@ -46,6 +73,7 @@ export default function EditBookContent() {
     const onChange = (e) => {
         console.log(e);
     };
+    const [cata, setCata] = useState("");
     const [mainContent, setMainContent] = useState("")
     const [items, setItems] = useState([]);
     const [name, setName] = useState('');
@@ -64,7 +92,7 @@ export default function EditBookContent() {
     };
     const [attribute, setAtrribute] = useState(true)
     useEffect(() => {
-
+        getCategory()
         const textArea = document.querySelector('.component__detail__edit__content--detail')
         if (attribute === false) {
             textArea.removeAttribute('readOnly')
@@ -77,19 +105,10 @@ export default function EditBookContent() {
         setFile(e.target.files[0])
     }
     const handleChange = (value) => {
-        console.log(`selected ${value}`);
+        setCata(value)
+        //console.log(`selected ${value}`);
       };
 
-    const category= [
-        {
-            value:"trinh tham",
-            label: "Trinh tham"
-        },
-        {
-            value:"love",
-            label:"Love"
-        }
-    ]
 
     return (
         <div>
