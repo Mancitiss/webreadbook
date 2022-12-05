@@ -47,6 +47,20 @@ export default function EditBookContent() {
         console.log(img);
         setImgBook(img)
     }
+    const handleChange = (value) => {
+        console.log(`selected ${value}`);
+      };
+
+    const category= [
+        {
+            value:"trinh tham",
+            label: "Trinh tham"
+        },
+        {
+            value:"love",
+            label:"Love"
+        }
+    ]
 
     return (
         <div>
@@ -78,7 +92,9 @@ export default function EditBookContent() {
                                         <div className="input__name__book">
                                             <p className="title__input__name">Name book :</p>
                                             <Input className="input__name__book--input" placeholder="Your book name" />
-                                            <span className="title__input__name">Chap estimate :</span>
+                                            <p className="title__input__name">Category</p>
+                                            <Select className=" select__chap__edit" placeholder="Choose your category"  onChange={handleChange} options={category}></Select>
+                                            <span  className="title__input__name">Chap estimate :</span>
                                             <InputNumber className="input__number__chap" min={1} max={999} defaultValue={1} bordered={false} />
                                         </div>
                                         
@@ -319,7 +335,7 @@ export default function EditBookContent() {
                 }
 
                 .component__detail__edit .input__number__chap{
-                    margin: 0 16px;
+                    margin: 16px;
                     font-size: 20px;
                     color: #ff8f5c;
                 }
