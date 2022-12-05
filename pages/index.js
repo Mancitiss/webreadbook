@@ -37,6 +37,7 @@ export default function Home() {
       console.log(data_new)
   }
   
+  
   useEffect(()=>{
     getCategory()
     const btnBack= document.getElementsByClassName('btn__back')
