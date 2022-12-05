@@ -224,6 +224,10 @@ export default function Home() {
           margin-bottom: 8px;
         }
 
+        .home__contaner__content--listfile:hover{
+          overflow-x:scroll;
+        }
+
         .home__bar__line{
           background: #FFFFFF;
           box-shadow: 0px 0px 4px 1px rgb(0 0 0 / 25%);
