@@ -13,7 +13,6 @@ import TabBook from '../../component/book/TabBook';
 import cookies from 'react-cookies';
 
 function Profile() {
-
   const [user, setUser] = useState({});
 
   const router = useRouter();
@@ -22,13 +21,14 @@ function Profile() {
 
   useEffect(() => {
     const getUser = () => {
-      const avatar = localStorage.getItem('avatar');
-      const email = localStorage.getItem('email');
-      const intro = localStorage.getItem('intro');
-      const hobbies = localStorage.getItem('hobbies');
-      const address = localStorage.getItem('address');
-      const phone = localStorage.getItem('phone');
-      const user = {
+      let avatar = localStorage.getItem('avatar') === 'null' ? '' : localStorage.getItem('avatar') 
+      let email = localStorage.getItem('email') === 'null' ? '' : localStorage.getItem('email') 
+      let intro = localStorage.getItem('intro') === 'null' ? '' : localStorage.getItem('intro') 
+      let hobbies = localStorage.getItem('hobbies') === 'null' ? '' : localStorage.getItem('hobbies') 
+      let address = localStorage.getItem('address') === 'null' ? '' : localStorage.getItem('address') 
+      let phone = localStorage.getItem('phone') === 'null' ? '' :  localStorage.getItem('phone')
+
+      let user = {
         avatar,
         email,
         intro,
@@ -68,7 +68,7 @@ function Profile() {
                     <Image
                       src={user?.avatar || ''}
                       alt='Avatar'
-                      layout='fill'
+                      layout = 'fill'
                       className='user-avatar-img'
                     />
                     <span className='user-change-avatar'>
