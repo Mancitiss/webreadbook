@@ -3,7 +3,11 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   images: {
-    domains: ['localhost'],
+    remotePatterns: [
+      {
+        hostname: 'localhost',
+      },
+    ],
   },
 };
 

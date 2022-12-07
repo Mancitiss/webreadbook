@@ -5,7 +5,7 @@ class Book {
     return http.get(`/bookreview/${id}/`);
   }
   get(id) {
-    return http.get(`/store/${id}/`);
+    return http.get(`/story/${id}/`);
   }
   getChapters(bookId) {
     return http.get(`/chapter/${bookId}/all/`);

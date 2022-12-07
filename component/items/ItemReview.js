@@ -21,6 +21,10 @@ export default function ItemReview({ bookReview, book }) {
     getUser();
   }, []);
 
+  const myLoader=({src})=>{
+    return `${src}`;
+  }
+
   return (
     <div>
       <div className='item__review__book'>
@@ -29,6 +33,7 @@ export default function ItemReview({ bookReview, book }) {
             <div className='item__review__book--img'>
               <Image
                 src={book?.image || ''}
+                loader={myLoader}
                 alt='bia sach'
                 width={60}
                 height={52}

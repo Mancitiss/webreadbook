@@ -51,6 +51,11 @@ function Profile() {
   };
 
   const name = 'book1';
+
+  const myLoader=({src})=>{
+    return `http://localhost:8000${src}`;
+  }
+
   return (
     <div>
       <Main>
@@ -66,7 +71,8 @@ function Profile() {
                 <div>
                   <div className='user-avatar'>
                     <Image
-                      src={user?.avatar || ''}
+                      src={user?.avatar ? `${user?.avatar}` : ''}
+                      loader = {myLoader}
                       alt='Avatar'
                       layout = 'fill'
                       className='user-avatar-img'

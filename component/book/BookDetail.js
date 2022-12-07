@@ -19,6 +19,10 @@ export default function BookDetail({ book, newChapterList }) {
     getCategories();
   }, [book]);
 
+  const myLoader=({src})=>{
+    return `${src}`;
+  }
+
   return (
     <div>
       <div className='component__detail'>
@@ -27,6 +31,7 @@ export default function BookDetail({ book, newChapterList }) {
             <div className='component__detail__img'>
               <Image
                 src={book?.image || ''}
+                loader={myLoader}
                 width={279}
                 height={279}
                 alt='hinh bia sach'
