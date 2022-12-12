@@ -62,6 +62,7 @@ export default function Card({index, owner}){
                 position: relative;
                 margin:12px 6px;
                 cursor: pointer;
+                transition: all 0.8s;
             }
             
             .item__card__book--bg{
@@ -170,15 +171,18 @@ export default function Card({index, owner}){
             .item__card__book:hover .item__card__book--text{
                 display:block;
                 inset: 82px 8px 0;
+                transition: all 0.6s;
             }
 
             .item__card__book:hover .item__card__book--bg::after{
                 transform: translateX(-4px) translateY(-158px);
+                transition: all 0.6s;
             }
            
             .item__card__book:hover .item__card__book--img{
                 scale: 0.7;
                 transform: translateX(72px) translateY(-102px);
+                transition: all 0.6s;
             }
 
             @media  (max-width: 480px){
@@ -205,11 +209,13 @@ export default function Card({index, owner}){
 
                 .item__card__book:hover .item__card__book--bg::after{
                     transform: translate(-16px, -116px);
+                    transition: all 0.6s;
                 }
 
                 .item__card__book:hover .item__card__book--img{
                     scale: 0.6;
                     transform: translate(54px, -82px);
+                    transition: all 0.6s;
                 }
 
                 .item__card__book:hover .item__card__book--text{
