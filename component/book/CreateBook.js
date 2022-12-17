@@ -9,6 +9,7 @@ import { Divider, Input, Select, Space, Button, InputNumber } from 'antd';
 import { useState, useRef, useEffect } from 'react';
 import { PlusCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useRouter } from 'next/router';
 const { Option } = Select;
 
 let index = 0;
@@ -20,7 +21,7 @@ export default function EditBookContent() {
     const [btnCancel, setBtnCancel] = useState(true);
     const [btnAdd, setBtnAdd] = useState(true);
     const [btnSave, setBtnSave] = useState(true);
-    const [cata, setCata] = useState("");
+    const [cata, setCata] = useState("1");
     const [mainContent, setMainContent] = useState("")
     const [items, setItems] = useState([]);
     const [chapter, setChapter] = useState([]);
@@ -114,12 +115,15 @@ export default function EditBookContent() {
         setMainContent(localStorage.getItem('introduce'))
         var str = localStorage.getItem('image_story', data_new.image)
         setImgBook(str)
-        document.getElementById("btnAddStory").disabled = true;
+        
         document.getElementById("update__baner__book").disabled = true;
         document.getElementById("mStory").disabled = true;
         document.getElementById("nStory").disabled = true;
         document.getElementById("iStory").disabled = true;
         document.getElementById("cStory").disabled = true;
+        document.getElementById("btnAddStory").hidden = true;
+        document.getElementById("btnEditStory").hidden = false;
+        document.getElementById("btnDelStory").hidden = false;
         setBtnSelect(false)
     }
 
@@ -189,6 +193,9 @@ export default function EditBookContent() {
         document.getElementById("nStory").disabled = true;
         document.getElementById("iStory").disabled = true;
         document.getElementById("cStory").disabled = true;
+        document.getElementById("btnEditStory").hidden = false;
+        document.getElementById("btnDelStory").hidden = false;
+        document.getElementById("btnAddStory").hidden = true    ;
         setSelect(false)
         setBtnSelect(false)
         setItems([])
@@ -201,9 +208,11 @@ export default function EditBookContent() {
         document.getElementById("cStory").disabled = false;
         document.getElementById("btnSaveStory").hidden = false;
         document.getElementById("btnEditStory").hidden = true;
+        document.getElementById("btnDelStory").hidden = true;
         document.getElementById("update__baner__book").disabled = false;
         
     }
+    const router= useRouter()
     const isEdit = () => {
         var isE = localStorage.getItem("is_edit")
         if(isE == 'true'){
@@ -256,6 +265,7 @@ export default function EditBookContent() {
         document.getElementById("cStory").disabled = true;
         document.getElementById("btnSaveStory").hidden = true;
         document.getElementById("btnEditStory").hidden = false;
+        document.getElementById("btnDelStory").hidden = false;
         setSelect(false)
         setBtnSelect(false)
         setItems([])
@@ -334,6 +344,26 @@ export default function EditBookContent() {
         setContent("")
         setNameChap("")
         setBtnCancel(true)
+    }
+    const delStory = async () => {
+        var requestOptions = {
+            method: 'DELETE',
+            redirect: 'follow'
+          };
+          
+          fetch("http://127.0.0.1:8000/api/story/" + localStorage.getItem("id_story") +"/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        alert("Delete story success")
+        localStorage.setItem("id_story", "")
+        localStorage.setItem("is_edit", "false")
+        getChapter()
+        setContent("")
+        setNameChap("")
+        setBtnCancel(true)
+        router.reload()
+        
     }
     const onChange = (e) => {
         console.log(e);
@@ -470,8 +500,9 @@ export default function EditBookContent() {
 
                         </div>
                         <div className="component__detail__edit__content--btn">
+                            <Button hidden id="btnDelStory" className="btn__cancel__edit" onClick={() => { delStory() }} >Delete</Button>
                             <Button id="btnAddStory" className="btn__save__add" onClick={() => { addStory() }} >Add story</Button>
-                            <Button id="btnEditStory" className="btn__save__edit" onClick={() => { editStory() }} >Edit story</Button>
+                            <Button hidden id="btnEditStory" className="btn__save__edit" onClick={() => { editStory() }} >Edit story</Button>
                             <Button hidden id="btnSaveStory" className="btn__save__edit" onClick={() => { saveStory() }} >Save</Button>
 
                         </div>
