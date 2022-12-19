@@ -223,13 +223,16 @@ function Profile() {
                 <TextHeading className='text-heading-section'>
                   Reading
                 </TextHeading>
-
-                  {
+                <Row>
+                {
                     hiStory.map((hiStory) => {
                       return (
                         <Card index={hiStory.id} story_name={hiStory.story_name} image={hiStory.image} total_chapters={hiStory.total_chapters} introduce={hiStory.introduce} owner={hiStory.user} />)
                     })
                   }
+                </Row>
+
+                  
               </Col>
             </Row>
           </div>

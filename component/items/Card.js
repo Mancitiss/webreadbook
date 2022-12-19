@@ -3,7 +3,7 @@ import { Button } from "antd"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-
+import Book1 from "../../assets/images/book-card-1.png"
 export default function Card({index, story_name, image, total_chapters, introduce, owner}){
     
     const [check, setCheck]= useState(false)
@@ -11,8 +11,14 @@ export default function Card({index, story_name, image, total_chapters, introduc
     const hello='2'
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
-    
+    const [img, setImg]= useState(Book1)
     useEffect(()=>{
+        
+        if(image == null){
+            setImg(Book1)
+        }else{
+            setImg(image)
+        }
         const bgs= document.getElementsByClassName(`item__card__book--bg--${index}`)
         const btns= document.getElementsByClassName(`item__card__book--btn--${index}`)
         setColorID(Math.floor(Math.random() * color.length))
@@ -40,7 +46,7 @@ export default function Card({index, story_name, image, total_chapters, introduc
                 
                 <div className="item__card__book--content"  onClick={() => router.push(`/books/detail/${index}`)} >
                     <div className="item__card__book--img">
-                        <Image src={image} alt="image book" width ={107} height={144}/>
+                        <Image src={img} alt="image book" width ={107} height={144}/>
                     </div>
                     <div className="item__card__book--text">
                         <h3 className="item__card__book--text--name"> <b>{story_name}</b></h3>
