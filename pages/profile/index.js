@@ -9,24 +9,59 @@ import Card from '../../component/items/Card';
 import { useRouter } from 'next/router';
 import bannerUrl from '../../assets/images/background-profile-user.png';
 import TabBook from '../../component/book/TabBook';
-
+import axios from "axios";
 import cookies from 'react-cookies';
 
 function Profile() {
   const [user, setUser] = useState({});
-
+  const [hiStory, setHiStory] = useState([]);
   const router = useRouter();
+  async function getHiStory() {
+    let data_new = []
+    const us = localStorage.getItem("id")
+    let us_temp = false
+    let res = await axios.get("http://127.0.0.1:8000/api/get-story-history/" + localStorage.getItem("id") + "/")
+      .then(
+        response => {
+          let data = response.data
+          for (let temp of data) {
+            if (us == temp.user) {
+              us_temp = true
+            } else {
+              us_temp = false
+            }
 
+            let ob =
+            {
+              id: temp.id,
+              story_name: temp.story_name,
+              image: temp.image,
+              total_chapters: temp.total_chapters,
+              introduce: temp.introduce,
+              user: us_temp
+            }
+            data_new.push(ob)
+          };
+          setHiStory(data_new)
+
+        }
+      )
+      .catch(
+        error => console.log(error)
+      );
+
+  }
   let id;
 
   useEffect(() => {
+    getHiStory()
     const getUser = () => {
-      let avatar = localStorage.getItem('avatar') === 'null' ? '' : localStorage.getItem('avatar') 
-      let email = localStorage.getItem('email') === 'null' ? '' : localStorage.getItem('email') 
-      let intro = localStorage.getItem('intro') === 'null' ? '' : localStorage.getItem('intro') 
-      let hobbies = localStorage.getItem('hobbies') === 'null' ? '' : localStorage.getItem('hobbies') 
-      let address = localStorage.getItem('address') === 'null' ? '' : localStorage.getItem('address') 
-      let phone = localStorage.getItem('phone') === 'null' ? '' :  localStorage.getItem('phone')
+      let avatar = localStorage.getItem('avatar') === 'null' ? '' : localStorage.getItem('avatar')
+      let email = localStorage.getItem('email') === 'null' ? '' : localStorage.getItem('email')
+      let intro = localStorage.getItem('intro') === 'null' ? '' : localStorage.getItem('intro')
+      let hobbies = localStorage.getItem('hobbies') === 'null' ? '' : localStorage.getItem('hobbies')
+      let address = localStorage.getItem('address') === 'null' ? '' : localStorage.getItem('address')
+      let phone = localStorage.getItem('phone') === 'null' ? '' : localStorage.getItem('phone')
 
       let user = {
         avatar,
@@ -39,7 +74,7 @@ function Profile() {
       setUser(user);
     };
     id = localStorage.getItem('id');
-
+    
     getUser();
   }, [id]);
 
@@ -52,7 +87,7 @@ function Profile() {
 
   const name = 'book1';
 
-  const myLoader=({src})=>{
+  const myLoader = ({ src }) => {
     return `http://localhost:8000${src}`;
   }
 
@@ -72,9 +107,9 @@ function Profile() {
                   <div className='user-avatar'>
                     <Image
                       src={user?.avatar ? `${user?.avatar}` : ''}
-                      loader = {myLoader}
+                      loader={myLoader}
                       alt='Avatar'
-                      layout = 'fill'
+                      layout='fill'
                       className='user-avatar-img'
                     />
                     <span className='user-change-avatar'>
@@ -188,11 +223,13 @@ function Profile() {
                 <TextHeading className='text-heading-section'>
                   Reading
                 </TextHeading>
-                <div className='card-list'>
-                  <Card index={1} />
-                  <Card index={2} />
-                  <Card index={3} />
-                </div>
+
+                  {
+                    hiStory.map((hiStory) => {
+                      return (
+                        <Card index={hiStory.id} story_name={hiStory.story_name} image={hiStory.image} total_chapters={hiStory.total_chapters} introduce={hiStory.introduce} owner={hiStory.user} />)
+                    })
+                  }
               </Col>
             </Row>
           </div>

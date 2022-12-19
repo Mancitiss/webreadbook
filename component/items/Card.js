@@ -3,7 +3,6 @@ import { Button } from "antd"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import Book1 from "../../assets/images/book-card-1.png"
 
 export default function Card({index, story_name, image, total_chapters, introduce, owner}){
     
@@ -12,6 +11,7 @@ export default function Card({index, story_name, image, total_chapters, introduc
     const hello='2'
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
+    
     useEffect(()=>{
         const bgs= document.getElementsByClassName(`item__card__book--bg--${index}`)
         const btns= document.getElementsByClassName(`item__card__book--btn--${index}`)
@@ -26,6 +26,7 @@ export default function Card({index, story_name, image, total_chapters, introduc
             btns[i].style.setProperty('--colorCard',`${color[colorID]}`)
         }
     })
+
     
     return(
         <div>
@@ -33,11 +34,11 @@ export default function Card({index, story_name, image, total_chapters, introduc
                 <div className={`item__card__book--bg item__card__book--bg--${index}`} ></div>
                 {
                     owner ?(<><div onClick={()=>router.push(`/books/create/edit=${index}`)}><EditFilled /></div></>)
-                    :(<><input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={()=>{setCheck(!check)}} />
+                    :(<><input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={()=>{setCheck(!check), save}} />
                     <label htmlFor={`check__save-${index}`} >{!check ?<PushpinOutlined /> :<PushpinFilled /> }</label></>)
                 }
                 
-                <div className="item__card__book--content"  onClick={() => router.push(`/books/detail/${hello}`)} >
+                <div className="item__card__book--content"  onClick={() => router.push(`/books/detail/${index}`)} >
                     <div className="item__card__book--img">
                         <Image src={image} alt="image book" width ={107} height={144}/>
                     </div>

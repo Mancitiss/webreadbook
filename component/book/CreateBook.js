@@ -218,6 +218,18 @@ export default function EditBookContent() {
         if(isE == 'edit='){
             localStorage.setItem("id_story", window.location.pathname.slice(19))
             getStory()
+            document.getElementById("btnAddStory").disabled = true;
+            document.getElementById("update__baner__book").disabled = true;
+            document.getElementById("mStory").disabled = true;
+            document.getElementById("nStory").disabled = true;
+            document.getElementById("iStory").disabled = true;
+            document.getElementById("cStory").disabled = true;
+            document.getElementById("btnEditStory").hidden = false;
+            document.getElementById("btnDelStory").hidden = false;
+            document.getElementById("btnAddStory").hidden = true    ;
+            setSelect(false)
+            setBtnSelect(false)
+            setItems([])
         }
         
     }

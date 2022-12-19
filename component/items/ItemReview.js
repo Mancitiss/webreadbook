@@ -8,17 +8,17 @@ export default function ItemReview({ bookReview, book }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const id = bookReview.user;
-    const getUser = async () => {
-      try {
-        const res = await userApi.get(id);
-        setUser(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    // const id = bookReview.user;
+    // const getUser = async () => {
+    //   try {
+    //     const res = await userApi.get(id);
+    //     setUser(res.data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
 
-    getUser();
+    // getUser();
   }, []);
 
   const myLoader=({src})=>{
@@ -63,7 +63,6 @@ export default function ItemReview({ bookReview, book }) {
           justify-content: center;
         }
 
-            <style jsx>{ `
                 .item__review__book{
                     background: #FFFFFF;
                     box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
