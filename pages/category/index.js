@@ -11,7 +11,42 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 export default function Category() {
     const [category, setCategory] = useState([]);
-  
+    const [caStory, setCaStory] = useState([]);
+    async function getCaStory() {
+        let data_new = []
+        const us = localStorage.getItem("id")
+        let us_temp = false
+        let res = await axios.get("http://127.0.0.1:8000/api/get-story-catagory/" + localStorage.getItem("id_cata_cho") + "/")
+          .then(
+            response => {
+              let data = response.data
+              for (let temp of data) {
+                if (us == temp.user) {
+                  us_temp = true
+                } else {
+                  us_temp = false
+                }
+    
+                let ob =
+                {
+                  id: temp.id,
+                  story_name: temp.story_name,
+                  image: temp.image,
+                  total_chapters: temp.total_chapters,
+                  introduce: temp.introduce,
+                  user: us_temp
+                }
+                data_new.push(ob)
+              };
+              setCaStory(data_new)
+    
+            }
+          )
+          .catch(
+            error => console.log(error)
+          );
+    
+      }
     async function getCategory() {
         let data_new = []
         let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
@@ -37,6 +72,7 @@ export default function Category() {
     }
     useEffect(() => {
         getCategory()
+        getCaStory()
         for (let i = 0; i < category.length; i++) {
             const one = document.getElementById(`check__category__${category[0].id}`)
             one.checked = true
@@ -64,7 +100,7 @@ export default function Category() {
                                 <div className="category__silder__title">
                                     <TextHeading >Category</TextHeading>
                                 </div>
-                                <div className='category__contaner__content--listfile'>
+                                <div className='category__contaner__content--listfile' onClick={getCaStory}>
                                     {
                                         category.map((categori) => {
                                             // console.log(categori);
@@ -90,30 +126,12 @@ export default function Category() {
                             </div>
                             <div className="category__list__book">
                                 <Row>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={1} />
-                                    </Col>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={2} />
-                                    </Col>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={3} />
-                                    </Col>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={4} />
-                                    </Col>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={5} />
-                                    </Col>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={6} />
-                                    </Col>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={7} />
-                                    </Col>
-                                    <Col lg={6} sm={8} xs={12}>
-                                        <Card index={8} />
-                                    </Col>
+                                    {
+                                        caStory.map((caStory) => {
+                                            return (
+                                                <Card index={caStory.id} story_name={caStory.story_name} image={caStory.image} total_chapters={caStory.total_chapters} introduce={caStory.introduce} owner={caStory.user} />)
+                                        })
+                                    }
                                 </Row>
                             </div>
 

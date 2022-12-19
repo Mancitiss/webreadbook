@@ -12,6 +12,8 @@ import axios from "axios";
 export default function Home() {
   const [category, setCategory] = useState([]);
   const [story, setStory] = useState([]);
+  const [caStory, setCaStory] = useState([]);
+
 
 
   async function getCategory() {
@@ -46,12 +48,12 @@ export default function Home() {
         response => {
           let data = response.data
           for (let temp of data) {
-            if(us == temp.user){
+            if (us == temp.user) {
               us_temp = true
-            }else{
+            } else {
               us_temp = false
             }
-            
+
             let ob =
             {
               id: temp.id,
@@ -72,18 +74,51 @@ export default function Home() {
     setStory(data_new)
     //console.log(data_new)
   }
+  async function getCaStory() {
+    let data_new = []
+    const us = localStorage.getItem("id")
+    let us_temp = false
+    let res = await axios.get("http://127.0.0.1:8000/api/get-story-catagory/" + localStorage.getItem("id_cata_cho") + "/")
+      .then(
+        response => {
+          let data = response.data
+          for (let temp of data) {
+            if (us == temp.user) {
+              us_temp = true
+            } else {
+              us_temp = false
+            }
 
+            let ob =
+            {
+              id: temp.id,
+              story_name: temp.story_name,
+              image: temp.image,
+              total_chapters: temp.total_chapters,
+              introduce: temp.introduce,
+              user: us_temp
+            }
+            data_new.push(ob)
+          };
+          setCaStory(data_new)
+
+        }
+      )
+      .catch(
+        error => console.log(error)
+      );
+
+  }
 
   useEffect(() => {
     getCategory()
     getStory()
+    getCaStory()
     const btnBack = document.getElementsByClassName('btn__back')
     const btnNext = document.getElementsByClassName('btn__next')
-    const widthItem = document.querySelector('.item__card__book').getBoundingClientRect().width
+    //const widthItem = document.querySelector('.item__card__book').getBoundingClientRect().width
     const widthSlide = document.querySelector('.home__silde__container').getBoundingClientRect().width
     const sliders = document.querySelectorAll('.home__silde__container')
-    console.log(widthItem);
-    console.log(widthSlide);
     // console.log(items.length);
     sliders.forEach((slide) => {
       btnNext[0].addEventListener('click', () => {
@@ -117,11 +152,11 @@ export default function Home() {
             <RightCircleFilled className='btn__slide btn__next' />
           </div>
           <div className='home__silde__container' >
-            
+
             {
               story.map((story) => {
                 return (
-                  <Card index={story.id} story_name={story.story_name} image={story.image} total_chapters={story.total_chapters} introduce={story.introduce} owner={story.user}/>)
+                  <Card index={story.id} story_name={story.story_name} image={story.image} total_chapters={story.total_chapters} introduce={story.introduce} owner={story.user} />)
               })
             }
           </div>
@@ -131,7 +166,7 @@ export default function Home() {
             <Col lg={16} sm={24} xs={24}>
               <TextHeading>Book Category</TextHeading>
               <div>
-                <div className='home__contaner__content--listfile'>
+                <div className='home__contaner__content--listfile' onClick={getCaStory}>
                   {
                     category.map((categori) => {
                       return (
@@ -158,21 +193,12 @@ export default function Home() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col lg={6} sm={8} xs={12}>
-                    <Card index={8}></Card>
-                  </Col>
-                  <Col lg={6} sm={8} xs={12}>
-                    <Card index={9}></Card>
-                  </Col>
-                  <Col lg={6} sm={8} xs={12}>
-                    <Card index={10}></Card>
-                  </Col>
-                  <Col lg={6} sm={8} xs={12}>
-                    <Card index={11}></Card>
-                  </Col>
-                  <Col lg={6} sm={8} xs={12}>
-                    <Card index={12}></Card>
-                  </Col>
+                  {
+                    caStory.map((caStory) => {
+                      return (
+                        <Card index={caStory.id} story_name={caStory.story_name} image={caStory.image} total_chapters={caStory.total_chapters} introduce={caStory.introduce} owner={caStory.user} />)
+                    })
+                  }
                 </Row>
               </div>
             </Col>
