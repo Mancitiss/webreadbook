@@ -1,9 +1,9 @@
-import Image from 'next/image';
-import Logo from '../../assets/images/logo.png';
-import LogoLogin from '../../assets/images/logo-login.png';
-import Link from 'next/link';
-import { Col, Row, Input, Button, Modal, Avatar } from 'antd';
-import styles from '../../styles/Home.module.css';
+import Image from 'next/image'
+import Logo from '../../assets/images/logo.png'
+import LogoLogin from '../../assets/images/logo-login.png'
+import Link from 'next/link'
+import { Col, Row, Input, Button, Modal, Avatar } from 'antd'
+import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import AvatarLogin from '../../assets/images/avatar1.jpg';
@@ -30,7 +30,10 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 
-  const [isLogin, setLogin] = useState(true);
+
+  const [isLogin, setLogin] = useState(true)
+  const [Avatar, setAvatar] = useState(AvatarLogin)
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -53,11 +56,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    var access_token = cookies.load('access_token');
-    if (access_token == null || access_token == '') {
-      setLogin(false);
-    } else {
-      setLogin(true);
+    var access_token = cookies.load("access_token")
+    if (access_token == null || access_token == "") {
+      setLogin(false)
+    }
+    else {
+      setLogin(true)
     }
     const home = document.getElementById('home');
     const category = document.getElementById('category');
@@ -77,98 +81,112 @@ const Navbar = () => {
   });
 
   const getId = async () => {
-    let token = cookies.load('access_token');
-    let data;
-    let res = await axios
-      .get('http://127.0.0.1:8000/api/users/current-user/', {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      })
-      .then((response) => {
-        data = response.data;
-        //cookies.save("Id", response.data.id)
-        localStorage.setItem('id', response.data.id);
-        localStorage.setItem('username', response.data.username);
-        localStorage.setItem('avatar', response.data.avatar);
-        localStorage.setItem('nickname', response.data.nickname);
-        localStorage.setItem('email', response.data.email);
-        localStorage.setItem('intro', response.data.intro);
-        localStorage.setItem('hobbies', response.data.hobbies);
-        localStorage.setItem('address', response.data.address);
-        localStorage.setItem('phone', response.data.phone);
-      })
-      .catch((error) => console.log(error));
-    var access_token = cookies.load('access_token');
-    if (access_token == null || access_token == '') {
-      setLogin(false);
-    } else {
-      setLogin(true);
+    let token = cookies.load("access_token")
+    let data
+    let res = await axios.get("http://127.0.0.1:8000/api/users/current-user/", {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then(
+        response => {
+          data = response.data;
+          //cookies.save("Id", response.data.id)
+          localStorage.setItem('id', response.data.id);
+          localStorage.setItem('username', response.data.username);
+          localStorage.setItem('avatar', response.data.avatar);
+          localStorage.setItem('nickname', response.data.nickname);
+          localStorage.setItem('intro', response.data.intro);
+          localStorage.setItem('hobbies', response.data.hobbies);
+          localStorage.setItem('address', response.data.address);
+          localStorage.setItem('phone', response.data.phone);
+          setAvatar("http://127.0.0.1:8000" + response.data.avatar)
+        }
+      )
+      .catch(
+        error => console.log(error)
+      );
+    var access_token = cookies.load("access_token")
+    if (access_token == null || access_token == "") {
+      setLogin(false)
     }
-  };
+    else {
+      setLogin(true)
+    }
+  }
   const checkLogin = async () => {
-    let sttCode = 0;
-    let sttCode_re = 0;
-    let user = document.getElementById('username').value;
-    let pass = document.getElementById('password').value;
+    let sttCode = 0
+    let sttCode_re = 0
+    let user = document.getElementById('username').value
+    let pass = document.getElementById('password').value
 
     if (!isModalLoginOpen) {
-      let re_password = document.getElementById('re_password').value;
+      let re_password = document.getElementById('re_password').value
       if (re_password != pass) {
-        alert('Password does not match');
-        return;
+        alert("Password does not match")
+        return
       }
       var FormData = require('form-data');
       var data = new FormData();
       data.append('username', user);
       data.append('password', pass);
-      let res = await axios
-        .post('http://127.0.0.1:8000/api/users/', data)
+      let res = await axios.post("http://127.0.0.1:8000/api/users/", data)
         .then(function (response) {
           //console.log(JSON.stringify(response.data)),
-          alert('Sign Up Success'), handleShowLoginModal();
+          alert("Sign Up Success"),
+            handleShowLoginModal();
+
         })
-        .catch((error) => {
-          console.log(error), alert('Account already exists');
-        });
-    } else {
-      let res = await axios
-        .post('http://127.0.0.1:8000/o/token/', {
-          client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
-          client_secret:
-            'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
-          username: user,
-          password: pass,
-          grant_type: 'password',
-        })
-        .then((response) => {
-          cookies.save('access_token', response.data.access_token);
-          sttCode = response.status == 200;
-        })
-        .catch((error) => console.log(error));
-      if (sttCode) {
-        setLogin(true);
-        handleOk();
-        getId();
-      } else {
-        alert(
-          "We don't recognize that username or password. You can try again or use another login option."
+        .catch(
+          error => {
+            console.log(error),
+              alert("Account already exists")
+          }
         );
+    }
+    else {
+      let res = await axios.post("http://127.0.0.1:8000/o/token/", {
+        client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
+        client_secret: 'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
+        username: user,
+        password: pass,
+        grant_type: 'password'
+      })
+        .then(
+          response => {
+            cookies.save("access_token", response.data.access_token)
+            sttCode = response.status == 200
+          }
+        )
+        .catch(
+          error => console.log(error)
+        );
+      if (sttCode) {
+        setLogin(true)
+        handleOk()
+        getId()
+
+
+      }
+      else {
+        alert("We don't recognize that username or password. You can try again or use another login option.")
       }
     }
   };
   // const [username, setUsername] = useState(null)
   // const [password, setPassword] = useState(null)
-  const router = useRouter();
-  const [users, setUsers] = useState([]);
+  const router = useRouter()
+  const [users, setUsers] = useState([])
   useEffect(() => {
-    axios
-      .get('http://localhost:8000/users/')
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+
+    var img = localStorage.getItem("avatar")
+    if(img == null){
+      setAvatar("http://127.0.0.1:8000/" + img)
+    }else{
+      setAvatar("http://127.0.0.1:8000" + img)
+    }
+    
+  }, [])
 
   // console.log(users);
   const [isModalOpenMobile, setIsModalOpenMobile] = useState(false);
@@ -216,18 +234,8 @@ const Navbar = () => {
               style={{ fontSize: '32px' }}
             />
           </Col>
-          <Modal
-            className='modal__menu__mobile'
-            open={isModalOpenMobile}
-            onOk={handleOkMobile}
-            onCancel={handleCancelMobile}
-          >
-            <div
-              className='logo__web'
-              onClick={() => {
-                router.push('/');
-              }}
-            >
+          <Modal className='modal__menu__mobile' open={isModalOpenMobile} onOk={handleOkMobile} onCancel={handleCancelMobile}>
+            <div className='logo__web' onClick={() => { router.push('/') }}>
               <Image
                 src={Logo}
                 alt='Logo trang web doc truyen'
@@ -241,20 +249,31 @@ const Navbar = () => {
                 <div id='home__mobile' className='menu__moblie--btn'>
                   <HomeFilled className='icon__home__mobile' />
                   <Link href='/'>
-                    <a className='navbar__home__link'>Home</a>
+
+                    <a className='navbar__home__link'>
+                      Home
+                    </a>
                   </Link>
                 </div>
                 <div id='category__mobile' className='menu__moblie--btn'>
                   <FolderOpenFilled className='icon__home__mobile' />
                   <Link href='/category'>
-                    <a className='navbar__home__link'>Category</a>
+
+                    <a className='navbar__home__link'>
+                      Category
+                    </a>
+
                   </Link>
                 </div>
                 {isLogin ? (
                   <div id='profile__mobile' className='menu__moblie--btn'>
                     <ScheduleFilled className='icon__home__mobile' />
                     <Link href='/profile'>
-                      <a className='navbar__home__link'>Profile</a>
+
+                      <a className='navbar__home__link'>
+                        Profile
+                      </a>
+
                     </Link>
                   </div>
                 ) : (
@@ -263,32 +282,24 @@ const Navbar = () => {
                 <div id='about__mobile' className='menu__moblie--btn'>
                   <InfoCircleFilled className='icon__home__mobile' />
                   <Link href='/abouts'>
-                    <a className='navbar__home__link'>Abouts</a>
+
+                    <a className='navbar__home__link'>
+                      Abouts
+                    </a>
                   </Link>
                 </div>
               </div>
-              <div>
-                {isLogin ? (
-                  <div className='memu__mobile__footer'>
-                    <LogoutOutlined className='icon__login--logout' />{' '}
-                    <span>Logout</span>
-                  </div>
-                ) : (
-                  <div className='memu__mobile__footer'>
-                    <LoginOutlined className='icon__login--logout' />{' '}
-                    <span>Login</span>
-                  </div>
-                )}
+              <div >
+                {isLogin ? (<div className='memu__mobile__footer'><LogoutOutlined className='icon__login--logout' /> <span>Logout</span></div>)
+                  : (<div className='memu__mobile__footer'><LoginOutlined className='icon__login--logout' /> <span>Login</span></div>)}
+
               </div>
             </div>
           </Modal>
           <Col lg={2} sm={2} xs={12}>
-            <div
-              className='logo-web'
-              onClick={() => {
-                router.push('/');
-              }}
-            >
+
+            <div className='logo-web' onClick={() => { router.push('/') }}>
+
               <Image
                 src={Logo}
                 alt='Logo trang web doc truyen'
@@ -330,23 +341,18 @@ const Navbar = () => {
             />
           </Col>
           <Col lg={2} sm={3} xs={6}>
-            {!isLogin ? (
-              <Button
+            {
+              !isLogin ? <Button
                 className='btn__header__login'
                 onClick={handleShowLoginModal}
               >
                 Login
-              </Button>
-            ) : (
-              <div
-                onClick={() => {
-                  router.push('/profile');
-                }}
-                className='navbar__home__avatar'
-              >
-                <Image src={AvatarLogin} />
+
+              </Button> : <div onClick={() => { router.push('/profile') }} className='navbar__home__avatar'>
+                <Image src={Avatar} width={60} height={60} />
               </div>
-            )}
+
+            }
           </Col>
         </Row>
         <Modal
@@ -400,15 +406,14 @@ const Navbar = () => {
               </Col>
             </Row>
             <div className='contaner__modal__login-input'>
-              <label className='contaner__modal__login-input-text'>
-                Username
-              </label>
+
+              <label className='contaner__modal__login-input-text'>Username</label>
               <Input
-                id='username'
+                id="username"
                 className='input-login'
                 placeholder='Username'
-                // field={username}
-                // change={event => setUsername(event.target.value)}
+              // field={username} 
+              // change={event => setUsername(event.target.value)}
               />
             </div>
             <div className='contaner__modal__login-input'>
@@ -422,8 +427,10 @@ const Navbar = () => {
                 id='password'
                 className='input-login'
                 placeholder='Your password'
-                // field={password}
-                // change={event => setPassword(event.target.value)
+
+              // field={password} 
+              // change={event => setPassword(event.target.value)
+
               />
             </div>
             {!isModalLoginOpen && (
@@ -441,12 +448,9 @@ const Navbar = () => {
               </div>
             )}
 
-            <Button
-              className='btn__modal__login'
-              onClick={() => {
-                checkLogin();
-              }}
-            >
+
+            <Button className='btn__modal__login' onClick={() => { checkLogin() }}>
+
               {isModalLoginOpen ? 'Login' : 'Register'}
             </Button>
           </div>

@@ -19,13 +19,13 @@ export default function EditBook(){
                         <span>Book</span>
                         </Breadcrumb.Item >
                         {/* <Breadcrumb.Item onClick={() => router.push(`/books/detail/${hello}`)}> Love story valut</Breadcrumb.Item> */}
-                        <Breadcrumb.Item > Create</Breadcrumb.Item>
+                        <Breadcrumb.Item > Create & Edit</Breadcrumb.Item>
                     </Breadcrumb>
                     <Row>
-                        <Col lg={18}  sm={24} xs={24}>
+                        <Col lg={58}  sm={24} xs={24}>
                             <CreateBookContent></CreateBookContent>
                         </Col>
-                        <Col lg={6}  sm={24} xs={24}>
+                        {/* <Col lg={6}  sm={24} xs={24}>
                             <h3 className="book__edit__book__chap--title">All chap</h3>
                             <div>
                                 {
@@ -39,7 +39,7 @@ export default function EditBook(){
                                     ):(<> <p>No have chap in your book</p></>)
                                 }
                             </div>
-                        </Col>
+                        </Col> */}  
                     </Row>
                 </div>
             </Main>

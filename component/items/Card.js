@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Book1 from "../../assets/images/book-card-1.png"
 
-export default function Card({index, owner}){
+export default function Card({index, story_name, image, total_chapters, introduce, owner}){
     
     const [check, setCheck]= useState(false)
     const router= useRouter()
@@ -13,6 +13,8 @@ export default function Card({index, owner}){
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
     useEffect(()=>{
+        localStorage.setItem("id_story", index)
+        localStorage.setItem("is_edit", "true")
         const bgs= document.getElementsByClassName(`item__card__book--bg--${index}`)
         const btns= document.getElementsByClassName(`item__card__book--btn--${index}`)
         setColorID(Math.floor(Math.random() * color.length))
@@ -32,20 +34,20 @@ export default function Card({index, owner}){
             <div className="item__card__book">
                 <div className={`item__card__book--bg item__card__book--bg--${index}`} ></div>
                 {
-                    owner ?(<><div onClick={()=>router.push(`/books/edit/${hello}`)}><EditFilled /></div></>)
+                    owner ?(<><div onClick={()=>router.push(`/books/create/edit=${index}`)}><EditFilled /></div></>)
                     :(<><input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={()=>{setCheck(!check)}} />
                     <label htmlFor={`check__save-${index}`} >{!check ?<PushpinOutlined /> :<PushpinFilled /> }</label></>)
                 }
                 
                 <div className="item__card__book--content"  onClick={() => router.push(`/books/detail/${hello}`)} >
                     <div className="item__card__book--img">
-                        <Image src={Book1} alt="image book" width ={107} height={144}/>
+                        <Image src={image} alt="image book" width ={107} height={144}/>
                     </div>
                     <div className="item__card__book--text">
-                        <h3 className="item__card__book--text--name"> <b>Sand and smoke</b></h3>
-                        <p className="item__card__book--text--chap">Chap <b>123 /999</b></p>
-                        <p className="item__card__book--text--intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate Lorem ipsum dolor sit amet </p>
-                        <p className="item__card__book--text--author">By <b>Luck</b></p>
+                        <h3 className="item__card__book--text--name"> <b>{story_name}</b></h3>
+                        <p className="item__card__book--text--chap">Total chap: <b>{total_chapters}</b></p>
+                        <p className="item__card__book--text--intro">{introduce}</p>
+                        {/* <p className="item__card__book--text--author">By <b>Luck</b></p> */}
                     </div>
                     <Button className={`item__card__book--btn item__card__book--btn--${index}`} >Read now</Button>
                 </div>
@@ -62,6 +64,7 @@ export default function Card({index, owner}){
                 position: relative;
                 margin:12px 6px;
                 cursor: pointer;
+                transition: all 0.8s;
             }
             
             .item__card__book--bg{
@@ -170,15 +173,18 @@ export default function Card({index, owner}){
             .item__card__book:hover .item__card__book--text{
                 display:block;
                 inset: 82px 8px 0;
+                transition: all 0.6s;
             }
 
             .item__card__book:hover .item__card__book--bg::after{
                 transform: translateX(-4px) translateY(-158px);
+                transition: all 0.6s;
             }
            
             .item__card__book:hover .item__card__book--img{
                 scale: 0.7;
                 transform: translateX(72px) translateY(-102px);
+                transition: all 0.6s;
             }
 
             @media  (max-width: 480px){
@@ -205,11 +211,13 @@ export default function Card({index, owner}){
 
                 .item__card__book:hover .item__card__book--bg::after{
                     transform: translate(-16px, -116px);
+                    transition: all 0.6s;
                 }
 
                 .item__card__book:hover .item__card__book--img{
                     scale: 0.6;
                     transform: translate(54px, -82px);
+                    transition: all 0.6s;
                 }
 
                 .item__card__book:hover .item__card__book--text{

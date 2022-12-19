@@ -47,6 +47,7 @@ export default function ItemReview({ bookReview, book }) {
               </p>
               <p className='item__review__book--text--owner'>{`By ${user?.first_name} ${user?.last_name}`}</p>
             </div>
+
           </Col>
         </Row>
         <p className='item__review__book--content'>{bookReview?.content}</p>
@@ -61,6 +62,26 @@ export default function ItemReview({ bookReview, book }) {
           align-items: center;
           justify-content: center;
         }
+
+            <style jsx>{ `
+                .item__review__book{
+                    background: #FFFFFF;
+                    box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
+                    border-radius: 10px;
+                    width: 90%;
+                    margin: 0 4px 6px;
+                    padding:4px ;
+                    height: 110px;
+                    position:relative;
+                    cursor: pointer;
+                    transition: all 1s;
+                }
+
+                .item__review__book:hover{
+                    transform: scale(1.01);
+                    box-shadow: 3px 3px 8px rgb(0 0 0 / 15%);
+                    transition: all 0.8s;
+                }
 
         .item__review__book {
           background: #ffffff;
