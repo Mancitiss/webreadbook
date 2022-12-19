@@ -18,6 +18,11 @@ export default function Card({index, story_name, image, total_chapters, introduc
     }
     const saveStory = async () => {
         setCheck(!check)
+        var tid = localStorage.getItem("id")
+        if(tid == 'null' || tid == null){
+            alert("Đăng nhập để lưu truyện")
+            return
+        }
         var formdata = new FormData();
         formdata.append("story", index);
         formdata.append("user", localStorage.getItem("id"));
