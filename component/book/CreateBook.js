@@ -214,8 +214,9 @@ export default function EditBookContent() {
     }
     const router= useRouter()
     const isEdit = () => {
-        var isE = localStorage.getItem("is_edit")
-        if(isE == 'true'){
+        var isE = window.location.pathname.slice(14, 19)
+        if(isE == 'edit='){
+            localStorage.setItem("id_story", window.location.pathname.slice(19))
             getStory()
         }
         
@@ -496,7 +497,7 @@ export default function EditBookContent() {
                             <span className="component__detail__edit__content--icon" onClick={() => { setAtrribute(false) }} >
                                 <EditFilled />
                             </span>
-                            <TextArea value={mainContent} id="mStory" onClick={() => { setAtrribute(false) }} className="component__detail__edit__content--detail" defaultValue={mainContent} allowClear readOnly onChange={event => setMainContent(event.target.value)} />
+                            <TextArea value={mainContent} id="mStory" onClick={() => { setAtrribute(true) }} className="component__detail__edit__content--detail" defaultValue={mainContent} allowClear readOnly onChange={event => setMainContent(event.target.value)} />
 
                         </div>
                         <div className="component__detail__edit__content--btn">
