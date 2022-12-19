@@ -9,32 +9,74 @@ import File from '../component/items/File';
 import Bar from '../component/items/Bar';
 import CardCreater from '../component/items/CardCreater';
 import axios from "axios";
-
 export default function Home() {
-  let category = []
-  
-  //var dataReturn = []
+  const [category, setCategory] = useState([]);
+  const [story, setStory] = useState([]);
+
+
   async function getCategory() {
+    let data_new = []
     let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
       .then(
         response => {
           let data = response.data
           for (let temp of data) {
-            let ob = 
-              {
-                id: temp.id,
-                category_name: temp.category_name,
-              }
-              category.push(ob)
-          }
+            let ob =
+            {
+              id: temp.id,
+              category_name: temp.category_name,
+            }
+            data_new.push(ob)
+          };
+
         }
       )
       .catch(
         error => console.log(error)
       );
+    setCategory(data_new)
+    //console.log(data_new)
+  }
+  async function getStory() {
+    let data_new = []
+    var us = localStorage.getItem("id")
+    let us_temp = false
+    let res = await axios.get("http://127.0.0.1:8000/api/list-story-new/")
+      .then(
+        response => {
+          let data = response.data
+          for (let temp of data) {
+            if(us == temp.user){
+              us_temp = true
+            }else{
+              us_temp = false
+            }
+            
+            let ob =
+            {
+              id: temp.id,
+              story_name: temp.story_name,
+              image: temp.image,
+              total_chapters: temp.total_chapters,
+              introduce: temp.introduce,
+              user: us_temp
+            }
+            data_new.push(ob)
+          };
+
+        }
+      )
+      .catch(
+        error => console.log(error)
+      );
+    setStory(data_new)
+    //console.log(data_new)
   }
 
-  useEffect(() => { 
+
+  useEffect(() => {
+    getCategory()
+    getStory()
     const btnBack = document.getElementsByClassName('btn__back')
     const btnNext = document.getElementsByClassName('btn__next')
     const widthItem = document.querySelector('.item__card__book').getBoundingClientRect().width
@@ -54,10 +96,9 @@ export default function Home() {
       })
     })
   }, [])
-  getCategory()
+  //getCategory()
   useEffect(() => {
-    console.log("chieu dai: " + category.length)
-    console.log(category)
+
     for (let i = 0; i < category.length; i++) {
       const one = document.getElementById(`check__category__${category[0].id}`)
       one.checked = true
@@ -77,13 +118,13 @@ export default function Home() {
             <RightCircleFilled className='btn__slide btn__next' />
           </div>
           <div className='home__silde__container' >
-            <Card index={1} />
-            <Card index={2} />
-            <Card index={3} />
-            <Card index={4} />
-            <Card index={5} />
-            <Card index={6} />
-            <Card index={7} />
+            
+            {
+              story.map((story) => {
+                return (
+                  <Card index={story.id} story_name={story.story_name} image={story.image} total_chapters={story.total_chapters} introduce={story.introduce} owner={story.user}/>)
+              })
+            }
           </div>
         </div>
         <div className='home__contaner__content'>
@@ -94,16 +135,10 @@ export default function Home() {
                 <div className='home__contaner__content--listfile'>
                   {
                     category.map((categori) => {
-                      console.log(category)
                       return (
                         <File index={categori.id} name={categori.category_name} />)
                     })
                   }
-                  {/* <File index={category[1].id}></File> */}
-                  {/* <File index={2}></File>
-                  <File index={3}></File>
-                  <File index={4}></File>
-                  <File index={5}></File> */}
                 </div>
                 <Row align='middle'>
                   <Col lg={4} sm={6} xs={12}>
@@ -222,6 +257,10 @@ export default function Home() {
           overflow:hidden;
           width:100%;
           margin-bottom: 8px;
+        }
+
+        .home__contaner__content--listfile:hover{
+          overflow-x:scroll;
         }
 
         .home__bar__line{

@@ -38,6 +38,14 @@ export default function ItemReview(){
                     padding:4px ;
                     height: 110px;
                     position:relative;
+                    cursor: pointer;
+                    transition: all 1s;
+                }
+
+                .item__review__book:hover{
+                    transform: scale(1.01);
+                    box-shadow: 3px 3px 8px rgb(0 0 0 / 15%);
+                    transition: all 0.8s;
                 }
 
                 .item__review__book--img{
