@@ -1,4 +1,4 @@
-import { Row, Col, Rate } from "antd";
+import { Row, Col, Rate, Tree } from "antd";
 import Image from "next/image";
 // import Book1 from '../../assets/images/baner-book1.png'
 const { TextArea } = Input;
@@ -9,43 +9,159 @@ import { Divider, Input, Select, Space, Button, InputNumber } from 'antd';
 import { useState, useRef, useEffect } from 'react';
 import { PlusCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useRouter } from 'next/router';
 const { Option } = Select;
 
 let index = 0;
 
 export default function EditBookContent() {
     const [category, setCategory] = useState([]);
-  
-  
+    const [select, setSelect] = useState(true);//
+    const [btnSelect, setBtnSelect] = useState(true);//
+    const [btnCancel, setBtnCancel] = useState(true);
+    const [btnAdd, setBtnAdd] = useState(true);
+    const [btnSave, setBtnSave] = useState(true);
+    const [cata, setCata] = useState("1");
+    const [mainContent, setMainContent] = useState("")
+    const [items, setItems] = useState([]);
+    const [chapter, setChapter] = useState([]);
+    const [name, setName] = useState('');
+    const [imgBook, setImgBook] = useState('')
+    const [estimate, setEstimate] = useState(0)
+    const [nameBook, setNameBook] = useState('')
+    const [nameChap, setNameChap] = useState('')
+    const [file, setFile] = useState(null)
+    const [indexChap, setIndexChap] = useState(0)
+    const [showIndexChap, setShowIndexChap] = useState("Select chap")
+    const [content, setContent] = useState("")
+    const [chapterIsCho, setChapterIsCho] = useState("Select chapter")
+
     async function getCategory() {
-      let data_new = []
-      let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
-        .then(
-          response => {
-            let data = response.data
-            for (let temp of data) {
-              let ob = 
-                {
-                  value: temp.id,
-                  label: temp.category_name,
+        let data_new = []
+        let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
+            .then(
+                response => {
+                    let data = response.data
+                    for (let temp of data) {
+                        let ob =
+                        {
+                            value: temp.id,
+                            label: temp.category_name,
+                        }
+                        data_new.push(ob)
+                    };
+
                 }
-                data_new.push(ob)
-            };
-            
-          }
-        )
-        .catch(
-          error => console.log(error)
-        );
+            )
+            .catch(
+                error => console.log(error)
+            );
         setCategory(data_new)
-        console.log(data_new)
+        //console.log(data_new)
     }
-    const addStory = () => {
-        // console.log(nameBook)
-        // console.log(mainContent)
-        // console.log(estimate)
-        // console.log(imgBook)
-        // console.log(cata)
+
+    async function getIdStory() {
+        let data_new = []
+        let res = await axios.get("http://127.0.0.1:8000/api/story-new/")
+            .then(
+                response => {
+                    let data = response.data
+                    data_new = data
+
+                }
+            )
+            .catch(
+                error => console.log(error)
+            );
+        localStorage.setItem('id_story', data_new[0].id);
+        localStorage.setItem('total_chapter', data_new[0].total_chapters)
+        localStorage.setItem('story_name', data_new[0].story_name)
+        localStorage.setItem('category_name', data_new[0].category_name)
+        localStorage.setItem('image_story', data_new[0].image)
+        localStorage.setItem('introduce', data_new[0].introduce)
+        //console.log(data_new[0].id)
+    }
+    async function getStory() {
+        let data_new = []
+        let exist = true
+        let res = await axios.get("http://127.0.0.1:8000/api/story/" + localStorage.getItem("id_story") + "/")
+            .then(
+                response => {
+                    let data = response.data
+                    data_new = data
+
+                }
+            )
+            .catch(
+                error => {
+                    console.log(error)
+                    alert("No exist")
+                    exist = false
+                }
+                
+            );
+        if(!exist){
+            return
+        }
+        localStorage.setItem('id_story', data_new.id);
+        localStorage.setItem('total_chapter', data_new.total_chapters)
+        localStorage.setItem('story_name', data_new.story_name)
+        localStorage.setItem('category_name', data_new.category_name)
+        localStorage.setItem('image_story', data_new.image)
+        localStorage.setItem('introduce', data_new.introduce)
+        setNameBook(localStorage.getItem('story_name'))
+        setEstimate(localStorage.getItem('total_chapter'))
+        setCata(localStorage.getItem('category_name'))
+        setMainContent(localStorage.getItem('introduce'))
+        var str = localStorage.getItem('image_story', data_new.image)
+        setImgBook(str)
+        
+        document.getElementById("update__baner__book").disabled = true;
+        document.getElementById("mStory").disabled = true;
+        document.getElementById("nStory").disabled = true;
+        document.getElementById("iStory").disabled = true;
+        document.getElementById("cStory").disabled = true;
+        document.getElementById("btnAddStory").hidden = true;
+        document.getElementById("btnEditStory").hidden = false;
+        document.getElementById("btnDelStory").hidden = false;
+        setBtnSelect(false)
+    }
+
+    async function getChapter() {
+        var story_id = localStorage.getItem('id_story')
+        let data_new = []
+        let res = await axios.get("http://127.0.0.1:8000/api/get_chapter/" + story_id + "/")
+            .then(
+                response => {
+                    let data = response.data
+                    for (let temp of data) {
+                        let ob =
+                        {
+                            id: temp.id,
+                            index: temp.index,
+                            chapter_name: temp.chapter_name,
+                            content: temp.content
+                        }
+                        data_new.push(ob)
+                    };
+
+                }
+            )
+            .catch(
+                error => console.log(error)
+            );
+        setItems(data_new)
+        //console.log(items)
+    }
+    const addStory = async () => {
+        if (estimate <= 0) {
+            alert("Chap estimate > 0")
+            return
+        }
+        if (nameBook == '' || nameBook === '') {
+            alert("Can not leave the name blank")
+            return
+        }
         var formdata = new FormData();
         formdata.append("story_name", nameBook);
         formdata.append("category_name", cata);
@@ -65,33 +181,230 @@ export default function EditBookContent() {
             redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:8000/api/story/", requestOptions)
+        await fetch("http://127.0.0.1:8000/api/story/", requestOptions)
+            .then(response => response.text())
+            .then(getChapter())
+            .catch(error => console.log('error', error));
+        getIdStory()
+        alert("Add story success.")
+        document.getElementById("btnAddStory").disabled = true;
+        document.getElementById("update__baner__book").disabled = true;
+        document.getElementById("mStory").disabled = true;
+        document.getElementById("nStory").disabled = true;
+        document.getElementById("iStory").disabled = true;
+        document.getElementById("cStory").disabled = true;
+        document.getElementById("btnEditStory").hidden = false;
+        document.getElementById("btnDelStory").hidden = false;
+        document.getElementById("btnAddStory").hidden = true    ;
+        setSelect(false)
+        setBtnSelect(false)
+        setItems([])
+
+    }
+    const editStory = () => {
+        document.getElementById("mStory").disabled = false;
+        document.getElementById("nStory").disabled = false;
+        document.getElementById("iStory").disabled = false;
+        document.getElementById("cStory").disabled = false;
+        document.getElementById("btnSaveStory").hidden = false;
+        document.getElementById("btnEditStory").hidden = true;
+        document.getElementById("btnDelStory").hidden = true;
+        document.getElementById("update__baner__book").disabled = false;
+        
+    }
+    const router= useRouter()
+    const isEdit = () => {
+        var isE = window.location.pathname.slice(14, 19)
+        if(isE == 'edit='){
+            localStorage.setItem("id_story", window.location.pathname.slice(19))
+            getStory()
+        }
+        
+    }
+    const saveStory = async () => {
+
+
+        
+        if (estimate <= 0) {
+            alert("Chap estimate > 0")
+            return
+        }
+        if (nameBook == '' || nameBook === '') {
+            alert("Can not leave the name blank")
+            return
+        }
+        var formdata = new FormData();
+        formdata.append("story_name", nameBook);
+        formdata.append("category_name", cata);
+        formdata.append("create_date", "");
+        formdata.append("author", localStorage.getItem("id"));
+        formdata.append("image", file);
+        formdata.append("total_chapters", estimate);
+        formdata.append("user", localStorage.getItem("id"));
+        formdata.append("showtimes", "2 4 6");
+        formdata.append("rating", "");
+        formdata.append("views", "");
+        formdata.append("introduce", mainContent);
+
+        var requestOptions = {
+            method: 'PUT',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        await fetch("http://127.0.0.1:8000/api/story/" + localStorage.getItem("id_story") + "/", requestOptions)
+            .then(response => response.text())
+            .then(getChapter())
+            .catch(error => console.log('error', error));
+
+        alert("Edit story success.")
+        document.getElementById("btnAddStory").disabled = true;
+        document.getElementById("update__baner__book").disabled = true;
+        document.getElementById("mStory").disabled = true;
+        document.getElementById("nStory").disabled = true;
+        document.getElementById("iStory").disabled = true;
+        document.getElementById("cStory").disabled = true;
+        document.getElementById("btnSaveStory").hidden = true;
+        document.getElementById("btnEditStory").hidden = false;
+        document.getElementById("btnDelStory").hidden = false;
+        setSelect(false)
+        setBtnSelect(false)
+        setItems([])
+
+    }
+
+    const addChapter = async () => {
+        setBtnSelect(false)
+        document.getElementById("btnInsertChap").disabled = true;
+        // console.log(indexChap)
+        // console.log(nameChap)
+        // console.log(content)
+        // console.log(localStorage.getItem("id_story"))
+
+        var formdata = new FormData();
+        formdata.append("index", indexChap);
+        formdata.append("story", localStorage.getItem("id_story"));
+        formdata.append("chapter_name", nameChap);
+        formdata.append("content", content);
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        await fetch("http://127.0.0.1:8000/api/chapter/", requestOptions)
+            .then(response => response.text())
+            .then(getChapter())
+            .catch(error => console.log('error', error));
+        alert("Add chapter success")
+        getChapter()
+        setBtnAdd(true)
+        document.getElementById("btnInsertChap").disabled = false;
+        setBtnSave(false)
+        setBtnSave(true)
+        document.getElementById("btnAdd").hidden = true ;
+    }
+
+    const editChapter = async () => {
+        var formdata = new FormData();
+        formdata.append("story", localStorage.getItem("id_story"));
+        formdata.append("chapter_name", nameChap);
+        formdata.append("content", content);
+
+        var requestOptions = {
+            method: 'PUT',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/api/chapter/" + localStorage.getItem("id_chap") + "/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+
+        alert("Edit chapter success")
+        getChapter()
+    }
+
+    const delChapter = async () => {
+        var formdata = new FormData();
+        var requestOptions = {
+            method: 'DELETE',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/api/chapter/" + localStorage.getItem("id_chap") + "/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+        alert("Delete chapter success")
+        getChapter()
+        setContent("")
+        setNameChap("")
+        setBtnCancel(true)
+    }
+    const delStory = async () => {
+        var requestOptions = {
+            method: 'DELETE',
+            redirect: 'follow'
+          };
+          
+          fetch("http://127.0.0.1:8000/api/story/" + localStorage.getItem("id_story") +"/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        alert("Delete story success")
+        localStorage.setItem("id_story", "")
+        localStorage.setItem("is_edit", "false")
+        getChapter()
+        setContent("")
+        setNameChap("")
+        setBtnCancel(true)
+        router.reload()
+        
     }
     const onChange = (e) => {
         console.log(e);
     };
-    const [cata, setCata] = useState("");
-    const [mainContent, setMainContent] = useState("")
-    const [items, setItems] = useState([]);
-    const [name, setName] = useState('');
-    const [imgBook, setImgBook] = useState('')
-    const [estimate, setEstimate] = useState('')
-    const [nameBook, setNameBook] = useState('')
-    const [file, setFile] = useState(null)
+
     // const inputRef = useRef(null);
     const onNameChange = (event) => {
         setName(event.target.value);
     };
     const addItem = (e) => {
         e.preventDefault();
-        setItems([...items, name || `New item ${index++}`]);
-        setName('');
+        if (indexChap <= 0) {
+            alert("Chap estimate > 0")
+            return
+        }
+        if (indexChap == 0) {
+            alert("Input index")
+            return
+        }
+        for (let temp of items) {
+            if (indexChap == temp.index) {
+                alert("Chapter is axist")
+                return
+            }
+        }
+        setItems([{ index: indexChap }, ...items]);
+        document.getElementById("btnInsertChap").disabled = true;
+        setBtnSave(true)
+        setBtnSelect(true)
+        setBtnAdd(false)
+        setChapterIsCho(indexChap)
+        document.getElementById("btnAdd").hidden = false;
+        document.getElementById("btnSave").hidden = true;
+        document.getElementById("btnCancel").hidden = true;
+
     };
     const [attribute, setAtrribute] = useState(true)
     useEffect(() => {
+        isEdit()
+        getChapter()
         getCategory()
         const textArea = document.querySelector('.component__detail__edit__content--detail')
         if (attribute === false) {
@@ -107,7 +420,32 @@ export default function EditBookContent() {
     const handleChange = (value) => {
         setCata(value)
         //console.log(`selected ${value}`);
-      };
+    };
+    const nameChapter = (key) => {
+        try {
+            document.getElementById("btnSave").hidden = false;
+            document.getElementById("btnCancel").hidden = false;
+            setChapterIsCho(key)
+            setBtnSave(false)
+            setBtnCancel(false)
+            for (let temp of items) {
+                if (key == temp.index) {
+                    //console.log(temp.index)
+                    setNameChap(temp.chapter_name)
+                    setContent(temp.content)
+                    localStorage.setItem("id_chap", temp.id)
+                    return
+                }
+
+            }
+
+        } catch (error) {
+            setNameChap("")
+        }
+
+
+        //console.log(`selected ${value}`);
+    };
 
 
     return (
@@ -139,11 +477,13 @@ export default function EditBookContent() {
                                     <div className="component__detail__edit__information">
                                         <div className="input__name__book">
                                             <p className="title__input__name">Name book :</p>
-                                            <Input className="input__name__book--input" placeholder="Your book name" onChange={event => setNameBook(event.target.value)} />
-                                            <p className="title__input__name">Category</p>
-                                            <Select className=" select__chap__edit" placeholder="Choose your category"  onChange={handleChange} options={category}></Select>
+                                            <Input value={nameBook} id="nStory" className="input__name__book--input" placeholder="Your book name" onChange={event => setNameBook(event.target.value)} />
+                                            <p id="cStory" className="title__input__name">Category</p>
+                                            <Select value={parseInt(cata)} className=" select__chap__edit" placeholder="Choose your category" onChange={handleChange} options={category}></Select>
+                                            <br></br><br></br>
                                             <span className="title__input__name">Chap estimate :</span>
-                                            <Input className="input__number__chap" onChange={event => setEstimate(event.target.value)} />
+                                            <br></br><br></br>
+                                            <Input value={estimate} placeholder="Chap estimate" id="iStory" className="input__name__book--input" type="number" min="0" onChange={event => setEstimate(event.target.value)} />
                                         </div>
 
                                     </div>
@@ -157,11 +497,15 @@ export default function EditBookContent() {
                             <span className="component__detail__edit__content--icon" onClick={() => { setAtrribute(false) }} >
                                 <EditFilled />
                             </span>
-                            <TextArea onClick={() => { setAtrribute(false) }} className="component__detail__edit__content--detail" defaultValue={mainContent} allowClear readOnly onChange={event => setMainContent(event.target.value)} />
+                            <TextArea value={mainContent} id="mStory" onClick={() => { setAtrribute(true) }} className="component__detail__edit__content--detail" defaultValue={mainContent} allowClear readOnly onChange={event => setMainContent(event.target.value)} />
 
                         </div>
                         <div className="component__detail__edit__content--btn">
-                            <Button className="btn__save__edit" onClick={() => { addStory() }} >Save</Button>
+                            <Button hidden id="btnDelStory" className="btn__cancel__edit" onClick={() => { delStory() }} >Delete</Button>
+                            <Button id="btnAddStory" className="btn__save__add" onClick={() => { addStory() }} >Add story</Button>
+                            <Button hidden id="btnEditStory" className="btn__save__edit" onClick={() => { editStory() }} >Edit story</Button>
+                            <Button hidden id="btnSaveStory" className="btn__save__edit" onClick={() => { saveStory() }} >Save</Button>
+
                         </div>
                     </Col>
                     <Col span={24}>
@@ -173,37 +517,42 @@ export default function EditBookContent() {
                             </Col>
                         </Row>
                         <div className="component__detail__edit--choosechap">
-                            <h3 className="component__detail__edit__content--title" style={{ display: 'block' }}>Name chap</h3>
+                            <h3 className="component__detail__edit__content--title" style={{ display: 'block' }}>Select chap</h3>
                             <Select
+                                id="inChap"
+                                value={chapterIsCho}
+                                onChange={nameChapter}
+                                disabled={btnSelect}
                                 className=" select__chap__edit"
-                                placeholder="Add your chap name"
+                                placeholder={showIndexChap}
                                 popupClassName='select__chap__edit--dropdown'
                                 dropdownRender={(menu) => (
                                     <>
                                         {menu}
-                                        <Input
-                                            placeholder="Please enter item"
-                                            // ref={inputRef}
-                                            value={name}
-                                            onChange={onNameChange}
-                                        />
-                                        <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-                                            Add item
+                                        <Input placeholder="Chapter index" id="id_chapter" className="input__name__book--input" type="number" min="0" onClick={nameChapter} onChange={event => setIndexChap(event.target.value)} />
+                                        <Button
+                                            id="btnInsertChap"
+                                            type="text" icon={<PlusOutlined />}
+                                            onClick={addItem}>
+                                            Add Chap
                                         </Button>
                                     </>
                                 )}
                             >
-                                {items.map((item) => (
-                                    <Option key={item}>{item}</Option>
+                                {items.map((items) => (
+                                    <Option key={items.index}>{items.index}</Option>
                                 ))}
                             </Select>
-
-                            <h3 className="component__detail__edit__content--title" style={{ display: 'block' }}>Content</h3>
-                            <TextArea className="component__detail__edit__content--detail component__detail__edit__content--content" allowClear onChange={onChange} />
+                            <br></br><br></br>
+                            <h3 className="component__detail__edit__content--title">Name chap</h3>
+                            <Input disabled={select} id="nStory" className="input__name__book--input" placeholder="Your chap name" value={nameChap} onChange={event => setNameChap(event.target.value)} />
+                            <h3 className="component__detail__edit__content--title">Content</h3>
+                            <TextArea disabled={select} className="component__detail__edit__content--detail component__detail__edit__content--content" value={content} allowClear onChange={event => setContent(event.target.value)} />
                         </div>
                         <div className="component__detail__edit__content--btn">
-                            <Button className="btn__cancel__edit">Cancel</Button>
-                            <Button className="btn__save__edit">Save</Button>
+                            <Button hidden disabled={btnCancel} id="btnCancel" className="btn__cancel__edit" onClick={delChapter}>Delete</Button>
+                            <Button hidden disabled={btnAdd} id="btnAdd" className="btn__save__add" onClick={addChapter}>Add</Button>
+                            <Button hidden disabled={btnSave} id="btnSave" className="btn__save__edit" onClick={editChapter}>Save</Button>
                         </div>
                     </Col>
                 </Row>
@@ -450,6 +799,7 @@ export default function EditBookContent() {
                     color: #E75C62;
                     margin: 12px 24px;
                 }
+                
 
                 .component__detail__edit .component__detail__edit__content--btn .btn__save__edit{
                     background: #8BD0FC;
@@ -457,7 +807,28 @@ export default function EditBookContent() {
                     border-radius: 20px;
                     color:#fff;
                     border:none;
-                }   
+                }
+
+                .component__detail__edit .component__detail__edit__content--btn .btn__cancel__add,
+                .component__detail__edit .component__detail__edit__content--btn .btn__save__add{
+                    height: 36px;
+                    width: 113px;
+                    background: #FFFFFF;
+                    border: 1px solid #E75C62;
+                    box-shadow: 2px 4px 4px rgb(0 0 0 / 25%);
+                    border-radius: 20px;
+                    font-weight: 700;
+                    font-size: 16px;
+                    color: #E75C62;
+                    margin: 12px 24px;
+                }
+                .component__detail__edit .component__detail__edit__content--btn .btn__save__add{
+                    background: #00ff1f;
+                    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+                    border-radius: 20px;
+                    color:#fff;
+                    border:none;
+                }      
             `}</style>
         </div>
     )
