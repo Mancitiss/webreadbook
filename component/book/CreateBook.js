@@ -114,7 +114,10 @@ export default function EditBookContent() {
         setCata(localStorage.getItem('category_name'))
         setMainContent(localStorage.getItem('introduce'))
         var str = localStorage.getItem('image_story', data_new.image)
-        setImgBook(str)
+        if(str != "null"){
+            setImgBook(str)
+        }
+        
         
         document.getElementById("update__baner__book").disabled = true;
         document.getElementById("mStory").disabled = true;

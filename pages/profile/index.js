@@ -15,6 +15,7 @@ import cookies from 'react-cookies';
 function Profile() {
   const [user, setUser] = useState({});
   const [hiStory, setHiStory] = useState([]);
+
   const router = useRouter();
   async function getHiStory() {
     let data_new = []
@@ -51,6 +52,8 @@ function Profile() {
       );
 
   }
+
+
   let id;
 
   useEffect(() => {

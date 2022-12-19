@@ -15,9 +15,8 @@ import Voice1 from '../../assets/images/avatar-ai-1.png'
 import Voice2 from '../../assets/images/avatar-ai-2.png'
 import Voice3 from '../../assets/images/avatar-ai-3.png'
 
-export default function Book({check}){
+export default function Book({check, content}){
     // const [click, setClick]= useState(false)
-    const content= 'Độ ấm từ sau lưng chậm rãi vây quanh, hô hấp nóng bỏng ở bên tai: “Sợ không?” Hơi thở xa lạ quanh quẩn bên tai khiến người ta lạnh lẽo đến không dám lên tiếng.Lâm Tử Lạp như cảm giác được người đàn ông hơi khựng lại, sau đó lại vang lên giọng nói của anh: “Bây giờ hối hận vẫn còn kịp.”Cô căng thẳng siết chặt hai tay, lắc đầu: “Tôi không hối hận…”Cô đang ở trong thời kỳ xinh đẹp nhất, nhưng… Một đêm này đau đớn mà dài lâu…Cuối cùng nửa đêm về sáng người đàn ông đứng dậy đi vào phòng tắm, Lâm Tử Lạp mới kéo thân thể mệt mỏi, mặc đồ ra khỏi phòng.Dưới lầu khách sạn có người phụ nữ trung niên giới thiệu công việc này cho cô đang đứng đó, thấy Lâm Tử Lạp đi tới, bà ta đưa cho cô một cái túi màu đen: “Đây là tiền thù lao của cô.”Lâm Tử Lạp gần như không chút do dự nhận lấy, cầm tiền nhanh chóng chạy đi, thậm chí còn không quan tâm sự đau đớn dưới thân, chỉ muốn nhanh chóng đến bệnh viện.Bầu trời vẫn chưa sáng khiến hành lang rất im lặng, dưới đất trước phòng phẫu thuật để hai cái cáng cứu thương, vì không đóng tiền nên không được đưa vào phòng phẫu thuật.Lâm Tử Lạp nhìn mà đau lòng không thôi, nức nở nói: “Tôi có tiền, mau cứu mẹ và em trai tôi đi…” Cô nghẹn ngào đưa tiền trong tay cho bác sĩ, bác sĩ nhìn thoáng qua, đưa cho y tá kiểm kê, sau đó mới kêu nhân viên đưa người bị thương vào trong phòng phẫu thuật.Lâm Tử Lạp không thấy bọn họ đẩy em trai mình vào, vội vàng nhào lên bắt lấy bác sĩ cầu xin: “Còn cả em trai tôi nữa, ông cứu thằng bé đi…”Bác sĩ thở dài: “Thật ngại quá, em trai cô đã không cứu được nữa rồi…”'
     const iconVoice = useRef()
     const iconStart = useRef()
     const iconPause = useRef()

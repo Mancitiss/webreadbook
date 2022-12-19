@@ -12,6 +12,28 @@ export default function Card({index, story_name, image, total_chapters, introduc
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
     const [img, setImg]= useState(Book1)
+    var intro = "" + introduce
+    if(intro.length > 160){
+        intro = intro.slice(0, 160) + "..."
+    }
+    const saveStory = async () => {
+        setCheck(!check)
+        var formdata = new FormData();
+        formdata.append("story", index);
+        formdata.append("user", localStorage.getItem("id"));
+
+        
+        var requestOptions = {
+          method: 'POST',
+          body: formdata,
+          redirect: 'follow'
+        };
+        
+        fetch("http://127.0.0.1:8000/api/savestory/", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      }
     useEffect(()=>{
         
         if(image == null){
@@ -40,7 +62,7 @@ export default function Card({index, story_name, image, total_chapters, introduc
                 <div className={`item__card__book--bg item__card__book--bg--${index}`} ></div>
                 {
                     owner ?(<><div onClick={()=>router.push(`/books/create/edit=${index}`)}><EditFilled /></div></>)
-                    :(<><input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={()=>{setCheck(!check), save}} />
+                    :(<><input type='checkbox'style={{display:'none'}}  id={`check__save-${index}`} onClick={saveStory} />
                     <label htmlFor={`check__save-${index}`} >{!check ?<PushpinOutlined /> :<PushpinFilled /> }</label></>)
                 }
                 
@@ -51,7 +73,7 @@ export default function Card({index, story_name, image, total_chapters, introduc
                     <div className="item__card__book--text">
                         <h3 className="item__card__book--text--name"> <b>{story_name}</b></h3>
                         <p className="item__card__book--text--chap">Total chap: <b>{total_chapters}</b></p>
-                        <p className="item__card__book--text--intro">{introduce}</p>
+                        <p className="item__card__book--text--intro">{intro}</p>
                         {/* <p className="item__card__book--text--author">By <b>Luck</b></p> */}
                     </div>
                     <Button className={`item__card__book--btn item__card__book--btn--${index}`} >Read now</Button>

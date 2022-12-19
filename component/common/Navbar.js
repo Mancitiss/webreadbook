@@ -100,7 +100,13 @@ const Navbar = () => {
           localStorage.setItem('hobbies', response.data.hobbies);
           localStorage.setItem('address', response.data.address);
           localStorage.setItem('phone', response.data.phone);
-          setAvatar("http://127.0.0.1:8000" + response.data.avatar)
+          var img = response.data.avatar
+          if(img == "null" || img == null || img ===null){
+            setAvatar(AvatarLogin)
+          }else{
+            setAvatar("http://127.0.0.1:8000" + img)
+          }
+
         }
       )
       .catch(
@@ -180,7 +186,7 @@ const Navbar = () => {
   useEffect(() => {
 
     var img = localStorage.getItem("avatar")
-    if(img == "null"){
+    if(img == "null" || img == null || img ===null){
       setAvatar(AvatarLogin)
     }else{
       setAvatar("http://127.0.0.1:8000" + img)

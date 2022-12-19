@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react';
 import bookApi from '../../utils/book';
 import Image from 'next/image';
 import Chap from '../items/Chap';
-
+import Book1 from "../../assets/images/baner-book1.png"
 export default function BookDetail({ book, newChapterList }) {
   const [categoryList, setCategoryList] = useState([]);
+
 
   useEffect(() => {
     const getCategories = async () => {
@@ -14,12 +15,14 @@ export default function BookDetail({ book, newChapterList }) {
           const res = await bookApi.getCategories(id);
           setCategoryList((pre) => [...pre, res.data.category_name]);
         }
-      } catch (error) {}
+        localStorage.setItem("read_chap_name", book?.story_name)
+        localStorage.setItem("id_name_story", book?.id)
+      } catch (error) { }
     };
     getCategories();
   }, [book]);
 
-  const myLoader=({src})=>{
+  const myLoader = ({ src }) => {
     return `${src}`;
   }
 
@@ -30,7 +33,7 @@ export default function BookDetail({ book, newChapterList }) {
           <Col lg={8} sm={12} xs={24}>
             <div className='component__detail__img'>
               <Image
-                src={book?.image || ''}
+                src={book?.image || Book1}
                 loader={myLoader}
                 width={279}
                 height={279}

@@ -4,25 +4,45 @@ import { useEffect } from "react"
 
 export default function Chap({ chap, book }) {
   const link = { book: book?.id, chap: chap?.index };
-   const read= true
+  const read = true
   const router = useRouter();
-  useEffect(()=>{
-        const items = document.getElementsByClassName('item__chap');
-        console.log(items.length);
-        for(let i=0; i<items.length;i++){
-            if(read){
+  const history = async () => {
+    var formdata = new FormData();
+    formdata.append("chapter", localStorage.getItem("read_chapter"));
+    formdata.append("story", localStorage.getItem("id_name_story"));
+    formdata.append("user", localStorage.getItem("id"));
 
-                items[i].classList.add('readed')
-            }
-        }
-    },[])
-  
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch("http://127.0.0.1:8000/api/history/", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+  useEffect(() => {
+    const items = document.getElementsByClassName('item__chap');
+    console.log(items.length);
+    for (let i = 0; i < items.length; i++) {
+      if (read) {
+
+        items[i].classList.add('readed')
+      }
+    }
+  }, [])
+
   return (
     <div>
       <div
         className='item__chap'
         onClick={() => {
+          localStorage.setItem("read_chapter", chap?.id)
+          history()
           router.push(`/books/${link?.book}/${link?.chap}`);
+
         }}
       >
         <p className='item__chap__number'>{`Chap ${chap?.index}: `}</p>

@@ -3,24 +3,56 @@ import { Breadcrumb, Button, Col, Row } from 'antd';
 import { ReadOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import TextHeading from "../../../component/common/TextHeading";
-import { BackwardOutlined,ForwardOutlined  } from "@ant-design/icons";
+import { BackwardOutlined, ForwardOutlined } from "@ant-design/icons";
 import Book from "../../../component/book/Book";
 import Image from "next/image";
 import IconLight from '../../../assets/images/icon-sunlight.svg'
 import IconDark from '../../../assets/images/icon-darkmon.svg'
 import { useEffect, useState } from "react";
+import axios from 'axios';
+
+export default function ReadBook() {
+    const hello = 'book1'
+    const router = useRouter()
+    const [check, setCheck] = useState(false)
+    const [nChap, setNChap] = useState("")
+    const [iChap, setIChap] = useState("")
+    const [cChap, setCChap] = useState("")
+    const [sName, setSName] = useState("")
+    async function getChapter() {
+        const idChap = localStorage.getItem("read_chapter")
+        let data_new = []
+        let res = await axios.get("http://127.0.0.1:8000/api/chapter/" + idChap + "/")
+            .then(
+                response => {
+                    let data = response.data
+                    data_new = data
+                }
+            )
+            .catch(
+                error => console.log(error)
+            );
+
+        setNChap(data_new.chapter_name);
+        setIChap(data_new.index);
+        setCChap(data_new.content);
+        setSName(localStorage.getItem("read_chap_name"))
 
 
-export default function ReadBook(){
-    const hello='book1'
-    const router= useRouter()
-    const [check, setCheck]= useState(false)
-   
-    useEffect(()=>{
-        
+
+    }
+    async function btnPre() {
+
+    }
+    async function btnNex() {
+
+    }
+    getChapter()
+    useEffect(() => {
+        getChapter()
         const icon = document.getElementsByClassName('icon__light__darkmode')
-        const iconVocie= document.getElementsByClassName('icon__play__voice')
-        const iconSettingVocie= document.getElementsByClassName('icon__setting__voice')
+        const iconVocie = document.getElementsByClassName('icon__play__voice')
+        const iconSettingVocie = document.getElementsByClassName('icon__setting__voice')
         const bg = document.getElementsByClassName('layout__main')
         const header = document.getElementsByClassName('ant-layout-header')
         const footer = document.getElementsByClassName('ant-layout-footer')
@@ -30,8 +62,8 @@ export default function ReadBook(){
         const textFooter = document.getElementsByClassName('footer__main__listmenu')
         const bookBg = document.getElementsByClassName("content__book__chap--bg")
         const lopGia = document.getElementsByClassName("lopgia")
-        const textBook= document.getElementsByClassName("content__book__chap--content")
-        
+        const textBook = document.getElementsByClassName("content__book__chap--content")
+
         icon[0].classList.toggle('icon__dark')
         iconVocie[0].classList.toggle('icon__dark')
         iconSettingVocie[0].classList.toggle('icon__dark')
@@ -39,68 +71,71 @@ export default function ReadBook(){
         header[0].classList.toggle('bg__dark')
         footer[0].classList.toggle('bg__dark')
         textHeading[0].classList.toggle('bg__dark')
-        nextBack[0].classList.toggle('bg__dark')
-        nextBack[1].classList.toggle('bg__dark')
         nameWeb[0].classList.toggle('bg__dark')
         textBook[0].classList.toggle('text__dark')
-        for( let i=0; i< textFooter.length; i++){
+        for (let i = 0; i < textFooter.length; i++) {
             textFooter[i].classList.toggle('bg__dark')
         }
-        if(check){
-            bookBg[0].style.setProperty('--dark','#ffff'),
-            lopGia[0].style.setProperty('--dark','#ffff')
+        if (check) {
+            bookBg[0].style.setProperty('--dark', '#ffff'),
+                lopGia[0].style.setProperty('--dark', '#ffff')
         }
-        else(
-            bookBg[0].style.setProperty('--dark','#111'),
-            lopGia[0].style.setProperty('--dark','#111')
+        else (
+            bookBg[0].style.setProperty('--dark', '#111'),
+            lopGia[0].style.setProperty('--dark', '#111')
         )
         // console.log('l');
     }, [check])
 
-    return(
+    return (
         <div>
             <Main>
                 <div className="readbook__content">
                     <Breadcrumb className="readbook__detail__breadcurmb">
                         <Breadcrumb.Item href="/">
-                        <ReadOutlined className="icon__book" />
+                            <ReadOutlined className="icon__book" />
                             <span>Book</span>
                         </Breadcrumb.Item>
-                        <Breadcrumb.Item onClick={() => router.push(`/books/detail/${hello}`)}> 
+                        <Breadcrumb.Item onClick={() => router.push(`/books/detail/${hello}`)}>
                             <span>Love story valut</span>
                         </Breadcrumb.Item>
-                        <Breadcrumb.Item>Chap 123</Breadcrumb.Item>
+                        <Breadcrumb.Item>Chap {iChap}</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="readbook__content__main">
-                        <TextHeading>Love story Vault</TextHeading>
+                        <TextHeading>{sName}</TextHeading>
                         <div className="readbook__content__main--title">
                             <Row justify="center" align='middle' >
-                                <Col lg={5}  sm={2} xs={0}></Col>
-                                <Col lg={4}  sm={6} xs={7} >
+                                <Col lg={5} sm={2} xs={0}></Col>
+                                <Col lg={4} sm={6} xs={7} >
+                                    <Button onClick={btnPre}>
                                     <BackwardOutlined className="icon__nextback" />
-                                    <span className="btn__next__back--chap">Back</span>
+                                    </Button>
                                 </Col>
-                                <Col lg={6}  sm={8} xs={10}>
-                                    <p className="readbook__content__main--title--chap">Chap 132: Where the love</p>
+                                <Col lg={6} sm={8} xs={10}>
+                                    <p className="readbook__content__main--title--chap">Chap {iChap}: {nChap}</p>
                                 </Col>
-                                <Col lg={4}  sm={6} xs={7} >
-                                    <span className="btn__next__back--chap">Next</span>
-                                    <ForwardOutlined  className="icon__nextback"/>
+                                <Col lg={4} sm={6} xs={7} >
+                                    <Button onClick={btnNex}>
+                                    <ForwardOutlined className="icon__nextback" />
+                                    </Button>
+                                    
+                                    
                                 </Col>
-                                <Col lg={5}  sm={2} xs={0}></Col>
+                                <Col lg={5} sm={2} xs={0}></Col>
                             </Row>
                         </div>
-                            <input type='checkbox' id='change__mode' className="change__mode__book" onClick={()=>{setCheck(!check)}} style={{display:'none'}} />
+                        <input type='checkbox' id='change__mode' className="change__mode__book" onClick={() => { setCheck(!check) }} style={{ display: 'none' }} />
                         <div className="readbook__content__main--content">
                             <div className="readbook__content__main--groundicon">
                                 <div className="icon__light__darkmode" >
-                                    <label style={{height:'36px',cursor: 'pointer'}} htmlFor="change__mode">
-                                        { check ? <Image src={IconDark} />: <Image src={IconLight} />}
-                                        </label>
+                                    <label style={{ height: '36px', cursor: 'pointer' }} htmlFor="change__mode">
+                                        {check ? <Image src={IconDark} /> : <Image src={IconLight} />}
+                                    </label>
                                 </div>
-                                
+
                             </div>
-                            <Book check={check}></Book>
+                            
+                            <Book check={check} content={cChap}></Book>
                         </div>
 
                     </div>

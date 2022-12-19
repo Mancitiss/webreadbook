@@ -3,34 +3,104 @@ import Card from '../items/Card';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { PlusCircleOutlined } from '@ant-design/icons';
+import axios from "axios";
+export default function TabBook() {
+    const name = "book1"
+    const [myStory, setMyStory] = useState([]);
+    const [mySave, setMySave] = useState([]);
+    async function getMyStory() {
+        var data_new = []
+        var us = localStorage.getItem("id")
+        var us_temp = false
+        let res = await axios.get("http://127.0.0.1:8000/api/my-book/" + localStorage.getItem("id") + "/")
+            .then(
+                response => {
+                    let data = response.data
+                    for (let temp of data) {
+                        if (us == temp.user) {
+                            us_temp = true
+                        } else {
+                            us_temp = false
+                        }
 
-export default function TabBook(){
-    const name="book1"
-    const router= useRouter()
-    return(
+                        let ob =
+                        {
+                            id: temp.id,
+                            story_name: temp.story_name,
+                            image: temp.image,
+                            total_chapters: temp.total_chapters,
+                            introduce: temp.introduce,
+                            user: us_temp
+                        }
+                        data_new.push(ob)
+                    };
+                    setMyStory(data_new)
+
+                }
+            )
+            .catch(
+                error => console.log(error)
+            );
+
+    }
+    async function getMySave() {
+        var data_new = []
+        var us = localStorage.getItem("id")
+        var us_temp = false
+        let res = await axios.get("http://127.0.0.1:8000/api/my-save/" + localStorage.getItem("id") + "/")
+            .then(
+                response => {
+                    let data = response.data
+                    for (let temp of data) {
+                        if (us == temp.user) {
+                            us_temp = true
+                        } else {
+                            us_temp = false
+                        }
+
+                        let ob =
+                        {
+                            id: temp.id,
+                            story_name: temp.story_name,
+                            image: temp.image,
+                            total_chapters: temp.total_chapters,
+                            introduce: temp.introduce,
+                            user: us_temp
+                        }
+                        data_new.push(ob)
+                    };
+                    setMySave(data_new)
+
+                }
+            )
+            .catch(
+                error => console.log(error)
+            );
+
+    }
+
+    useEffect(() => {
+        getMyStory()
+        getMySave()
+    })
+
+    const router = useRouter()
+
+    return (
         <div>
             <div className='tab__book__profile'>
                 <Tabs defaultActiveKey="1">
                     <Tabs.TabPane tab="Your books" key="1">
                         <div>
                             <Row justify="start" gutter={16}>
+                                {
+                                    myStory.map((myStory) => {
+                                        return (
+                                            <Card index={myStory.id} story_name={myStory.story_name} image={myStory.image} total_chapters={myStory.total_chapters} introduce={myStory.introduce} owner={myStory.user} />)
+                                    })
+                                }
                                 <Col flex={2} sm={8} xs={12}>
-                                    <Card index={16} owner={true}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={17} owner={true}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={18} owner={true}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={4} owner={true}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={5} owner={true}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <div className='create__book--item' onClick={()=>router.push(`books/create/${name}`)}>
+                                    <div className='create__book--item' onClick={() => router.push(`books/create/${name}`)}>
                                         <PlusCircleOutlined />
                                     </div>
                                 </Col>
@@ -40,42 +110,16 @@ export default function TabBook(){
                     <Tabs.TabPane tab="Saved" key="2">
                         <div>
                             <Row justify="start" gutter={16}>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={6}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={7}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={8}></Card>
-                                </Col>
+                            {
+                                    mySave.map((mySave) => {
+                                        return (
+                                            <Card index={mySave.id} story_name={mySave.story_name} image={mySave.image} total_chapters={mySave.total_chapters} introduce={mySave.introduce} owner={mySave.user} />)
+                                    })
+                                }
                             </Row>
                         </div>
                     </Tabs.TabPane>
-                    <Tabs.TabPane tab="History" key="3">
-                        <div>
-                            <Row justify="start" gutter={16}>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={9}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={2}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={10}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={11}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={12}></Card>
-                                </Col>
-                                <Col flex={2} sm={8} xs={12}>
-                                    <Card index={13}></Card>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Tabs.TabPane>
+                    
                 </Tabs>
             </div>
             <style jsx>{`
