@@ -180,8 +180,8 @@ const Navbar = () => {
   useEffect(() => {
 
     var img = localStorage.getItem("avatar")
-    if(img == null){
-      setAvatar("http://127.0.0.1:8000/" + img)
+    if(img == "null"){
+      setAvatar(AvatarLogin)
     }else{
       setAvatar("http://127.0.0.1:8000" + img)
     }

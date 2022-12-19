@@ -47,12 +47,12 @@ export default function ReadBook(){
             textFooter[i].classList.toggle('bg__dark')
         }
         if(check){
-            bookBg[0].style.setProperty('--dark','#1D1C1F'),
-            lopGia[0].style.setProperty('--dark','#1D1C1F')
+            bookBg[0].style.setProperty('--dark','#ffff'),
+            lopGia[0].style.setProperty('--dark','#ffff')
         }
         else(
-            bookBg[0].style.setProperty('--dark',''),
-            lopGia[0].style.setProperty('--dark','')
+            bookBg[0].style.setProperty('--dark','#111'),
+            lopGia[0].style.setProperty('--dark','#111')
         )
         // console.log('l');
     }, [check])
