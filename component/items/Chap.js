@@ -1,12 +1,12 @@
-import { CheckCircleOutlined } from "@ant-design/icons"
-import { useRouter } from "next/router"
+import { CheckCircleOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { useEffect } from "react"
 
-export default function Chap(){
-    const link={'book':'book1','chap':'123'}
-    const read= true
-    const router= useRouter()
-    useEffect(()=>{
+export default function Chap({ chap, book }) {
+  const link = { book: book?.id, chap: chap?.index };
+   const read= true
+  const router = useRouter();
+  useEffect(()=>{
         const items = document.getElementsByClassName('item__chap');
         console.log(items.length);
         for(let i=0; i<items.length;i++){
@@ -16,52 +16,49 @@ export default function Chap(){
             }
         }
     },[])
-    return(
-        <div>
-            <div className="item__chap" onClick={()=>{router.push(`/books/${link.book}/${link.chap}`)}}>
-                <p className="item__chap__number">Chap 123:</p>
-                <p className="item__chap__name">Where my love ?</p>
-                {
-                    read ?(
-                    <div className="item__chap__isread">
-                        <CheckCircleOutlined  />
-                    </div>
-                    ):(<> </>)
-                }
-            </div>
+  
+  return (
+    <div>
+      <div
+        className='item__chap'
+        onClick={() => {
+          router.push(`/books/${link?.book}/${link?.chap}`);
+        }}
+      >
+        <p className='item__chap__number'>{`Chap ${chap?.index}: `}</p>
+        <p className='item__chap__name'>{chap?.chapter_name}</p>
+        <div className='item__chap__isread'>
+          <CheckCircleOutlined />
+        </div>
+      </div>
 
-            <style jsx>{`
-                .item__chap{
-                    display:flex;
-                    width:90%;
-                    height:36px;
-                    background: #FFFFFF;
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-                    border-radius: 5px;
-                    align-items: center;
-                    font-weight: 600;
-                    font-size: 16px;
-                    position:relative;
-                    margin:6px;
-                    transition: 0.4s;
-                    cursor: pointer;
-                }
+      <style jsx>{`
+        .item__chap {
+          display: flex;
+          width: 90%;
+          height: 36px;
+          background: #ffffff;
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 5px;
+          align-items: center;
+          font-weight: 600;
+          font-size: 16px;
+          position: relative;
+          margin: 6px;
+          transition: 0.4s;
+          cursor: pointer;
+        }
 
-                .item__chap:hover{
-                    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25);
-                    scale: 1.02;
-                }
-                .item__chap__number{
-                    margin: 0 24px 0 16px;
-                    color: #FF8F5C;
-                }
-                
-                .item__chap__name{
-                    margin: 0;
-                    color: #1F1E22;
-                }
+        .item__chap:hover {
+          box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25);
+          scale: 1.02;
+        }
+        .item__chap__number {
+          margin: 0 24px 0 16px;
+          color: #ff8f5c;
+        }
 
-                .item__chap__isread{
+        .item__chap__isread{
                     position: absolute;
                     right: 16px;
                     font-size: 22px;
@@ -90,8 +87,9 @@ export default function Chap(){
                     .readed{
                         background: rgba(255,143,92,.5);
                     }
-                }
-            `}</style>
-        </div>
-    )
+                  
+  `}</style>
+    </div>
+  );
 }
+
