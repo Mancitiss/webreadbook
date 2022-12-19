@@ -13,8 +13,6 @@ export default function Card({index, story_name, image, total_chapters, introduc
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
     useEffect(()=>{
-        localStorage.setItem("id_story", index)
-        localStorage.setItem("is_edit", "true")
         const bgs= document.getElementsByClassName(`item__card__book--bg--${index}`)
         const btns= document.getElementsByClassName(`item__card__book--btn--${index}`)
         setColorID(Math.floor(Math.random() * color.length))
