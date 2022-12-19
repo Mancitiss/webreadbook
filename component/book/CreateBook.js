@@ -401,7 +401,7 @@ export default function EditBookContent() {
         document.getElementById("btnCancel").hidden = true;
 
     };
-    const [attribute, setAtrribute] = useState(true)
+    const [attribute, setAtrribute] = useState(false)
     useEffect(() => {
         isEdit()
         getChapter()

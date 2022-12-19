@@ -4,9 +4,11 @@ import Image from "next/image"
 import React, { useEffect, useState } from 'react';
 
 export default function File({index, name}){
-
+    function setCata(){
+        localStorage.setItem("id_cata_cho", index)
+    }
     return(
-        <div>
+        <div onClick={setCata}>
             <input type={'radio'} id={`check__category__${index}`} className='chose__catergory'  name='checkbox__category' />
             <label htmlFor={`check__category__${index}`}>
                 <div className="file__item" id={`item__category__${index}`}>
@@ -20,7 +22,7 @@ export default function File({index, name}){
                         <Image src={Book1} alt="anh sach" className="file__item__content--img" height={40} width={30} />
                         <Image src={Book1} alt="anh sach" className="file__item__content--img" height={40} width={30} />
                     </div>
-                    <span className="file__item__content--detail">Lorem ipsum </span>
+                    {/* <span className="file__item__content--detail">Lorem ipsum </span> */}
                     <RightCircleFilled className="icon__detail__file" />
                 </div>
             </div></label>
