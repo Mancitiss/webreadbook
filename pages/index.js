@@ -41,7 +41,7 @@ export default function Home() {
   }
   async function getStory() {
     let data_new = []
-    const us = localStorage.getItem("id")
+    var us = localStorage.getItem("id")
     let us_temp = false
     let res = await axios.get("http://127.0.0.1:8000/api/list-story-new/")
       .then(
@@ -131,13 +131,14 @@ export default function Home() {
       })
     })
   }, [])
-
+  //getCategory()
   useEffect(() => {
 
     for (let i = 0; i < category.length; i++) {
       const one = document.getElementById(`check__category__${category[0].id}`)
       one.checked = true
     }
+    
 
   }, [])
 

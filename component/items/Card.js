@@ -9,12 +9,10 @@ export default function Card({index, story_name, image, total_chapters, introduc
     
     const [check, setCheck]= useState(false)
     const router= useRouter()
-    const hello='book1'
+    const hello='2'
     const color= ['#FF8F5C','#8BD0FC','#FCE76C']
     const [colorID, setColorID]= useState(0)
     useEffect(()=>{
-        localStorage.setItem("id_story", index)
-        localStorage.setItem("is_edit", "true")
         const bgs= document.getElementsByClassName(`item__card__book--bg--${index}`)
         const btns= document.getElementsByClassName(`item__card__book--btn--${index}`)
         setColorID(Math.floor(Math.random() * color.length))
@@ -64,6 +62,7 @@ export default function Card({index, story_name, image, total_chapters, introduc
                 position: relative;
                 margin:12px 6px;
                 cursor: pointer;
+                transition: all 0.8s;
             }
             
             .item__card__book--bg{
@@ -172,15 +171,18 @@ export default function Card({index, story_name, image, total_chapters, introduc
             .item__card__book:hover .item__card__book--text{
                 display:block;
                 inset: 82px 8px 0;
+                transition: all 0.6s;
             }
 
             .item__card__book:hover .item__card__book--bg::after{
                 transform: translateX(-4px) translateY(-158px);
+                transition: all 0.6s;
             }
            
             .item__card__book:hover .item__card__book--img{
                 scale: 0.7;
                 transform: translateX(72px) translateY(-102px);
+                transition: all 0.6s;
             }
 
             @media  (max-width: 480px){
@@ -207,11 +209,13 @@ export default function Card({index, story_name, image, total_chapters, introduc
 
                 .item__card__book:hover .item__card__book--bg::after{
                     transform: translate(-16px, -116px);
+                    transition: all 0.6s;
                 }
 
                 .item__card__book:hover .item__card__book--img{
                     scale: 0.6;
                     transform: translate(54px, -82px);
+                    transition: all 0.6s;
                 }
 
                 .item__card__book:hover .item__card__book--text{

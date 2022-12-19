@@ -44,19 +44,27 @@ export default function Book({check}){
         
     })
     const listening=(()=>{
-        setInterval(()=>{
+        // const timeCheck =setInterval(()=>{
 
-            if(responsiveVoice.isPlaying()) {
-                // console.log("I hope you are listening");
-                iconVoice.current.style.display='flex'
-              }
-            else{
-                // console.log("none listenming");
-                iconVoice.current.style.display='none'
+        //     if(responsiveVoice.isPlaying()) {
+        //         // console.log("I hope you are listening");
+        //         if(iconVoice){
+
+        //             iconVoice.current.style.display='flex'
+        //         }
+        //       }
+        //     else{
+        //         // console.log("none listenming");
+        //         if(iconVoice){
+
+        //             iconVoice.current.style.display='none'
+        //         }
                 
-            }
-        },1500)
-        
+        //     }
+        // },1500)
+        //  return (()=>{
+        //     clearInterval(timeCheck);
+        //  })
 
     })
     const pauseVoice =(()=>{

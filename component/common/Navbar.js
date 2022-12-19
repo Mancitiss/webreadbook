@@ -5,12 +5,12 @@ import Link from 'next/link'
 import { Col, Row, Input, Button, Modal, Avatar } from 'antd'
 import styles from '../../styles/Home.module.css'
 import { useEffect, useState } from 'react';
-import { UserOutlined } from '@ant-design/icons'
-import AvatarLogin from '../../assets/images/avatar1.jpg'
-import axios from "axios";
+import { UserOutlined } from '@ant-design/icons';
+import AvatarLogin from '../../assets/images/avatar1.jpg';
+import axios from 'axios';
 const { Search } = Input;
 
-import cookies from 'react-cookies'
+import cookies from 'react-cookies';
 import {
   SearchOutlined,
   MenuOutlined,
@@ -21,17 +21,19 @@ import {
   ScheduleFilled,
   InfoCircleFilled,
   LogoutOutlined,
-  LoginOutlined
+  LoginOutlined,
 } from '@ant-design/icons';
-import { useRouter } from 'next/router'
-import { ApiError } from 'next/dist/server/api-utils'
+import { useRouter } from 'next/router';
+import { ApiError } from 'next/dist/server/api-utils';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 
+
   const [isLogin, setLogin] = useState(true)
   const [Avatar, setAvatar] = useState(AvatarLogin)
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -170,8 +172,7 @@ const Navbar = () => {
         alert("We don't recognize that username or password. You can try again or use another login option.")
       }
     }
-
-  }
+  };
   // const [username, setUsername] = useState(null)
   // const [password, setPassword] = useState(null)
   const router = useRouter()
@@ -228,7 +229,10 @@ const Navbar = () => {
       <div className='navbar-home'>
         <Row justify='center' align='middle'>
           <Col lg={0} sm={0} xs={6}>
-            <MenuOutlined onClick={showModalMoblie} style={{ fontSize: '32px' }} />
+            <MenuOutlined
+              onClick={showModalMoblie}
+              style={{ fontSize: '32px' }}
+            />
           </Col>
           <Modal className='modal__menu__mobile' open={isModalOpenMobile} onOk={handleOkMobile} onCancel={handleCancelMobile}>
             <div className='logo__web' onClick={() => { router.push('/') }}>
@@ -240,14 +244,12 @@ const Navbar = () => {
               />
             </div>
             <div className='modal__menu__mobile__content'>
-              <Search
-                placeholder="Search..."
-                onSearch={onSearch}
-              />
+              <Search placeholder='Search...' onSearch={onSearch} />
               <div className='menu__moblie'>
                 <div id='home__mobile' className='menu__moblie--btn'>
                   <HomeFilled className='icon__home__mobile' />
                   <Link href='/'>
+
                     <a className='navbar__home__link'>
                       Home
                     </a>
@@ -256,18 +258,22 @@ const Navbar = () => {
                 <div id='category__mobile' className='menu__moblie--btn'>
                   <FolderOpenFilled className='icon__home__mobile' />
                   <Link href='/category'>
+
                     <a className='navbar__home__link'>
                       Category
                     </a>
+
                   </Link>
                 </div>
                 {isLogin ? (
                   <div id='profile__mobile' className='menu__moblie--btn'>
                     <ScheduleFilled className='icon__home__mobile' />
                     <Link href='/profile'>
+
                       <a className='navbar__home__link'>
                         Profile
                       </a>
+
                     </Link>
                   </div>
                 ) : (
@@ -276,6 +282,7 @@ const Navbar = () => {
                 <div id='about__mobile' className='menu__moblie--btn'>
                   <InfoCircleFilled className='icon__home__mobile' />
                   <Link href='/abouts'>
+
                     <a className='navbar__home__link'>
                       Abouts
                     </a>
@@ -285,11 +292,14 @@ const Navbar = () => {
               <div >
                 {isLogin ? (<div className='memu__mobile__footer'><LogoutOutlined className='icon__login--logout' /> <span>Logout</span></div>)
                   : (<div className='memu__mobile__footer'><LoginOutlined className='icon__login--logout' /> <span>Login</span></div>)}
+
               </div>
             </div>
           </Modal>
           <Col lg={2} sm={2} xs={12}>
+
             <div className='logo-web' onClick={() => { router.push('/') }}>
+
               <Image
                 src={Logo}
                 alt='Logo trang web doc truyen'
@@ -337,6 +347,7 @@ const Navbar = () => {
                 onClick={handleShowLoginModal}
               >
                 Login
+
               </Button> : <div onClick={() => { router.push('/profile') }} className='navbar__home__avatar'>
                 <Image src={Avatar} width={60} height={60} />
               </div>
@@ -395,6 +406,7 @@ const Navbar = () => {
               </Col>
             </Row>
             <div className='contaner__modal__login-input'>
+
               <label className='contaner__modal__login-input-text'>Username</label>
               <Input
                 id="username"
@@ -412,11 +424,13 @@ const Navbar = () => {
                 {isModalLoginOpen && <span>Forgot password ?</span>}
               </div>
               <Input.Password
-                id="password"
+                id='password'
                 className='input-login'
                 placeholder='Your password'
+
               // field={password} 
               // change={event => setPassword(event.target.value)
+
               />
             </div>
             {!isModalLoginOpen && (
@@ -427,14 +441,16 @@ const Navbar = () => {
                   </label>
                 </div>
                 <Input.Password
-                  id="re_password"
+                  id='re_password'
                   className='input-login'
                   placeholder='Confirm password'
                 />
               </div>
             )}
 
+
             <Button className='btn__modal__login' onClick={() => { checkLogin() }}>
+
               {isModalLoginOpen ? 'Login' : 'Register'}
             </Button>
           </div>
@@ -470,7 +486,7 @@ const Navbar = () => {
           color: #ff8f5c;
         }
 
-        .navbar__home__avatar{
+        .navbar__home__avatar {
           height: 52px;
           width: 52px;
           border-radius: 50%;
@@ -480,7 +496,7 @@ const Navbar = () => {
           cursor: pointer;
         }
 
-        .navbar__home__avatar:hover{
+        .navbar__home__avatar:hover {
           scale: 1.2;
           box-shadow: 6px 6px 10px #ccc;
         }
@@ -691,7 +707,7 @@ const Navbar = () => {
           box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.25);
         }
 
-        .modal__menu__mobile{
+        .modal__menu__mobile {
           height: 100vh;
           width: 63% !important;
           position: fixed;
@@ -701,59 +717,59 @@ const Navbar = () => {
           padding-bottom: 0;
         }
 
-        .modal__menu__mobile .ant-modal-content{
+        .modal__menu__mobile .ant-modal-content {
           height: 100%;
         }
 
-        .modal__menu__mobile .ant-modal-footer{
-          display:none;
+        .modal__menu__mobile .ant-modal-footer {
+          display: none;
         }
 
-        .modal__menu__mobile .ant-modal-close-x{
-          color: #F19DA1;
-          font-size:20px
+        .modal__menu__mobile .ant-modal-close-x {
+          color: #f19da1;
+          font-size: 20px;
         }
 
-        .modal__menu__mobile .logo__web{
+        .modal__menu__mobile .logo__web {
           display: flex;
           justify-content: center;
           align-items: center;
         }
 
-        .modal__menu__mobile .modal__menu__mobile__content{
+        .modal__menu__mobile .modal__menu__mobile__content {
           margin: 30px auto;
         }
 
-        .modal__menu__mobile .ant-input{
-          background: #FFF0E9;
+        .modal__menu__mobile .ant-input {
+          background: #fff0e9;
           border-radius: 10px 0 0 10px;
           height: 42px;
           border: none;
           color: rgba(255, 143, 92, 0.7);
           font-size: 14px;
         }
-        .modal__menu__mobile .ant-input-search .ant-input:hover, 
-        .modal__menu__mobile .ant-input-search .ant-input:focus{
-          border:none;
+        .modal__menu__mobile .ant-input-search .ant-input:hover,
+        .modal__menu__mobile .ant-input-search .ant-input:focus {
+          border: none;
         }
-        .modal__menu__mobile .ant-input-search-button{
-          background: #FFF0E9;
+        .modal__menu__mobile .ant-input-search-button {
+          background: #fff0e9;
           border-radius: 0 10px 10px 0 !important;
           height: 42px;
           border: none;
-          color: rgba(255,143,92,.7) !important;
+          color: rgba(255, 143, 92, 0.7) !important;
         }
 
-        .modal__menu__mobile .menu__moblie{
-          margin:20px auto;
+        .modal__menu__mobile .menu__moblie {
+          margin: 20px auto;
           font-size: 16px;
           font-weight: bold;
-          color: #FF8F5C;
+          color: #ff8f5c;
         }
 
         .modal__menu__mobile .menu__moblie .menu__moblie--btn,
-        .modal__menu__mobile .memu__mobile__footer{
-          background: #FFFFFF;
+        .modal__menu__mobile .memu__mobile__footer {
+          background: #ffffff;
           border-radius: 5px;
           height: 42px;
           width: 100%;
@@ -763,22 +779,21 @@ const Navbar = () => {
           margin: 4px 0;
         }
 
-
-        .active__mobile{
-          color:#fff;
-          background: #FF8F5C !important;
+        .active__mobile {
+          color: #fff;
+          background: #ff8f5c !important;
           box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
         }
 
-        .modal__menu__mobile .icon__home__mobile{
-          font-size:24px
+        .modal__menu__mobile .icon__home__mobile {
+          font-size: 24px;
         }
 
-        .modal__menu__mobile .navbar__home__link{
-          margin:0 16px;
+        .modal__menu__mobile .navbar__home__link {
+          margin: 0 16px;
         }
 
-        .modal__menu__mobile .memu__mobile__footer{
+        .modal__menu__mobile .memu__mobile__footer {
           display: flex;
           font-size: 16px;
           font-weight: bolder;
@@ -786,31 +801,34 @@ const Navbar = () => {
           bottom: 24px;
           width: unset;
           align-items: center;
-          color: #E75C62;
-          background: #FFF0E9;
+          color: #e75c62;
+          background: #fff0e9;
         }
 
-        .modal__menu__mobile .memu__mobile__footer .icon__login--logout{
+        .modal__menu__mobile .memu__mobile__footer .icon__login--logout {
           font-size: 24px;
           margin-right: 12px;
         }
 
-        @media  (max-width: 576px){
-          .modal__login .contaner__modal__login .btn__contaner__loginGG{
-            font-size:18px;
+        @media (max-width: 576px) {
+          .modal__login .contaner__modal__login .btn__contaner__loginGG {
+            font-size: 18px;
             padding: 0 8px;
           }
 
-          .modal__login .contaner__modal__login .btn__contaner__loginGG>.anticon-google{
-            margin-right:4px
+          .modal__login
+            .contaner__modal__login
+            .btn__contaner__loginGG
+            > .anticon-google {
+            margin-right: 4px;
           }
 
-          .modal__login .contaner__modal__login .ant-btn > .anticon + span{
-            margin-left:2px
+          .modal__login .contaner__modal__login .ant-btn > .anticon + span {
+            margin-left: 2px;
           }
 
-          .modal__login .header__modal__login .header__modal__login-signup>p{
-            font-size:14px
+          .modal__login .header__modal__login .header__modal__login-signup > p {
+            font-size: 14px;
           }
         }
       `}</style>
