@@ -1,6 +1,7 @@
 import { Comment, List, Tooltip, Avatar, Button, Form, Input } from 'antd';
 import { useState } from 'react';
 import moment from 'moment';
+import LogoLogin from '../../assets/images/logo-login.png'
 const { TextArea } = Input;
 
 const CommentList = ({ comments }) => (
@@ -37,7 +38,7 @@ export default function CommentBook(){
             ...comments,
             {
               author: 'Han Solo',
-              avatar: 'https://joeschmoe.io/api/v1/random',
+              avatar: 'https://vcdn.subiz-cdn.com/file/firayzsbdxnjqgkkkksm-photo_2021_02_18_17_37_21.jpg',
               content: <p>{value}</p>,
               datetime: moment('2016-11-22').fromNow(),
             },
@@ -51,7 +52,7 @@ export default function CommentBook(){
         {
         //   actions: [<span key="comment-list-reply-to-0">Reply to</span>],
           author: 'Han Solo',
-          avatar: 'https://joeschmoe.io/api/v1/random',
+          avatar: 'https://vcdn.subiz-cdn.com/file/firayzsbdxnjqgkkkksm-photo_2021_02_18_17_37_21.jpg',
           content: (
             <p>
               We supply a series of design principles, practical patterns and high quality design
