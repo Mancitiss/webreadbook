@@ -11,11 +11,83 @@ import bannerUrl from '../../assets/images/background-profile-user.png';
 import TabBook from '../../component/book/TabBook';
 import axios from "axios";
 import cookies from 'react-cookies';
-
+import { PlusCircleOutlined } from '@ant-design/icons';
 function Profile() {
   const [user, setUser] = useState({});
   const [hiStory, setHiStory] = useState([]);
+  const name = "book1"
+  const [myStory, setMyStory] = useState([]);
+  const [mySave, setMySave] = useState([]);
+  async function getMyStory() {
+      var data_new = []
+      var us = localStorage.getItem("id")
+      var us_temp = false
+      let res = await axios.get("http://127.0.0.1:8000/api/my-book/" + localStorage.getItem("id") + "/")
+          .then(
+              response => {
+                  let data = response.data
+                  for (let temp of data) {
+                      if (us == temp.user) {
+                          us_temp = true
+                      } else {
+                          us_temp = false
+                      }
 
+                      let ob =
+                      {
+                          id: temp.id,
+                          story_name: temp.story_name,
+                          image: temp.image,
+                          total_chapters: temp.total_chapters,
+                          introduce: temp.introduce,
+                          user: us_temp
+                      }
+                      data_new.push(ob)
+                  };
+                  setMyStory(data_new)
+
+              }
+          )
+          .catch(
+              error => console.log(error)
+          );
+
+  }
+  async function getMySave() {
+      var data_new = []
+      var us = localStorage.getItem("id")
+      var us_temp = false
+      let res = await axios.get("http://127.0.0.1:8000/api/my-save/" + localStorage.getItem("id") + "/")
+          .then(
+              response => {
+                  let data = response.data
+                  for (let temp of data) {
+                      if (us == temp.user) {
+                          us_temp = true
+                      } else {
+                          us_temp = false
+                      }
+
+                      let ob =
+                      {
+                          id: temp.id,
+                          story_name: temp.story_name,
+                          image: temp.image,
+                          total_chapters: temp.total_chapters,
+                          introduce: temp.introduce,
+                          user: us_temp
+                      }
+                      data_new.push(ob)
+                  };
+                  setMySave(data_new)
+
+              }
+          )
+          .catch(
+              error => console.log(error)
+          );
+
+  }
   const router = useRouter();
   async function getHiStory() {
     let data_new = []
@@ -58,6 +130,8 @@ function Profile() {
 
   useEffect(() => {
     getHiStory()
+    getMyStory()
+    getMySave()
     const getUser = () => {
       let avatar = localStorage.getItem('avatar') === 'null' ? '' : localStorage.getItem('avatar')
       let email = localStorage.getItem('email') === 'null' ? '' : localStorage.getItem('email')
@@ -88,7 +162,6 @@ function Profile() {
     // window.location="/";
   };
 
-  const name = 'book1';
 
   const myLoader = ({ src }) => {
     return `http://localhost:8000${src}`;
@@ -240,11 +313,66 @@ function Profile() {
             </Row>
           </div>
           <div className='profile-tabs'>
-            <TabBook></TabBook>
+          <div className='tab__book__profile'>
+                <Tabs defaultActiveKey="1">
+                    <Tabs.TabPane tab="Your books" key="1">
+                        <div>
+                            <Row justify="start" gutter={16}>
+                                {
+                                    myStory.map((myStory) => {
+                                        return (
+                                            <Card index={myStory.id} story_name={myStory.story_name} image={myStory.image} total_chapters={myStory.total_chapters} introduce={myStory.introduce} owner={myStory.user} />)
+                                    })
+                                }
+                                <Col flex={2} sm={8} xs={12}>
+                                    <div className='create__book--item' onClick={() => router.push(`books/create/${name}`)}>
+                                        <PlusCircleOutlined />
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Saved" key="2">
+                        <div>
+                            <Row justify="start" gutter={16}>
+                            {
+                                    mySave.map((mySave) => {
+                                        return (
+                                            <Card index={mySave.id} story_name={mySave.story_name} image={mySave.image} total_chapters={mySave.total_chapters} introduce={mySave.introduce} owner={mySave.user} />)
+                                    })
+                                }
+                            </Row>
+                        </div>
+                    </Tabs.TabPane>
+                    
+                </Tabs>
+            </div>
           </div>
         </div>
       </Main>
       <style jsx>{`
+      .create__book--item{
+        width: 200px;
+        height: 287px;
+        box-shadow: 0px 0px 4px 2px rgb(0 0 0 / 25%), 2px 2px 6px rgb(0 0 0 / 25%);
+        border-radius: 5px;
+        position: relative;
+        margin: 12px 6px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 100px;
+        color: #FCE76C;
+    }
+
+    @media  (max-width: 576px){
+        .create__book--item{
+            width: 135px;
+            height: 198px;
+            margin: 6px;
+        }
+    }
         .user-section {
           padding: 16px 36px;
           margin: 82px auto 138px;

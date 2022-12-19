@@ -45,7 +45,7 @@ export default function BookDetail({ book, newChapterList }) {
                 <Col span={12}>
                   <p className='component__detail__info--left'>Author:</p>
                   <p className='component__detail__info--left'>Category:</p>
-                  <p className='component__detail__info--left'>Chap:</p>
+                  <p className='component__detail__info--left'>Total chap:</p>
                 </Col>
                 <Col span={12}>
                   <p className='component__detail__info--right'>
@@ -55,10 +55,7 @@ export default function BookDetail({ book, newChapterList }) {
                     {categoryList.join(', ')}
                   </p>
                   <p className='component__detail__info--right'>
-                    <strong style={{ color: '#FF8F5C' }}>
-                      {book?.showtimes}
-                    </strong>
-                    /{book?.total_chapters}
+                    {book?.total_chapters}
                   </p>
                 </Col>
               </Row>

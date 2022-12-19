@@ -100,6 +100,7 @@ const Navbar = () => {
           localStorage.setItem('hobbies', response.data.hobbies);
           localStorage.setItem('address', response.data.address);
           localStorage.setItem('phone', response.data.phone);
+          localStorage.setItem('email', response.data.email);
           var img = response.data.avatar
           if(img == "null" || img == null || img ===null){
             setAvatar(AvatarLogin)

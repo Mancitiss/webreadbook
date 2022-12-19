@@ -45,8 +45,8 @@ export default function Chap({ chap, book }) {
 
         }}
       >
-        <p className='item__chap__number'>{`Chap ${chap?.index}: `}</p>
-        <p className='item__chap__name'>{chap?.chapter_name}</p>
+        <p className='item__chap__number'>{`Chap ${chap?.index}: ${chap?.chapter_name}`}</p>
+        
         <div className='item__chap__isread'>
           <CheckCircleOutlined />
         </div>
