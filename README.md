@@ -5,6 +5,7 @@ Install model next
 ```bash
 npm install next
 ```
+Run backend server
 
 First, run the development server:
 
