@@ -2,16 +2,16 @@ import http from './axios';
 
 class Book {
   getReview(id) {
-    return http.get(`/bookreview/${id}/`);
+    return http.get(`/api/bookreview/${id}/`);
   }
   get(id) {
-    return http.get(`/story/${id}/`);
+    return http.get(`/api/story/${id}/`);
   }
   getChapters(bookId) {
-    return http.get(`/chapter/${bookId}/all/`);
+    return http.get(`/api/chapter/${bookId}/all/`);
   }
   getCategories(id) {
-    return http.get(`/categorys/${id}/`);
+    return http.get(`/api/categorys/${id}/`);
   }
 }
 

@@ -8,7 +8,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Divider, Input, Select, Space, Button, InputNumber } from 'antd';
 import { useState, useRef, useEffect } from 'react';
 import { PlusCircleOutlined } from "@ant-design/icons";
-import axios from "axios";
+import axios from "../../utils/axios";
 import { useRouter } from 'next/router';
 const { Option } = Select;
 
@@ -38,7 +38,7 @@ export default function EditBookContent() {
 
     async function getCategory() {
         let data_new = []
-        let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
+        let res = await axios.get("/api/categorys/?format=json")
             .then(
                 response => {
                     let data = response.data
@@ -62,7 +62,7 @@ export default function EditBookContent() {
 
     async function getIdStory() {
         let data_new = []
-        let res = await axios.get("http://127.0.0.1:8000/api/story-new/")
+        let res = await axios.get("/api/story-new/")
             .then(
                 response => {
                     let data = response.data
@@ -84,7 +84,7 @@ export default function EditBookContent() {
     async function getStory() {
         let data_new = []
         let exist = true
-        let res = await axios.get("http://127.0.0.1:8000/api/story/" + localStorage.getItem("id_story") + "/")
+        let res = await axios.get("/api/story/" + localStorage.getItem("id_story") + "/")
             .then(
                 response => {
                     let data = response.data
@@ -133,7 +133,7 @@ export default function EditBookContent() {
     async function getChapter() {
         var story_id = localStorage.getItem('id_story')
         let data_new = []
-        let res = await axios.get("http://127.0.0.1:8000/api/get_chapter/" + story_id + "/")
+        let res = await axios.get("/api/get_chapter/" + story_id + "/")
             .then(
                 response => {
                     let data = response.data
@@ -184,7 +184,7 @@ export default function EditBookContent() {
             redirect: 'follow'
         };
 
-        await fetch("http://127.0.0.1:8000/api/story/", requestOptions)
+        await fetch("https://mancitiss.duckdns.org:8000/api/story/", requestOptions)
             .then(response => response.text())
             .then(getChapter())
             .catch(error => console.log('error', error));
@@ -267,7 +267,7 @@ export default function EditBookContent() {
             redirect: 'follow'
         };
 
-        await fetch("http://127.0.0.1:8000/api/story/" + localStorage.getItem("id_story") + "/", requestOptions)
+        await fetch("https://mancitiss.duckdns.org:8000/api/story/" + localStorage.getItem("id_story") + "/", requestOptions)
             .then(response => response.text())
             .then(getChapter())
             .catch(error => console.log('error', error));
@@ -308,7 +308,7 @@ export default function EditBookContent() {
             redirect: 'follow'
         };
 
-        await fetch("http://127.0.0.1:8000/api/chapter/", requestOptions)
+        await fetch("https://mancitiss.duckdns.org:8000/api/chapter/", requestOptions)
             .then(response => response.text())
             .then(getChapter())
             .catch(error => console.log('error', error));
@@ -333,7 +333,7 @@ export default function EditBookContent() {
             redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:8000/api/chapter/" + localStorage.getItem("id_chap") + "/", requestOptions)
+        fetch("https://mancitiss.duckdns.org:8000/api/chapter/" + localStorage.getItem("id_chap") + "/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -350,7 +350,7 @@ export default function EditBookContent() {
             redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:8000/api/chapter/" + localStorage.getItem("id_chap") + "/", requestOptions)
+        fetch("https://mancitiss.duckdns.org:8000/api/chapter/" + localStorage.getItem("id_chap") + "/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -367,7 +367,7 @@ export default function EditBookContent() {
             redirect: 'follow'
           };
           
-          fetch("http://127.0.0.1:8000/api/story/" + localStorage.getItem("id_story") +"/", requestOptions)
+          fetch("https://mancitiss.duckdns.org:8000/api/story/" + localStorage.getItem("id_story") +"/", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));

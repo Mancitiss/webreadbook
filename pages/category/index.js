@@ -8,7 +8,7 @@ import { LeftCircleFilled, RightCircleFilled, ReadOutlined } from '@ant-design/i
 import ItemReview from "../../component/items/ItemReview";
 import Card from "../../component/items/Card";
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import axios from "../../utils/axios";
 export default function Category() {
     const [category, setCategory] = useState([]);
     const [caStory, setCaStory] = useState([]);
@@ -16,7 +16,7 @@ export default function Category() {
         let data_new = []
         const us = localStorage.getItem("id")
         let us_temp = false
-        let res = await axios.get("http://127.0.0.1:8000/api/get-story-catagory/" + localStorage.getItem("id_cata_cho") + "/")
+        let res = await axios.get("/api/get-story-catagory/" + localStorage.getItem("id_cata_cho") + "/")
           .then(
             response => {
               let data = response.data
@@ -49,7 +49,7 @@ export default function Category() {
       }
     async function getCategory() {
         let data_new = []
-        let res = await axios.get("http://127.0.0.1:8000/api/categorys/?format=json")
+        let res = await axios.get("/api/categorys/?format=json")
             .then(
                 response => {
                     let data = response.data

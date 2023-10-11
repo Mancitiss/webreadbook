@@ -34,7 +34,7 @@ export default function Card({index, story_name, image, total_chapters, introduc
           redirect: 'follow'
         };
         
-        fetch("http://127.0.0.1:8000/api/savestory/", requestOptions)
+        fetch("https://mancitiss.duckdns.org:8000/api/savestory/", requestOptions)
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));

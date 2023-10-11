@@ -9,7 +9,7 @@ import Image from "next/image";
 import IconLight from '../../../assets/images/icon-sunlight.svg'
 import IconDark from '../../../assets/images/icon-darkmon.svg'
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "../../../utils/axios";
 
 export default function ReadBook() {
     const hello = 'book1'
@@ -22,7 +22,7 @@ export default function ReadBook() {
     async function getChapter() {
         const idChap = localStorage.getItem("read_chapter")
         let data_new = []
-        let res = await axios.get("http://127.0.0.1:8000/api/chapter/" + idChap + "/")
+        let res = await axios.get("/api/chapter/" + idChap + "/")
             .then(
                 response => {
                     let data = response.data

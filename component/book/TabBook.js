@@ -3,7 +3,7 @@ import Card from '../items/Card';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { PlusCircleOutlined } from '@ant-design/icons';
-import axios from "axios";
+import axios from '../../utils/axios';
 export default function TabBook() {
     const name = "book1"
     const [myStory, setMyStory] = useState([]);
@@ -12,7 +12,7 @@ export default function TabBook() {
         var data_new = []
         var us = localStorage.getItem("id")
         var us_temp = false
-        let res = await axios.get("http://127.0.0.1:8000/api/my-book/" + localStorage.getItem("id") + "/")
+        let res = await axios.get("/api/my-book/" + localStorage.getItem("id") + "/")
             .then(
                 response => {
                     let data = response.data
@@ -47,7 +47,7 @@ export default function TabBook() {
         var data_new = []
         var us = localStorage.getItem("id")
         var us_temp = false
-        let res = await axios.get("http://127.0.0.1:8000/api/my-save/" + localStorage.getItem("id") + "/")
+        let res = await axios.get("/api/my-save/" + localStorage.getItem("id") + "/")
             .then(
                 response => {
                     let data = response.data

@@ -4,10 +4,14 @@ import LogoLogin from '../../assets/images/logo-login.png'
 import Link from 'next/link'
 import { Col, Row, Input, Button, Modal, Avatar } from 'antd'
 import styles from '../../styles/Home.module.css'
-import { useEffect, useState } from 'react';
-import { UserOutlined } from '@ant-design/icons';
-import AvatarLogin from '../../assets/images/avatar1.jpg';
-import axios from 'axios';
+import { useEffect, useState } from 'react'
+import { UserOutlined } from '@ant-design/icons'
+import AvatarLogin from '../../assets/images/avatar1.jpg'
+import axios from '../../utils/axios'
+
+import { GoogleLogin } from '@react-oauth/google'
+import { isExpired, decodeToken } from 'react-jwt'
+
 const { Search } = Input;
 
 import cookies from 'react-cookies';
@@ -47,12 +51,19 @@ const Navbar = () => {
   };
 
   const handleSwitchModal = () => {
-    setIsModalLoginOpen((prev) => !prev);
+    setIsModalLoginOpen(!isModalLoginOpen);
   };
 
   const handleShowLoginModal = () => {
     showModal();
     setIsModalLoginOpen(true);
+  };
+
+  const handleLogin = (credentialResponse) => {
+    console.log(credentialResponse);
+    const myDecodedToken = decodeToken(credentialResponse.credential);
+    const isMyTokenExpired = isExpired(myDecodedToken);
+    console.log(myDecodedToken);
   };
 
   useEffect(() => {
@@ -83,7 +94,7 @@ const Navbar = () => {
   const getId = async () => {
     let token = cookies.load("access_token")
     let data
-    let res = await axios.get("http://127.0.0.1:8000/api/users/current-user/", {
+    let res = await axios.get("/api/users/current-user/", {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -105,7 +116,7 @@ const Navbar = () => {
           if(img == "null" || img == null || img ===null){
             setAvatar(AvatarLogin)
           }else{
-            setAvatar("http://127.0.0.1:8000" + img)
+            setAvatar("https://mancitiss.duckdns.org:8000" + img)
           }
 
         }
@@ -137,7 +148,7 @@ const Navbar = () => {
       var data = new FormData();
       data.append('username', user);
       data.append('password', pass);
-      let res = await axios.post("http://127.0.0.1:8000/api/users/", data)
+      let res = await axios.post("/api/users/", data)
         .then(function (response) {
           //console.log(JSON.stringify(response.data)),
           alert("Sign Up Success"),
@@ -152,7 +163,7 @@ const Navbar = () => {
         );
     }
     else {
-      let res = await axios.post("http://127.0.0.1:8000/o/token/", {
+      let res = await axios.post("/o/token/", {
         client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
         client_secret: 'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
         username: user,
@@ -190,7 +201,7 @@ const Navbar = () => {
     if(img == "null" || img == null || img ===null){
       setAvatar(AvatarLogin)
     }else{
-      setAvatar("http://127.0.0.1:8000" + img)
+      setAvatar("https://mancitiss.duckdns.org:8000" + img)
     }
     
   }, [])
@@ -255,7 +266,7 @@ const Navbar = () => {
               <div className='menu__moblie'>
                 <div id='home__mobile' className='menu__moblie--btn'>
                   <HomeFilled className='icon__home__mobile' />
-                  <Link href='/'>
+                  <Link href='/' legacyBehavior>
 
                     <a className='navbar__home__link'>
                       Home
@@ -264,7 +275,7 @@ const Navbar = () => {
                 </div>
                 <div id='category__mobile' className='menu__moblie--btn'>
                   <FolderOpenFilled className='icon__home__mobile' />
-                  <Link href='/category'>
+                  <Link href='/category' legacyBehavior>
 
                     <a className='navbar__home__link'>
                       Category
@@ -275,7 +286,7 @@ const Navbar = () => {
                 {isLogin ? (
                   <div id='profile__mobile' className='menu__moblie--btn'>
                     <ScheduleFilled className='icon__home__mobile' />
-                    <Link href='/profile'>
+                    <Link href='/profile' legacyBehavior>
 
                       <a className='navbar__home__link'>
                         Profile
@@ -288,7 +299,7 @@ const Navbar = () => {
                 )}
                 <div id='about__mobile' className='menu__moblie--btn'>
                   <InfoCircleFilled className='icon__home__mobile' />
-                  <Link href='/abouts'>
+                  <Link href='/abouts' legacyBehavior>
 
                     <a className='navbar__home__link'>
                       Abouts
@@ -318,21 +329,21 @@ const Navbar = () => {
           <Col lg={9} sm={12} xs={0}>
             <Row justify='center' align='middle'>
               <Col span={8} className={styles.align_center}>
-                <Link href='/'>
+                <Link href='/' legacyBehavior>
                   <a id='home' className='navbar__home__link'>
                     Home
                   </a>
                 </Link>
               </Col>
               <Col span={8} className={styles.align_center}>
-                <Link href='/category'>
+                <Link href='/category' legacyBehavior>
                   <a id='category' className='navbar__home__link'>
                     Category
                   </a>
                 </Link>
               </Col>
               <Col span={8} className={styles.align_center}>
-                <Link href='/abouts'>
+                <Link href='/abouts' legacyBehavior>
                   <a id='abouts' className='navbar__home__link'>
                     About
                   </a>
@@ -396,14 +407,15 @@ const Navbar = () => {
           <div className='contaner__modal__login'>
             <Row>
               <Col span={20}>
-                <Button
+                {/* <Button
                   className='btn__contaner__loginGG'
                   icon={<GoogleOutlined />}
                 >
                   {isModalLoginOpen
                     ? 'Login with Google'
                     : 'Register with Google'}
-                </Button>
+                </Button> */}
+                <GoogleLogin onSuccess={handleLogin} onError={() => { console.log('Login failed'); }} />
               </Col>
               <Col span={4}>
                 <Button
@@ -575,10 +587,12 @@ const Navbar = () => {
           .logo__header__modal__login
           .logo__header__modal__login-text {
           position: absolute;
+          display: inline-block;
           font-weight: 700;
           font-size: 36px;
           text-transform: uppercase;
-          inset: 32px 0 0 74px;
+          top: 32px;
+          left: 74px;
         }
 
         .modal__login .header__modal__login .header__modal__login-signup > p {

@@ -9,7 +9,7 @@ import Card from '../../component/items/Card';
 import { useRouter } from 'next/router';
 import bannerUrl from '../../assets/images/background-profile-user.png';
 import TabBook from '../../component/book/TabBook';
-import axios from "axios";
+import axios from "../../utils/axios";
 import cookies from 'react-cookies';
 import { PlusCircleOutlined } from '@ant-design/icons';
 function Profile() {
@@ -22,7 +22,7 @@ function Profile() {
       var data_new = []
       var us = localStorage.getItem("id")
       var us_temp = false
-      let res = await axios.get("http://127.0.0.1:8000/api/my-book/" + localStorage.getItem("id") + "/")
+      let res = await axios.get("/api/my-book/" + localStorage.getItem("id") + "/")
           .then(
               response => {
                   let data = response.data
@@ -57,7 +57,7 @@ function Profile() {
       var data_new = []
       var us = localStorage.getItem("id")
       var us_temp = false
-      let res = await axios.get("http://127.0.0.1:8000/api/my-save/" + localStorage.getItem("id") + "/")
+      let res = await axios.get("/api/my-save/" + localStorage.getItem("id") + "/")
           .then(
               response => {
                   let data = response.data
@@ -93,7 +93,7 @@ function Profile() {
     let data_new = []
     const us = localStorage.getItem("id")
     let us_temp = false
-    let res = await axios.get("http://127.0.0.1:8000/api/get-story-history/" + localStorage.getItem("id") + "/")
+    let res = await axios.get("/api/get-story-history/" + localStorage.getItem("id") + "/")
       .then(
         response => {
           let data = response.data
@@ -282,7 +282,7 @@ function Profile() {
                   </div>
                   <br></br>
                   <div className='item__card__book--btn'>
-                    <Link href='/'>
+                    <Link href='/' legacyBehavior>
                       <Button
                         className='edit__intro__user'
                         onClick={() => {
