@@ -59,11 +59,37 @@ const Navbar = () => {
     setIsModalLoginOpen(true);
   };
 
-  const handleLogin = (credentialResponse) => {
+  const handleLogin = async (credentialResponse) => {
     console.log(credentialResponse);
     const myDecodedToken = decodeToken(credentialResponse.credential);
     const isMyTokenExpired = isExpired(myDecodedToken);
     console.log(myDecodedToken);
+    let sttCode = false
+    var FormData = require('form-data');
+      var data = new FormData();
+      data.append('credential', credentialResponse.credential);
+      data.append('provider', "google")
+      let res = await axios.post("/login/", data)
+        .then(
+          response => {
+            cookies.save("access_token", response.data.access_token)
+            sttCode = response.status == 200
+          }
+        )
+        .catch(
+          error => {
+            console.log(error),
+              alert("Login Failed, Please try again later or check your Google account");
+          }
+        );
+      if (sttCode) {
+        setLogin(true)
+        handleOk()
+        getId()
+      }
+      else {
+        alert("We don't recognize that username or password. You can try again or use another login option.")
+      }
   };
 
   useEffect(() => {
@@ -164,8 +190,8 @@ const Navbar = () => {
     }
     else {
       let res = await axios.post("/o/token/", {
-        client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
-        client_secret: 'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
+        //client_id: 'KOS0npL9WDYQ2qSdsIZQPJBe2uzmTIOLd9WTCSOE',
+        //client_secret: 'EU8dzfaF3ryStd2OfOPEPwc5r0KN08Dts9yKo15pMjpX9fZzZGEV0iHDIjwgT9umw7AN5lAcQOTWMnCIKNADxD1Dni38QudVrLH1nLRZV9QyEuw67Y1tZDwhKOHGLuLA',
         username: user,
         password: pass,
         grant_type: 'password'
