@@ -30,6 +30,8 @@ import {
 import { useRouter } from 'next/router';
 import { ApiError } from 'next/dist/server/api-utils';
 
+import FacebookLogin from '@greatsumini/react-facebook-login';
+
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
@@ -66,31 +68,65 @@ const Navbar = () => {
     console.log(myDecodedToken);
     let sttCode = false
     var FormData = require('form-data');
-      var data = new FormData();
-      data.append('credential', credentialResponse.credential);
-      data.append('provider', "google")
-      let res = await axios.post("/login/", data)
-        .then(
-          response => {
-            cookies.save("access_token", response.data.access_token)
-            sttCode = response.status == 200
-          }
-        )
-        .catch(
-          error => {
-            console.log(error),
-              alert("Login Failed, Please try again later or check your Google account");
-          }
-        );
-      if (sttCode) {
-        setLogin(true)
-        handleOk()
-        getId()
-      }
-      else {
-        alert("We don't recognize that username or password. You can try again or use another login option.")
-      }
+    var data = new FormData();
+    data.append('credential', credentialResponse.credential);
+    data.append('provider', "google")
+    let res = await axios.post("/login/", data)
+      .then(
+        response => {
+          cookies.save("access_token", response.data.access_token)
+          sttCode = response.status == 200
+        }
+      )
+      .catch(
+        error => {
+          console.log(error),
+            alert("Login Failed, Please try again later or check your Google account");
+        }
+      );
+    if (sttCode) {
+      setLogin(true)
+      handleOk()
+      getId()
+    }
+    else {
+      alert("We don't recognize that username or password. You can try again or use another login option.")
+    }
   };
+
+  const handleLoginFacebook = async (response) => {
+    console.log('Login Success!', response.accessToken);
+    // redirect to home page
+    let sttCode = false
+    var FormData = require('form-data');
+    var data = new FormData();
+    data.append('credential', response.accessToken);
+    data.append('provider', "facebook")
+    let res = await axios.post("/login/", data)
+      .then(
+        response => {
+          cookies.save("access_token", response.data.access_token)
+          sttCode = response.status == 200
+        }
+      )
+      .catch(
+        error => {
+          console.log(error)
+          //router.reload()
+          alert("Login Failed, Please try again later or check your Google account");
+        }
+      );
+    if (sttCode) {
+      setLogin(true)
+      handleOk()
+      getId()
+      //router.reload()
+    }
+    else {
+      //router.reload()
+      alert("We don't recognize that username or password. You can try again or use another login option.")
+    }
+  }
 
   useEffect(() => {
     var access_token = cookies.load("access_token")
@@ -444,10 +480,29 @@ const Navbar = () => {
                 <GoogleLogin onSuccess={handleLogin} onError={() => { console.log('Login failed'); }} />
               </Col>
               <Col span={4}>
-                <Button
+                {/* <Button
                   className='btn__contaner__loginFB'
                   icon={<FacebookFilled />}
-                ></Button>
+                ></Button> */}
+                <FacebookLogin
+                  appId="6671720299530658"
+                  loginOptions={{
+                    ignoreSdkError: true,
+                  }}
+                  onSuccess={handleLoginFacebook}
+                  onFail={(error) => {
+                    console.log('Login Failed!', error);
+                    //router.reload()
+                  }}
+                  onProfileSuccess={(response) => {
+                    console.log('Get Profile Success!', response);
+                    //router.reload()
+                  }}
+                  onError={(error) => {
+                    console.log('Get Profile Failed!', error);
+                    //router.reload()
+                  }}
+                />
               </Col>
             </Row>
             <div className='contaner__modal__login-input'>
