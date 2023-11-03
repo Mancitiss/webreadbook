@@ -4,7 +4,7 @@ import LogoLogin from '../../assets/images/logo-login.png'
 import Link from 'next/link'
 import { Col, Row, Input, Button, Modal, Avatar } from 'antd'
 import styles from '../../styles/Home.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { UserOutlined } from '@ant-design/icons'
 import AvatarLogin from '../../assets/images/avatar1.jpg'
 import axios from '../../utils/axios'
@@ -468,7 +468,7 @@ const Navbar = () => {
           </div>
           <div className='contaner__modal__login'>
             <Row>
-              <Col span={20}>
+              <Col span={12}>
                 {/* <Button
                   className='btn__contaner__loginGG'
                   icon={<GoogleOutlined />}
@@ -479,8 +479,15 @@ const Navbar = () => {
                 </Button> */}
                 <GoogleLogin onSuccess={handleLogin} onError={() => { console.log('Login failed'); }} />
               </Col>
-              <Col span={4}>
+              <Col span={12}>
                 
+                <Button
+                  id='btn__contaner__loginFB'
+                  className='btn__contaner__loginFB'
+                  icon={<FacebookFilled />}
+                  style={{ visibility: 'visible' }}
+                  // onClick={() => { document.getElementsByClassName('btn__contaner__loginFB')[1].click() }}
+                  >
                   <FacebookLogin
                     appId="6671720299530658"
                     loginOptions={{
@@ -499,15 +506,16 @@ const Navbar = () => {
                       console.log('Get Profile Failed!', error);
                       //router.reload()
                     }}
-                    style={{ visibility: 'hidden', width: '100%', height: '100%' }}
+                    style={{ 
+                      visibility: 'visible',
+                      width: '100%', 
+                      height: '100%',
+                    }}
                     className='btn__contaner__loginFB'
                   >
-                    <Button
-                      className='btn__contaner__loginFB'
-                      icon={<FacebookFilled />}
-                      style={{ visibility: 'visible' }}
-                    ></Button>
                   </FacebookLogin>
+                  
+                </Button>
               </Col>
             </Row>
             <div className='contaner__modal__login-input'>
